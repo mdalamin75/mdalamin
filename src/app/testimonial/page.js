@@ -1,6 +1,7 @@
 import React from "react";
 import { Titillium_Web, Josefin_Sans } from "next/font/google";
 import TestimonialSlider from "../components/TestimonialSlider";
+import CountUpAnimation from "../components/CountUpANimation";
 
 const josefin = Josefin_Sans({
   subsets: ["latin"],
@@ -25,7 +26,10 @@ const Testimonial = () => {
               development journey review from my valuable clients.
             </p>
           </div>
-          <div className="testimonial_slider pb-10">
+          <div className="testimonial_counter">
+            <CountUpAnimation/>
+          </div>
+          <div className="testimonial_slider py-10">
             <TestimonialSlider />
           </div>
         </div>

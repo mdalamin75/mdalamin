@@ -5,6 +5,7 @@ import { Typewriter } from "react-simple-typewriter";
 import { Titillium_Web, Josefin_Sans } from "next/font/google";
 import Link from "next/link";
 import { FiDownload } from "react-icons/fi";
+import CountUpAnimation from "./components/CountUpAnimation";
 
 const titillium = Titillium_Web({
   subsets: ["latin"],
@@ -18,7 +19,7 @@ const josefin = Josefin_Sans({
 export default function Home() {
   return (
     <>
-      <section className="py-10 bg-dark-bg">
+      <section className="py-10">
         <div className="container">
           <div className="grid sm:grid-cols-1 md:grid-cols-2 justify-between items-center min-h-screen">
             <div className="hero_text sm:order-last md:order-first">
@@ -85,6 +86,7 @@ export default function Home() {
             </div>
           </div>
         </div>
+      <CountUpAnimation/>
       </section>
     </>
   );
