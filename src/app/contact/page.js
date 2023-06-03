@@ -32,10 +32,10 @@ const Contact = () => {
           <div className="absolute right-[18%] top-0 hidden h-[150px] w-[200px] rotate-12 rounded-3xl bg-gradient-to-l from-blue-800 to-sky-600 opacity-20 blur-3xl filter dark:block dark:opacity-30 lg:top-72 lg:-right-0 lg:h-48 lg:w-[350px] xl:h-80 xl:w-[500px]"></div>
           <div className="contact">
             <div className="grid grid-cols-1 md:grid-cols-2">
-              <div className="form">
+              <div className="form order-2 md:order-1">
                 <ContactForm />
               </div>
-              <div className="conatct_svg">
+              <div className="conatct_svg order-1 md:order-2 mb-10">
                 <Image
                   src="/contactPage/contact-us-animate.svg"
                   width={450}

@@ -52,8 +52,8 @@ const ContactForm = () => {
       <h2 className={`${josefin.className} text-3xl capitalize pb-2`}>
         Contact Us
       </h2>
-      <p className={`${titillium.className} w-9/12 mb-7 text-slate-400`}>
-        Let's make something new,different,and more meaningful or make things
+      <p className={`${titillium.className} w-10/12 md:w-9/12 mb-7 text-slate-400`}>
+        Let&apos;s make something new, different, and more meaningful or make things
         more visual or conceptual?
       </p>
       <div className="grid">

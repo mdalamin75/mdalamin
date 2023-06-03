@@ -19,9 +19,9 @@ const josefin = Josefin_Sans({
 export default function Home() {
   return (
     <>
-      <section className="py-10">
+      <section className="pb-10 pt-14">
         <div className="container">
-          <div className="grid sm:grid-cols-1 md:grid-cols-2 justify-between items-center min-h-screen">
+          <div className="grid sm:grid-cols-1 md:grid-cols-2 justify-between items-center mb-20">
             <div className="hero_text sm:order-last md:order-first">
               <h5 className="bg-white text-dark-bg text-lg font-bold w-fit px-2">
                 Hello!
@@ -79,9 +79,9 @@ export default function Home() {
               <Image
                 src="/mdalamin.png"
                 width={350}
-                height={400}
+                height={350}
                 alt="mdalamin75"
-                className="shadow-xl shadow-sky-600 rounded-full"
+                className="shadow-xl shadow-sky-600 rounded-full mb-10"
               />
             </div>
           </div>

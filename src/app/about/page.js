@@ -38,7 +38,7 @@ const About = () => {
               className={`${titillium.className} flex flex-col justify-around gap-y-5 pt-7`}>
               <p>
                 Hi there! <br />
-                My name is MD.AL-AMIN and I am a web developer with 2 years
+                My name is MD.AL-AMIN and I am a web developer with 2+ years
                 profession of experience. I specialize in creating dynamic and
                 user-friendly websites using HTML, CSS, JavaScript, and
                 React.js, Next.js, Bootstrap, Tailwind.
@@ -57,7 +57,7 @@ const About = () => {
               <p>
                 Thank you for visiting my website. I hope you find my portfolio
                 and experience to be of interest. If you have any questions or
-                would like to work together, please don't hesitate to reach out.
+                would like to work together, please don&apos;t hesitate to reach out.
               </p>
               <p>
                 Best regards <br /> MD.AL-AMIN
@@ -288,7 +288,7 @@ const About = () => {
                 flawless functionality with Mobile Responsive. With a strong
                 focus on user experience and a passion for creating impactful
                 online experiences, I am confident in delivering exceptional
-                results. Let's collaborate and bring your ideas to the digital
+                results. Let&apos;s collaborate and bring your ideas to the digital
                 world!
               </h3>
               <div className="flex items-center mt-5">
