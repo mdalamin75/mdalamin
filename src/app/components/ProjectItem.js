@@ -31,7 +31,7 @@ const ProjectItem = ({ items }) => {
                   initial={{ opacity: 0 }}
                   exit={{ opacity: 0 }}
                   className="description flex flex-col md:flex-row gap-x-3 gap-y-3 items-center p-5 bg-dark2 m-3 rounded-xl shadow-md shadow-emerald-600 duration-500 hover:shadow-lg hover:shadow-orange-600">
-                  <div className="max-h-56 overflow-hidden">
+                  <div className="max-h-56 overflow-hidden tra duration-500 hover:scale-105">
                     <Image
                       src={image}
                       width={100}
@@ -52,13 +52,13 @@ const ProjectItem = ({ items }) => {
                       <Link
                         href={view}
                         target="_blank"
-                        className="bg-gradient-to-r from-sky-500 to-indigo-500 px-2 py-1 rounded-lg text-base capitalize font-medium delay-300 hover:hover:from-emerald-600 hover:to-amber-500">
+                        className="bg-gradient-to-r from-sky-500 to-indigo-500 px-2 py-1 rounded-lg text-base capitalize font-medium delay-300 hover:from-sky-600 hover:to-purple-500">
                         View
                       </Link>
                       <Link
                         href={source}
                         target="_blank"
-                        className="bg-gradient-to-r from-sky-500 to-indigo-500 px-2 py-1 ms-5 rounded-lg text-base capitalize font-medium delay-300 hover:hover:from-orange-600 hover:to-amber-500">
+                        className="bg-gradient-to-r from-sky-500 to-indigo-500 px-2 py-1 ms-5 rounded-lg text-base capitalize font-medium delay-300 hover:from-indigo-600 hover:to-purple-500">
                         Source
                       </Link>
                     </div>

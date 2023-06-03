@@ -29,7 +29,7 @@ const About = () => {
               <Image
                 src="/amin.png"
                 width={300}
-                height={200}
+                height={300}
                 alt="mdalamin"
                 className="rounded-3xl shadow-2xl shadow-emerald-600"
               />
@@ -111,6 +111,7 @@ const About = () => {
                   src="/html-5.png"
                   width={40}
                   height={50}
+                  alt="html-5"
                   className="bg-white p-1 rounded-full shadow-lg shadow-sky-600 animate-pulse"
                 />
                 <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
@@ -127,6 +128,7 @@ const About = () => {
                   src="/css-3.png"
                   width={40}
                   height={50}
+                  alt="css"
                   className="bg-white p-1 rounded-full shadow-lg shadow-sky-600 animate-pulse"
                 />
                 <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
@@ -143,6 +145,7 @@ const About = () => {
                   src="/sass.png"
                   width={40}
                   height={50}
+                  alt="sass"
                   className="bg-white p-1 rounded-full shadow-lg shadow-sky-600 animate-pulse"
                 />
                 <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
@@ -159,11 +162,12 @@ const About = () => {
                   src="/bootstrap.png"
                   width={40}
                   height={50}
+                  alt="bootstrap"
                   className="bg-white p-1 rounded-full shadow-lg shadow-sky-600 animate-pulse"
                 />
-                <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
                   <div
-                    class="bg-gradient-to-r from-cyan-500 to-blue-500 text-sm font-medium text-dark2 text-center p-1 leading-none rounded-full"
+                    className="bg-gradient-to-r from-cyan-500 to-blue-500 text-sm font-medium text-dark2 text-center p-1 leading-none rounded-full"
                     style={{ width: "95%" }}>
                     {" "}
                     Bootstrap 95%
@@ -178,9 +182,9 @@ const About = () => {
                   alt="tailwind"
                   className="bg-white p-1 rounded-full shadow-lg shadow-sky-600 animate-pulse"
                 />
-                <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
                   <div
-                    class="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% text-sm font-medium text-dark2 text-center p-1 leading-none rounded-full"
+                    className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% text-sm font-medium text-dark2 text-center p-1 leading-none rounded-full"
                     style={{ width: "90%" }}>
                     {" "}
                     Tailwind 90%
@@ -195,9 +199,9 @@ const About = () => {
                   alt="javascript"
                   className="bg-white p-1 rounded-full shadow-lg shadow-sky-600 animate-pulse"
                 />
-                <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
                   <div
-                    class="bg-gradient-to-r from-cyan-500 to-blue-500 text-sm font-medium text-dark2 text-center p-1 leading-none rounded-full"
+                    className="bg-gradient-to-r from-cyan-500 to-blue-500 text-sm font-medium text-dark2 text-center p-1 leading-none rounded-full"
                     style={{ width: "60%" }}>
                     {" "}
                     JavaScript 60%
@@ -212,9 +216,9 @@ const About = () => {
                   alt="jquery"
                   className="bg-white p-1 rounded-full shadow-lg shadow-sky-600 animate-pulse"
                 />
-                <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
                   <div
-                    class="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% text-sm font-medium text-dark2 text-center p-1 leading-none rounded-full"
+                    className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% text-sm font-medium text-dark2 text-center p-1 leading-none rounded-full"
                     style={{ width: "70%" }}>
                     {" "}
                     jQuery 70%
@@ -229,9 +233,9 @@ const About = () => {
                   alt="react"
                   className="bg-white p-1 rounded-full shadow-lg shadow-sky-600 animate-pulse"
                 />
-                <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
                   <div
-                    class="bg-gradient-to-r from-cyan-500 to-blue-500 text-sm font-medium text-dark2 text-center p-1 leading-none rounded-full"
+                    className="bg-gradient-to-r from-cyan-500 to-blue-500 text-sm font-medium text-dark2 text-center p-1 leading-none rounded-full"
                     style={{ width: "70%" }}>
                     {" "}
                     React 70%
@@ -246,9 +250,9 @@ const About = () => {
                   alt="next js"
                   className="bg-white p-1 rounded-full shadow-lg shadow-sky-600 animate-pulse"
                 />
-                <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
                   <div
-                    class="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% text-sm font-medium text-dark2 text-center p-1 leading-none rounded-full"
+                    className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% text-sm font-medium text-dark2 text-center p-1 leading-none rounded-full"
                     style={{ width: "70%" }}>
                     {" "}
                     Next Js 70%
@@ -263,9 +267,9 @@ const About = () => {
                   alt="wordpress"
                   className="bg-white p-1 rounded-full shadow-lg shadow-sky-600 animate-pulse"
                 />
-                <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
                   <div
-                    class="bg-gradient-to-r from-cyan-500 to-blue-500 text-sm font-medium text-dark2 text-center p-1 leading-none rounded-full"
+                    className="bg-gradient-to-r from-cyan-500 to-blue-500 text-sm font-medium text-dark2 text-center p-1 leading-none rounded-full"
                     style={{ width: "80%" }}>
                     {" "}
                     WordPress Customization 80%
