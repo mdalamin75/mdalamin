@@ -144,7 +144,7 @@ const AllProjects = [
     image: "/projects/15/sherad.png",
     category: "client",
     view: "https://sherad.netlify.app",
-    source: "https://github.com/mdalamin75/Presentation",
+    source: "Client Project source code not available",
     description:
       "This is a Client Projects. This is a fancey design Portfolio responsive Webpage.",
   },
@@ -154,7 +154,7 @@ const AllProjects = [
     image: "/projects/16/landingpage.png",
     category: "Bootstrap",
     view: "https://mdalamin75.github.io/Presentation",
-    source: "Client Project source code not available",
+    source: "https://github.com/mdalamin75/Presentation",
     description:
       "This is a Bootstrap Projects. This is a responsive landing page.",
   },

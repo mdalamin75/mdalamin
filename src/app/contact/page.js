@@ -3,6 +3,7 @@ import { Titillium_Web, Josefin_Sans } from "next/font/google";
 import Image from "next/image";
 import ContactForm from "../components/ContactForm";
 import Link from "next/link";
+import contact from "../../../public/ContactPage/contact-us-animate.svg";
 const josefin = Josefin_Sans({
   subsets: ["latin"],
   weight: ["400", "700"],
@@ -37,7 +38,7 @@ const Contact = () => {
               </div>
               <div className="conatct_svg order-1 md:order-2 mb-10">
                 <Image
-                  src="/contactPage/contact-us-animate.svg"
+                  src={contact}
                   width={450}
                   height={450}
                   alt="contact_us"
