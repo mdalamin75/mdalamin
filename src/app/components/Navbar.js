@@ -47,7 +47,7 @@ const Navbar = () => {
       <header
         className={`${
           open ? "w-48" : "w-20"
-        } min-h-screen max-h-full bg-dark-bg duration-500 p-5 pt-10 border-r-2 border-r-slate-100 fixed top-0 z-50`}>
+        } min-h-screen max-h-full bg-dark-bg duration-500 p-5 pt-10 border-r-2 border-r-slate-100 fixed top-0 z-40`}>
         <div className="menuBtn flex items-center gap-x-8 relative">
           <div
             className={`flex gap-x-4 items-center duration-300 ${

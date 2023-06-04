@@ -41,6 +41,7 @@ const Contact = () => {
                   width={450}
                   height={450}
                   alt="contact_us"
+                  priority={true}
                 />
                 <h3 className={`${josefin.className} text-3xl font-bold`}>Find me on </h3>
                 <hr  className="w-4/12 h-1 bg-blue-500"/>
