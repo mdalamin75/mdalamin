@@ -12,16 +12,16 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-    return (
-      <html lang="en" className="scroll-smooth snap-mandatory">
-        <body className={`inter.className bg-dark-bg text-white`}>
-          <CursorAnimation />
-          <div className="container mx-auto">
-            <Navbar />
-            <main className="snap-mandatory">{children}</main>
-            {/* <Footer /> */}
-          </div>
-        </body>
-      </html>
-    );
+  return (
+    <html lang="en" className="scroll-smooth snap-mandatory">
+      <body className={`inter.className bg-dark-bg text-white`}>
+        <CursorAnimation/>
+        <div className="container mx-auto">
+          <Navbar />
+          <main className="snap-mandatory">{children}</main>
+          {/* <Footer /> */}
+        </div>
+      </body>
+    </html>
+  );
 }

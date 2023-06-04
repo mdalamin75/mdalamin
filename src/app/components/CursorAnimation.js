@@ -1,58 +1,46 @@
 "use client";
-// globalThis = window
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import React from "react";
+import dynamic from "next/dynamic";
+
+const AnimatedCursor = dynamic(() => import("react-animated-cursor"), {
+  ssr: false,
+});
 
 const CursorAnimation = () => {
-  const [mousePosition, setMosuePosition] = useState({
-    x: 0,
-    y: 0,
-  });
-  const [cursorVariant, setCursorVariant] = useState("default");
-
-  useEffect(() => {
-    const mouseMove = (e) => {
-      setMosuePosition({
-        x: e.clientX,
-        y: e.clientY,
-      });
-    };
-    window.addEventListener("mousemove", mouseMove);
-    return () => {
-      window.removeEventListener("mousemove", mouseMove);
-    };
-  }, []);
-
-  const variants = {
-    default: {
-      x: mousePosition.x - 20,
-      y: mousePosition.y - 20,
-      transition: "0.3s",
-    },
-    text: {
-      width: 150,
-      height: 150,
-      x: mousePosition.x - 80,
-      y: mousePosition.y - 80,
-      bacgroundColor: "white",
-      mixBlendMode: "difference",
-      border: "none",
-    },
-  };
-
-  const textEnter = () => setCursorVariant();
-  const textLeave = () => setCursorVariant("default");
   return (
     <>
-      <motion.div
-        className="border-2 border-orange-500 w-10 h-10 rounded-full fixed top-0 left-0 z-50 duration-300 pointer-events-none"
-        variants={variants}
-        animate={cursorVariant}
-      />
-      <motion.div
-        className="bg-white w-1 h-1 rounded-full fixed top-4 left-4 z-50 duration-100 pointer-events-none"
-        variants={variants}
-        animate={cursorVariant}
+      <AnimatedCursor
+        innerSize={5}
+        outerSize={40}
+        color="255, 255, 255"
+        outerAlpha={0.1}
+        innerScale={0.7}
+        outerScale={2}
+        innerStyle={{
+          backgroundColor: "#0B1121",
+        }}
+        outerStyle={{
+          backgroundColor: "white",
+          mixBlendMode: "difference",
+        }}
+        clickables={[
+          "a",
+          'input[type="text"]',
+          'input[type="email"]',
+          'input[type="number"]',
+          'input[type="submit"]',
+          'input[type="image"]',
+          "label[for]",
+          "select",
+          "textarea",
+          "button",
+          ".link",
+          "svg",
+          "h1",
+          "h2",
+          "h3",
+          "h4",
+        ]}
       />
     </>
   );

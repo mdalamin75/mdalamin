@@ -67,9 +67,9 @@ header.w-48 ~ main {
     linear,
     left bottom,
     left top,
-    color-stop(0.44, rgb(138, 20, 216)),
-    color-stop(0.72, rgb(11, 190, 214)),
-    color-stop(0.86, rgb(19, 64, 199))
+    color-stop(0.44, rgb(243, 191, 95)),
+    color-stop(0.72, rgb(73, 223, 243)),
+    color-stop(0.86, rgb(88, 127, 243))
   );
 }
 /* ===============================Scrollbar End Here ============================  */

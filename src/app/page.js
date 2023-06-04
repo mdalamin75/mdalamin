@@ -26,7 +26,7 @@ export default function Home() {
               <h5 className="bg-white text-dark-bg text-lg font-bold w-fit px-2">
                 Hello!
               </h5>
-              <h1 className={`${josefin.className} font-serif text-xl py-5 `}>
+              <h1 className={`${josefin.className} font-serif text-xl py-5`}>
                 My Name is{" "}
                 <span className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-indigo-500">
                   {" "}
@@ -86,7 +86,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      <CountUpAnimation/>
+        <CountUpAnimation />
       </section>
     </>
   );
