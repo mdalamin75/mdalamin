@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React from "react";
 import TestimonialData from "../components/TestimonialData";
 import { Titillium_Web, Josefin_Sans } from "next/font/google";
 import { RiDoubleQuotesL, RiDoubleQuotesR } from "react-icons/ri";

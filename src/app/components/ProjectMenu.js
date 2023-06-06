@@ -8,7 +8,7 @@ const josefin = Josefin_Sans({
 const ProjectMenu = ({ filterItem, categoryItems }) => {
   return (
     <>
-      <div className="bg-gradient-to-r from-sky-700 to-indigo-800 p-3 rounded-lg sticky top-0 z-50">
+      <div data-aos="fade-right" data-aos-duration="1000"  className="bg-gradient-to-r from-sky-700 to-indigo-800 p-3 rounded-lg sticky top-0 z-50">
         <div className="flex flex-wrap gap-y-5 justify-around">
           {categoryItems.map((currentElement, index) => {
             return (

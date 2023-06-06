@@ -13,7 +13,7 @@ const titillium = Titillium_Web({
 });
 const Result = () => {
   return (
-    <p className="text-emerald-600">
+    <p className="text-emerald-600 py-2">
       Thank you! Your message has been sent successfully. I will contact you
       soon.
     </p>
@@ -48,13 +48,18 @@ const ContactForm = () => {
     setResult(false);
   }, 5000);
   return (
-    <form ref={form} onSubmit={sendEmail}>
+    <form
+      ref={form}
+      onSubmit={sendEmail}
+      data-aos="fade-right"
+      data-aos-duration="1000">
       <h2 className={`${josefin.className} text-3xl capitalize pb-2`}>
         Contact Us
       </h2>
-      <p className={`${titillium.className} w-10/12 md:w-9/12 mb-7 text-slate-400`}>
-        Let&apos;s make something new, different, and more meaningful or make things
-        more visual or conceptual?
+      <p
+        className={`${titillium.className} w-10/12 md:w-9/12 mb-7 text-slate-400`}>
+        Let&apos;s make something new, different, and more meaningful or make
+        things more visual or conceptual?
       </p>
       <div className="grid">
         <div className="mb-5">

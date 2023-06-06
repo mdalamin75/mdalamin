@@ -46,7 +46,8 @@ const Contact = () => {
                 />
                 <h3 className={`${josefin.className} text-3xl font-bold`}>Find me on </h3>
                 <hr  className="w-4/12 h-1 bg-blue-500"/>
-                <div className="flex gap-x-5 my-5">
+                <div className="flex gap-x-5 my-5" data-aos="fade-left"
+                data-aos-duration="1000">
                   <Link
                     href="https://www.facebook.com/webmdalamin"
                     target="_blank"

@@ -2,6 +2,8 @@ import React from "react";
 import { Titillium_Web, Josefin_Sans } from "next/font/google";
 import TestimonialSlider from "../components/TestimonialSlider";
 import CountUpAnimation from "../components/CountUpAnimation";
+import review from "../../../public/testimonial/review.svg";
+import Image from "next/image";
 
 const josefin = Josefin_Sans({
   subsets: ["latin"],
@@ -17,6 +19,14 @@ const Testimonial = () => {
       <section id="testimonial">
         <div className="container">
           <div className="testimonial_head py-16">
+            <Image
+              src={review}
+              width={150}
+              priority="true"
+              alt="testimonial"
+              className="mx-auto z-10"
+            />
+
             <h1
               className={`${josefin.className} uppercase text-center text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-purple-700 to-slate-100 drop-shadow-2xl`}>
               Testimonial
@@ -27,7 +37,7 @@ const Testimonial = () => {
             </p>
           </div>
           <div className="testimonial_counter">
-            <CountUpAnimation/>
+            <CountUpAnimation />
           </div>
           <div className="testimonial_slider py-10">
             <TestimonialSlider />

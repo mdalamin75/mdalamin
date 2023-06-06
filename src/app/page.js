@@ -6,6 +6,7 @@ import { Titillium_Web, Josefin_Sans } from "next/font/google";
 import Link from "next/link";
 import { FiDownload } from "react-icons/fi";
 import CountUpAnimation from "./components/CountUpAnimation";
+import mdalamin from "../../public/mdalamin.png";
 
 const titillium = Titillium_Web({
   subsets: ["latin"],
@@ -22,7 +23,10 @@ export default function Home() {
       <section className="pb-10 pt-14">
         <div className="container">
           <div className="grid sm:grid-cols-1 md:grid-cols-2 justify-between items-center mb-20">
-            <div className="hero_text sm:order-last md:order-first">
+            <div
+              data-aos="fade-right"
+              data-aos-duration="1000"
+              className="hero_text sm:order-last md:order-first">
               <h5 className="bg-white text-dark-bg text-lg font-bold w-fit px-2">
                 Hello!
               </h5>
@@ -75,12 +79,15 @@ export default function Home() {
                 </Link>
               </div>
             </div>
-            <div className="hero_image mx-auto order-first sm:order-first md:order-last">
+            <div
+              data-aos="zoom-in"
+              data-aos-duration="1000"
+              className="hero_image mx-auto order-first sm:order-first md:order-last">
               <Image
-                src="/mdalamin.png"
+                src={mdalamin}
                 width={350}
-                height={350}
                 alt="mdalamin75"
+                priority="true"
                 className="shadow-xl shadow-sky-600 rounded-full mb-10"
               />
             </div>
