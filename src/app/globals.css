@@ -33,15 +33,29 @@ main {
   position: relative;
   width: calc(100% - 5rem);
   top: 0;
-  left: 7rem;
+  left: 5rem;
   transition: all 0.5s ease;
   z-index: 2;
+  padding: 0 1rem;
 }
 header {
   height: calc(100vh + 5rem);
 }
 header.w-48 ~ main {
-  left: 13rem;
+  left: 12rem;
+  width: calc(100% - 12rem);
+}
+footer {
+  position: relative;
+  width: calc(100% - 5rem);
+  left: 5rem;
+  bottom: 0;
+  /* padding: 0 1rem; */
+  transition: all 0.5s ease;
+  z-index: 2;
+}
+header.w-48 ~ footer {
+  left: 12rem;
   width: calc(100% - 12rem);
 }
 .sticky {
@@ -63,9 +77,8 @@ header.w-48 ~ main {
 
 ::-webkit-scrollbar-thumb {
   border-radius: 0.7rem;
-  background-color: #8EC5FC;
-  background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
-  
+  background-color: #8ec5fc;
+  background-image: linear-gradient(62deg, #8ec5fc 0%, #e0c3fc 100%);
 }
 /* ===============================Scrollbar End Here ============================  */
 
@@ -298,8 +311,7 @@ header.w-48 ~ main {
 
 /* ================================= SVG Wave Animation Start Here ======================= */
 .demo2 {
-  width: 100%;
-  height: 300px;
+  width: calc(100% + 10rem);
   position: relative;
 }
 .demo2 .parallax > use {

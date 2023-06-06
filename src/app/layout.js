@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
         <div className="container mx-auto">
           <Navbar />
           <main className="snap-mandatory">{children}</main>
-          {/* <Footer /> */}
+          <Footer />
         </div>
       </body>
     </html>

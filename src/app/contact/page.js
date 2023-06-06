@@ -4,6 +4,7 @@ import Image from "next/image";
 import ContactForm from "../components/ContactForm";
 import Link from "next/link";
 import contact from "../../../public/ContactPage/contact-us-animate.svg";
+import SocialList from "../components/SocialList";
 const josefin = Josefin_Sans({
   subsets: ["latin"],
   weight: ["400", "700"],
@@ -36,7 +37,7 @@ const Contact = () => {
               <div className="form order-2 md:order-1">
                 <ContactForm />
               </div>
-              <div className="conatct_svg order-1 md:order-2 mb-10">
+              <div className="conatct_svg order-1 md:order-2 mb-10 pb-10">
                 <Image
                   src={contact}
                   width={450}
@@ -44,84 +45,22 @@ const Contact = () => {
                   alt="contact_us"
                   priority={true}
                 />
-                <h3 className={`${josefin.className} text-3xl font-bold`}>Find me on </h3>
-                <hr  className="w-4/12 h-1 bg-blue-500"/>
-                <div className="flex gap-x-5 my-5" data-aos="fade-left"
-                data-aos-duration="1000">
-                  <Link
-                    href="https://www.facebook.com/webmdalamin"
-                    target="_blank"
-                    className="animate-pulse duration-500 hover:scale-125 hover:animate-none"
-                    >
-                    <Image src="/social_icon/facebook.png" width={30} height={30} alt="webmdalamin mdalamin md_alamin75" />
-                  </Link>
-                  <Link
-                    href="https://www.instagram.com/md_alamin75"
-                    target="_blank"
-                    className="animate-pulse duration-500 hover:scale-125 hover:animate-none"
-                    >
-                    <Image src="/social_icon/instagram.png" width={30} height={30} alt="md_alamin75" />
-                  </Link>
-                  <Link
-                    href="https://www.linkedin.com/in/mdalamin75"
-                    target="_blank"
-                    className="animate-pulse duration-500 hover:scale-125 hover:animate-none"
-                    >
-                    <Image src="/social_icon/linkedin.png" width={30} height={30} alt="mdalamin75" />
-                  </Link>
-                  <Link
-                    href="https://twitter.com/md_alamin75"
-                    target="_blank"
-                    className="animate-pulse duration-500 hover:scale-125 hover:animate-none"
-                    >
-                    <Image src="/social_icon/twitter.png" width={30} height={30} alt="md_alamin75" />
-                  </Link>
-                  <Link
-                    href="https://wa.me/?text=I'm%20interested%20to%20work%20with%20you!"
-                    target="_blank"
-                    className="animate-pulse duration-500 hover:scale-125 hover:animate-none"
-                    >
-                    <Image src="/social_icon/whatsapp.png" width={30} height={30} alt="mdalamin75" />
-                  </Link>
-                  <Link
-                    href="https://github.com/mdalamin75"
-                    target="_blank"
-                    className="animate-pulse duration-500 hover:scale-125 hover:animate-none"
-                    >
-                    <Image src="/social_icon/github.png" width={30} height={30} alt="mdalamin75" />
-                  </Link>
-                </div>
+                <h3
+                  className={`${josefin.className} text-3xl font-bold`}
+                  data-aos="zoom-in"
+                  data-aos-duration="1000">
+                  Find me on{" "}
+                </h3>
+                <hr
+                  data-aos="fade-right"
+                  data-aos-duration="1000"
+                  className="w-4/12 h-1 bg-blue-500"
+                />
+                <SocialList />
               </div>
             </div>
           </div>
         </div>
-        {/* <div className="demo2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            xmlnsXlink="http://www.w3.org/1999/xlink"
-            viewBox="0 24 150 28"
-            preserveAspectRatio="none"
-            shape-rendering="auto">
-            <defs>
-              <path
-                id="gentle-wave"
-                className="st0"
-                d="M-160,35.6 c 30,0,58-6.6,88-6.6 s58,6.6,88,6.6s58-6.6,88-6.6s58,6.6,88,6.6V59h-352V35.6z"></path>
-            </defs>
-            <g class="parallax">
-              <use
-                style={{fill:"#c0a4fb",fillOpacity: 1,}}
-                xlinkHref="#gentle-wave"
-                x="48"
-                y="0"></use>
-              <use
-                style={{fill:"#fff", fillOpacity: 1,}}
-                xlinkHref="#gentle-wave"
-                x="48"
-                y="0"></use>
-            </g>
-          </svg>
-        </div> */}
       </section>
     </>
   );

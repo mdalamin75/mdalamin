@@ -7,7 +7,8 @@ import Link from "next/link";
 import { FiDownload } from "react-icons/fi";
 import CountUpAnimation from "./components/CountUpAnimation";
 import mdalamin from "../../public/mdalamin.png";
-
+import AllProjects from "./components/AllProjects";
+import portfolio from "../../public/portfolio/portfolio.svg";
 const titillium = Titillium_Web({
   subsets: ["latin"],
   weight: ["400", "700"],
@@ -93,7 +94,93 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <CountUpAnimation />
+      </section>
+      <CountUpAnimation />
+      <section id="latest_projects">
+        <div className="container">
+          <div className="latest_head pt-16">
+            <Image
+              src={portfolio}
+              width={150}
+              priority="true"
+              alt="portfolio"
+              className="mx-auto z-10"
+              data-aos="fade-up"
+              data-aos-duration="1000"
+            />
+            <h1
+              className={`${josefin.className} uppercase text-center text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-orange-600 drop-shadow-2xl`}>
+              Latest Projects
+            </h1>
+            <p className={`${titillium.className} text-center py-3`}>
+              Here you will find my all New Projects.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 py-10">
+            {AllProjects.slice(16)
+              .reverse()
+              .map((element) => {
+                const {
+                  id,
+                  title,
+                  image,
+                  category,
+                  view,
+                  source,
+                  description,
+                } = element;
+                return (
+                  <div
+                    key={id}
+                    data-aos="zoom-in"
+                    data-aos-duration="1000"
+                    className="description flex flex-col md:flex-row gap-x-3 gap-y-3 items-center p-5 bg-dark2 m-3 rounded-xl shadow-md shadow-emerald-600 duration-500 hover:shadow-lg hover:shadow-orange-600">
+                    <div className="max-h-56 overflow-hidden tra duration-500 hover:scale-105">
+                      <Image
+                        src={image}
+                        width={100}
+                        height={100}
+                        alt={category}
+                        className="w-96"
+                      />
+                    </div>
+                    <div className="details">
+                      <h2
+                        className={`${josefin.className} uppercase font-bold text-lg text-emerald-500 mb-3`}>
+                        {title}
+                      </h2>
+                      <p className={`${titillium.className} text-sm mb-3 `}>
+                        {description}
+                      </p>
+                      <div className="flex items-center py-3">
+                        <Link
+                          href={view}
+                          target="_blank"
+                          className="bg-gradient-to-r from-sky-500 to-indigo-500 px-2 py-1 rounded-lg text-base capitalize font-medium delay-300 hover:from-sky-600 hover:to-purple-500">
+                          View
+                        </Link>
+                        <Link
+                          href={source}
+                          target="_blank"
+                          className="bg-gradient-to-r from-sky-500 to-indigo-500 px-2 py-1 ms-5 rounded-lg text-base capitalize font-medium delay-300 hover:from-indigo-600 hover:to-purple-500">
+                          Source
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
+          <div className="w-full flex justify-center pb-20 mt-5">
+            <Link
+              href="/portfolio"
+              data-aos="fade-right"
+              data-aos-duration="1000"
+              className="bg-emerald-700 py-3 px-10 rounded-lg font-bold duration-500 hover:bg-emerald-800">
+              View More
+            </Link>
+          </div>
+        </div>
       </section>
     </>
   );
