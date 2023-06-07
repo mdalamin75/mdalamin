@@ -25,6 +25,8 @@
 /* ===============================Header Start Here ============================  */
 html {
   cursor: none;
+  height: 100%;
+  overflow-x: hidden;
 }
 body {
   overflow-x: hidden;
@@ -57,6 +59,14 @@ footer {
 header.w-48 ~ footer {
   left: 12rem;
   width: calc(100% - 12rem);
+}
+.main_footer {
+  width: calc(100vw - 5rem);
+  left: 5rem;
+}
+header.w-48 ~ .main_footer {
+  left: 12rem;
+  width: calc(100vw - 12rem);
 }
 .sticky {
   position: sticky;
@@ -311,7 +321,7 @@ header.w-48 ~ footer {
 
 /* ================================= SVG Wave Animation Start Here ======================= */
 .demo2 {
-  width: calc(100% + 10rem);
+  width: 100vw;
   position: relative;
 }
 .demo2 .parallax > use {

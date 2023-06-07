@@ -39,15 +39,15 @@ const Footer = () => {
             </g>
           </svg>
         </div>
-        <div className="main_footer bg-slate-700/[0.7] pt-16 px-10 z-30">
+        <div className="main_footer bg-slate-700/[0.7] px-4 z-30">
           <div className="container">
             <div className="grid">
-              <div className="flex justify-center">
+              <div className="flex flex-wrap justify-center">
                 <SocialList />
               </div>
               <div className="menu">
                 <nav>
-                  <ul className="flex flex-auto gap-x-5 justify-center">
+                  <ul className="flex flex-wrap gap-x-5 justify-center">
                     <li>
                       <Link href="/">Home</Link>
                     </li>

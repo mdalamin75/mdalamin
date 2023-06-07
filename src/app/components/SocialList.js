@@ -6,9 +6,7 @@ const SocialList = () => {
   return (
     <>
       <div
-        className="flex gap-x-5 my-5"
-        data-aos="fade-left"
-        data-aos-duration="1000">
+        className="flex flex-wrap gap-x-5 gap-y-3 justify-center my-5">
         <Link
           href="https://www.facebook.com/webmdalamin"
           target="_blank"

@@ -28,7 +28,7 @@ const Testimonial = () => {
             />
 
             <h1
-              className={`${josefin.className} uppercase text-center text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-purple-700 to-slate-100 drop-shadow-2xl`}>
+              className={`${josefin.className} uppercase text-center text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-purple-700 to-slate-100 drop-shadow-2xl`}>
               Testimonial
             </h1>
             <p className={`${titillium.className} text-center py-3`}>

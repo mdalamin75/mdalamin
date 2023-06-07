@@ -57,7 +57,7 @@ const ContactForm = () => {
         Contact Us
       </h2>
       <p
-        className={`${titillium.className} w-10/12 md:w-9/12 mb-7 text-slate-400`}>
+        className={`${titillium.className} mb-7 text-slate-400 px-10`}>
         Let&apos;s make something new, different, and more meaningful or make
         things more visual or conceptual?
       </p>
@@ -91,7 +91,7 @@ const ContactForm = () => {
         </div>
         <button
           type="submit"
-          className="uppercase text-center text-lg font-bold text-white w-1/2 flex gap-x-3 items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-500 p-2 rounded-lg duration-300 shadow-md hover:shadow-orange-600">
+          className="uppercase text-center text-lg font-bold text-white w-1/2 flex gap-x-3 mx-auto items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-500 p-2 rounded-lg duration-300 shadow-md hover:shadow-orange-600">
           <span>Send</span>
           <FiSend className="text-xl delay-100 duration-500 animate-ping" />
         </button>

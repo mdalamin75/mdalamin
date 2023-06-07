@@ -55,7 +55,7 @@ const TestimonialSlider = () => {
             <>
               <SwiperSlide key={id}>
                 <div
-                  className="review_card w-80 h-80 flex flex-col justify-center bg-dark2 m-5 p-5 rounded-xl shadow-lg shadow-emerald-600 text-center">
+                  className="review_card w-60 sm:w-80 h-80 flex flex-col justify-center bg-dark2 m-5 ml-12 sm:ml-5 p-5 rounded-xl shadow-lg shadow-emerald-600 text-center">
                   <h3
                     className={`${josefin.className} font-bold text-lg text-emerald-600`}>
                     {name}
@@ -65,7 +65,7 @@ const TestimonialSlider = () => {
                     {nationality}
                   </h4>
                   <p
-                    className={`${josefin.className} text-base font-medium text-white py-2`}>
+                    className={`${josefin.className} text-sm sm:text-base font-medium text-white py-2 px-2`}>
                     <RiDoubleQuotesL className="inline-block mb-3 me-1 text-2xl font-bold" />
                     {review}
                     <RiDoubleQuotesR className="inline-block mb-3 ms-1 text-2xl font-bold" />

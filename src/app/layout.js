@@ -15,10 +15,12 @@ export default function RootLayout({ children }) {
       <body className={`bg-dark-bg text-white`} suppressHydrationWarning={true}>
         <AosAnimation />
         <CursorAnimation />
-        <div className="container mx-auto">
+        <div className="xl:container xl:mx-auto">
           <Navbar />
+          <div className="flex flex-col min-h-screen">
           <main className="snap-mandatory">{children}</main>
           <Footer />
+          </div>
         </div>
       </body>
     </html>

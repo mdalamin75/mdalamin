@@ -25,7 +25,7 @@ const About = () => {
           <div className="about_head">
             <Image src={Programming} width={150} alt="programming" priority="true" className="mx-auto z-10" />
             <h1
-              className={`${josefin.className} uppercase text-center text-5xl font-extrabold pb-10 -mt-5 z-30 text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-blue-600`}>
+              className={`${josefin.className} uppercase text-center text-3xl md:text-5xl font-extrabold pb-10 -mt-5 z-30 text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-blue-600`}>
               About Me
             </h1>
           </div>
@@ -89,7 +89,7 @@ const About = () => {
               className="mx-auto z-10"
             />
             <h1
-              className={`${josefin.className} uppercase text-center text-5xl font-extrabold pb-16 text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-green-600 drop-shadow-2xl`}>
+              className={`${josefin.className} uppercase text-center text-3xl md:text-5xl font-extrabold pb-16 text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-green-600 drop-shadow-2xl`}>
               Education
             </h1>
           </div>
@@ -136,7 +136,7 @@ const About = () => {
               className="mx-auto z-10"
             />
             <h1
-              className={`${josefin.className} uppercase text-center text-5xl font-extrabold pb-16 text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-blue-600 drop-shadow-2xl`}>
+              className={`${josefin.className} uppercase text-center text-3xl md:text-5xl font-extrabold pb-16 text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-blue-600 drop-shadow-2xl`}>
               Skill & Experience
             </h1>
           </div>

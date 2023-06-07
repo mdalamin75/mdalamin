@@ -43,7 +43,7 @@ const Portfolio = () => {
           <div className="portfolio_head py-16">
             <Image src={portfolio} width={150} priority="true" alt="portfolio" className="mx-auto z-10" />
             <h1
-              className={`${josefin.className} uppercase text-center text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-orange-600 drop-shadow-2xl`}>
+              className={`${josefin.className} uppercase text-center text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-orange-600 drop-shadow-2xl`}>
               My Projects
             </h1>
             <p className={`${titillium.className} text-center py-3`}>
