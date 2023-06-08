@@ -52,7 +52,7 @@ const SocialList = () => {
           />
         </Link>
         <Link
-          href="https://wa.me/?text=I'm%20interested%20to%20work%20with%20you!"
+          href="https://wa.me/8801774147147?text=I'm%20interested%20to%20work%20with%20you!"
           target="_blank"
           className="animate-pulse duration-500 hover:scale-125 hover:animate-none">
           <Image
