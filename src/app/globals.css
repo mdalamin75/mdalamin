@@ -317,6 +317,9 @@ header.w-48 ~ .main_footer {
 .swiper-pagination {
   bottom: -5px !important;
 }
+.review_card{
+  min-height: 24rem;
+}
 /* ================================= Testimonial End Here ======================= */
 
 /* ================================= SVG Wave Animation Start Here ======================= */

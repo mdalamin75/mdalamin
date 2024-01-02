@@ -67,6 +67,27 @@ const TestimonialData = [
     nationality: "London, United Kingdom",
     review: "Good work, good communication skills. Will work again.",
   },
+  {
+    id: 10,
+    date: "August 2023",
+    name: "Cram",
+    nationality: "Repentigny, Canada",
+    review: "Nice work to convert a PSD a an HTML newsletter ! Thanks.",
+  },
+  {
+    id: 11,
+    date: "September 2023",
+    name: "Matthias",
+    nationality: "Karlsruhe, Germany",
+    review: "I searched for fresh ideas for my newly created website. It was done from a technical perspective but the design was terrible. I needed some fresh new ideas and a contest was the best way to get new ideas. While most participants just send their portfolio, Md.A. really prepared some custom website where I could see the changes already. Epic! The ideas were creative and I'll definitly hire Md.A. again in the future to further improve the design of my website.",
+  },
+  {
+    id: 12,
+    date: "September 2023",
+    name: "Pieter Bezuiden",
+    nationality: "Sydney, Australia",
+    review: "Exceptionally prompt in responses, a great understanding of what is required whilst being able to splice in creative ideas and techniques to fill any areas where instructions are limited or unclear. Will definitely be using this designed/developer again.",
+  },
 ];
 
 export default TestimonialData;

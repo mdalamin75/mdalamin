@@ -35,10 +35,10 @@ const TestimonialSlider = () => {
         keyboard={{
           enabled: true,
         }}
-        autoplay={{
-          delay: 3000,
-          disableOnInteraction: false,
-        }}
+        // autoplay={{
+        //   delay: 3000,
+        //   disableOnInteraction: false,
+        // }}
         coverflowEffect={{
           rotate: 50,
           stretch: 0,
@@ -55,7 +55,7 @@ const TestimonialSlider = () => {
             <>
               <SwiperSlide key={id}>
                 <div
-                  className="review_card w-60 sm:w-80 h-80 flex flex-col justify-center bg-dark2 m-5 ml-12 sm:ml-5 p-5 rounded-xl shadow-lg shadow-emerald-600 text-center">
+                  className="review_card w-64 sm:w-80 h-full sm:h-96 min-h-96 flex flex-col justify-center bg-dark2 m-5 ml-12 sm:ml-5 p-5 rounded-xl shadow-lg shadow-emerald-600 text-center">
                   <h3
                     className={`${josefin.className} font-bold text-lg text-emerald-600`}>
                     {name}
@@ -65,7 +65,7 @@ const TestimonialSlider = () => {
                     {nationality}
                   </h4>
                   <p
-                    className={`${josefin.className} text-sm sm:text-base font-medium text-white py-2 px-2`}>
+                    className={`${josefin.className} text-sm sm:text-sm font-medium text-white py-2 px-2`}>
                     <RiDoubleQuotesL className="inline-block mb-3 me-1 text-2xl font-bold" />
                     {review}
                     <RiDoubleQuotesR className="inline-block mb-3 ms-1 text-2xl font-bold" />
