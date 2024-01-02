@@ -40,7 +40,7 @@ const Footer = () => {
           </svg>
         </div>
         <div className="main_footer bg-slate-700/[0.7] px-4 z-30">
-          <div className="container">
+          <div className="container mx-auto">
             <div className="grid">
               <div className="flex flex-wrap justify-center">
                 <SocialList />

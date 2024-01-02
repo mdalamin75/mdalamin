@@ -31,43 +31,6 @@ html {
 body {
   overflow-x: hidden;
 }
-main {
-  position: relative;
-  width: calc(100% - 5rem);
-  top: 0;
-  left: 5rem;
-  transition: all 0.5s ease;
-  z-index: 2;
-  padding: 0 1rem;
-}
-header {
-  height: calc(100vh + 5rem);
-}
-header.w-48 ~ main {
-  left: 12rem;
-  width: calc(100% - 12rem);
-}
-footer {
-  position: relative;
-  width: calc(100% - 5rem);
-  left: 5rem;
-  bottom: 0;
-  /* padding: 0 1rem; */
-  transition: all 0.5s ease;
-  z-index: 2;
-}
-header.w-48 ~ footer {
-  left: 12rem;
-  width: calc(100% - 12rem);
-}
-.main_footer {
-  width: calc(100vw - 5rem);
-  left: 5rem;
-}
-header.w-48 ~ .main_footer {
-  left: 12rem;
-  width: calc(100vw - 12rem);
-}
 .sticky {
   position: sticky;
 }

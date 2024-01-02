@@ -17,13 +17,9 @@ export default function RootLayout({ children }) {
         <TawkMessenger />
         <AosAnimation />
         <CursorAnimation />
-        <div className="xl:container xl:mx-auto">
-          <Navbar />
-          <div className="flex flex-col min-h-screen">
-            <main className="snap-mandatory">{children}</main>
-            <Footer />
-          </div>
-        </div>
+        <Navbar />
+        <main className="snap-mandatory container mx-auto px-3 md:px-5 mt-20">{children}</main>
+        <Footer />
       </body>
     </html>
   );

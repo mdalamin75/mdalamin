@@ -1,8 +1,12 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { Bungee_Spice } from "next/font/google";
 import React, { useState } from "react";
-
+const bungee = Bungee_Spice({
+  subsets: ["latin"],
+  weight: ["400"],
+});
 import {
   FcMenu,
   FcBriefcase,
@@ -11,7 +15,7 @@ import {
   FcContacts,
 } from "react-icons/fc";
 import { MdReviews } from "react-icons/md";
-import { AiOutlineMenu } from "react-icons/ai";
+import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -44,43 +48,36 @@ const Navbar = () => {
   ];
   return (
     <>
-      <header
-        className={`${
-          open ? "w-48" : "w-20"
-        } min-h-screen max-h-full bg-dark-bg duration-500 p-5 pt-10 border-r-2 border-r-slate-100 fixed top-0 z-40`}>
-        <div className="menuBtn flex items-center gap-x-8 relative">
-          <div
-            className={`flex gap-x-4 items-center duration-300 ${
-              !open && "scale-0"
-            }`}>
-            {/* <Image
-              src="/mdalamin75.png"
-              width={30}
-              height={30}
-              className="rounded-full"
-            /> */}
-            <h1 className="text-white text-md duration-500 ease">MD.AL-AMIN</h1>
-          </div>
-          <AiOutlineMenu
-            className={`text-2xl text-white cursor-pointer absolute right-1`}
-            onClick={() => setOpen(!open)}
-          />
+      <header className="bg-dark-bg duration-500 shadow shadow-sky-600 py-2 fixed top-0 left-0 w-full z-50">
+        <div className="container mx-auto">
+          <nav className="justify-between px-4 md:items-center md:flex">
+            <div className="flex items-center justify-between py-3 md:py-5 md:block">
+              <h2 className={`${bungee.className} text-4xl py-3`}>MD.AL-AMIN</h2>
+              <button className="md:hidden" onClick={() => setOpen(!open)}>
+                {open ? (<AiOutlineClose className="text-3xl text-white cursor-pointer" />) : (<AiOutlineMenu className="text-3xl text-white cursor-pointer"/>)}
+              </button>
+            </div>
+            <div className={`flex-1 justify-self-center pb-3 md:block md:pb-0 md:mt-0 ${
+                open ? 'p-12 md:p-0 block' : 'hidden'
+              }`}>
+
+            <ul className="h-screen md:h-auto items-center justify-center md:justify-end md:flex ">
+              {Menus.map((menu, index) => (
+                <li key={index} >
+                  <Link
+                    onClick={() => setOpen(!open)}
+                    href={`${menu.src}`}
+                    className="has-tooltip text-gray-300 text-lg flex items-center justify-center gap-x-2 cursor-pointer py-7 px-2 hover:bg-slate-600 rounded-md">
+                    <span className="text-2xl">{menu.icon}</span>
+                    <span className="duration-500 ease">{menu.title}</span>
+                    {/* <span className={`${open && "hidden"} tooltip absolute left-16 bg-white text-dark-bg p-2 rounded-md shadow-xl`}>{menu.title}</span> */}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            </div>
+          </nav>
         </div>
-        <nav>
-          <ul className="pt-6">
-            {Menus.map((menu, index) => (
-              <li key={index} className="mb-5 relative">
-                <Link
-                  href={`${menu.src}`}
-                  className="has-tooltip text-gray-300 text-lg flex items-center gap-x-4 cursor-pointer py-3 px-2 hover:bg-slate-600 rounded-md">
-                  <span className="text-2xl">{menu.icon}</span>
-                  <span className={`${!open && "hidden"} duration-500 ease`}>{menu.title}</span>
-                  <span className={`${open && "hidden"} tooltip absolute left-16 bg-white text-dark-bg p-2 rounded-md shadow-xl`}>{menu.title}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
       </header>
     </>
   );
