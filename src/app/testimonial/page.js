@@ -17,7 +17,7 @@ const Testimonial = () => {
   return (
     <>
       <section id="testimonial">
-        <div className="container">
+        <div className="container mx-auto px-3 md:px-5">
           <div className="testimonial_head py-16">
             <Image
               src={review}

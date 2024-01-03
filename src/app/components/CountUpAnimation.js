@@ -15,7 +15,7 @@ const CountUpAnimation = () => {
   return (
     <>
       <section className="py-5">
-        <div className="container">
+        <div className="container mx-auto px-3 md:px-5">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-x-5 gap-y-3">
             <div data-aos="fade-right" data-aos-duration="1000"  className="text-center bg-dark2 px-5 py-10 rounded-lg shadow-inner shadow-sky-600">
               <h2 className={`${josefin.className} text-2xl font-medium`}>

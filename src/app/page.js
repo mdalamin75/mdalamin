@@ -7,8 +7,11 @@ import Link from "next/link";
 import { FiDownload } from "react-icons/fi";
 import CountUpAnimation from "./components/CountUpAnimation";
 import mdalamin from "../../public/mdalamin.png";
+import shadow from "../../public/shadow_01.png";
+import shadow2 from "../../public/shadow_02.png";
 import AllProjects from "./components/AllProjects";
 import portfolio from "../../public/portfolio/portfolio.svg";
+import Particles from "./components/Particles";
 const titillium = Titillium_Web({
   subsets: ["latin"],
   weight: ["400", "700"],
@@ -21,8 +24,9 @@ const josefin = Josefin_Sans({
 export default function Home() {
   return (
     <>
-      <section className="pb-10 pt-14">
-        <div className="container">
+      <section className="pb-10 pt-14 relative">
+        <Particles/>
+        <div className="container mx-auto px-3 md:px-5">
           <div className="grid sm:grid-cols-1 md:grid-cols-2 justify-between items-center mb-20">
             <div
               data-aos="fade-right"
@@ -89,15 +93,25 @@ export default function Home() {
                 width={350}
                 alt="mdalamin75"
                 priority="true"
-                className="shadow-xl shadow-sky-600 rounded-full mb-10"
+                className="shadow-xl shadow-sky-600 rounded-full mb-10 md:ml-64"
               />
             </div>
           </div>
         </div>
       </section>
       <CountUpAnimation />
-      <section id="latest_projects">
-        <div className="container">
+      <section id="latest_projects" className="relative">
+        {/* <div class="absolute z-20 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
+          <div class="w-[108rem] flex-none flex justify-end">
+            <picture>
+                <Image src={shadow} alt="" class="w-[71.75rem] flex-none max-w-none dark:hidden" decoding="async"/>
+            </picture>
+            <picture>
+                <Image src={shadow2} alt="" class="w-[90rem] flex-none max-w-none hidden dark:block" decoding="async"/>
+            </picture>
+          </div>
+        </div> */}
+        <div className="container mx-auto px-3 md:px-5">
           <div className="latest_head pt-16">
             <Image
               src={portfolio}
@@ -170,6 +184,7 @@ export default function Home() {
                   </div>
                 );
               })}
+              <div className="absolute bottom-0 inset-x-0 bg-bottom bg-no-repeat shadow_03 bottom-0 xl:bottom-8"></div>
           </div>
           <div className="w-full flex justify-center pb-20 mt-5">
             <Link

@@ -39,7 +39,7 @@ const Portfolio = () => {
   return (
     <>
       <section id="portfolio">
-        <div className="container">
+        <div className="container mx-auto px-3 md:px-5">
           <div className="portfolio_head py-16">
             <Image src={portfolio} width={150} priority="true" alt="portfolio" className="mx-auto z-10" />
             <h1

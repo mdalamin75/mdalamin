@@ -17,7 +17,7 @@ const Contact = () => {
   return (
     <>
       <section id="contact">
-        <div className="container">
+        <div className="container mx-auto px-3 md:px-5">
           <div className="absolute left-[18%] top-10 hidden rotate-12 rounded-3xl bg-sky-800 opacity-90 blur-3xl filter dark:opacity-30 lg:h-32 lg:w-[450px] dark:lg:block xl:h-44 xl:w-[600px]"></div>
           <div className="contact_head py-16">
             <h1

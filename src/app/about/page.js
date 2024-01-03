@@ -21,7 +21,7 @@ const About = () => {
   return (
     <>
       <section id="about" className="py-10 snap-start">
-        <div className="container">
+        <div className="container mx-auto px-3 md:px-5">
           <div className="about_head">
             <Image src={Programming} width={150} alt="programming" priority="true" className="mx-auto z-10" />
             <h1
@@ -78,7 +78,7 @@ const About = () => {
         </div>
       </section>
       <section id="education" className="py-5 snap-start">
-        <div className="container">
+        <div className="container mx-auto px-3 md:px-5">
           <div className="education_head">
             <Image
               src={education}
@@ -125,7 +125,7 @@ const About = () => {
         </div>
       </section>
       <section id="skill" className="py-10 snap-start">
-        <div className="container mx-auto">
+        <div className="container mx-auto mx-auto px-3 md:px-5">
           <div className="skill_head">
             <Image
               src={skill}

@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
         <AosAnimation />
         <CursorAnimation />
         <Navbar />
-        <main className="snap-mandatory container mx-auto px-3 md:px-5 mt-20">{children}</main>
+        <main className="snap-mandatory mt-20">{children}</main>
         <Footer />
       </body>
     </html>
