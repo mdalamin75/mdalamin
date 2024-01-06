@@ -8,6 +8,8 @@ import Programming from "../../../public/about/programming-animate.svg";
 import education from "../../../public/about/education.svg";
 import skill from "../../../public/about/skill.svg";
 import amin from "../../../public/about/amin.png";
+import shadow from "../../../public/shadow_01.png";
+import shadow2 from "../../../public/shadow_02.png";
 const titillium = Titillium_Web({
   subsets: ["latin"],
   weight: ["400", "700"],
@@ -28,6 +30,7 @@ const About = () => {
               className={`${josefin.className} uppercase text-center text-3xl md:text-5xl font-extrabold pb-10 -mt-5 z-30 text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-blue-600`}>
               About Me
             </h1>
+            <div class="absolute right-[18%] top-0 hidden h-[150px] w-[200px] rotate-12 rounded-3xl bg-gradient-to-l from-sky-800 to-sky-700 opacity-20 blur-3xl filter dark:block dark:opacity-30 lg:top-72 lg:-right-0 lg:h-48 lg:w-[350px] xl:h-80 xl:w-[500px]"></div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 justify-between w-full items-center">
             <div className="mx-auto about_image ">
@@ -77,7 +80,17 @@ const About = () => {
           </div>
         </div>
       </section>
-      <section id="education" className="py-5 snap-start">
+      <section id="education" className="py-10 snap-start relative">
+        <div class="absolute z-20 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
+          <div class="w-[108rem] flex-none flex justify-end">
+            <picture>
+              <Image src={shadow} alt="" class="w-[71.75rem] flex-none max-w-none dark:hidden" decoding="async" />
+            </picture>
+            <picture>
+              <Image src={shadow2} alt="" class="w-[90rem] flex-none max-w-none hidden dark:block" decoding="async" />
+            </picture>
+          </div>
+        </div>
         <div className="container mx-auto px-3 md:px-5">
           <div className="education_head">
             <Image
@@ -94,6 +107,17 @@ const About = () => {
             </h1>
           </div>
           <div className="timeline">
+          <div className="timeline_container after:animate-bounce right">
+              <div
+                data-aos="fade-left"
+                data-aos-duration="1000"
+                className={`${titillium.className} content shadow-lg shadow-emerald-600`}>
+                <h2>August 2023 - December 2023</h2>
+                <p>Industrial Training in Web Design and Development at 
+                  <Link href="https://www.itlabsolutions.com/" target="_blanck" className="text-emerald-600">  IT Lab Solutions Ltd.</Link>
+                </p>
+              </div>
+            </div>
             <div className="timeline_container after:animate-bounce left">
               <div
                 data-aos="fade-right"
@@ -124,7 +148,8 @@ const About = () => {
           </div>
         </div>
       </section>
-      <section id="skill" className="py-10 snap-start">
+      <section id="skill" className="py-10 snap-start relative">
+        <div class="absolute inset-0 top-0 bg-top bg-no-repeat shadow_04"></div>
         <div className="container mx-auto mx-auto px-3 md:px-5">
           <div className="skill_head">
             <Image
@@ -147,7 +172,7 @@ const About = () => {
                 data-aos-duration="1000"
                 className="flex justify-center items-center gap-x-5 mb-5">
                 <Image
-                  src="/html-5.png"
+                  src="/skills/html-5.png"
                   width={40}
                   height={50}
                   alt="html-5"
@@ -167,7 +192,7 @@ const About = () => {
                 data-aos-duration="1000"
                 className="flex justify-center items-center gap-x-5 mb-5">
                 <Image
-                  src="/css-3.png"
+                  src="/skills/css-3.png"
                   width={40}
                   height={50}
                   alt="css"
@@ -187,7 +212,7 @@ const About = () => {
                 data-aos-duration="1000"
                 className="flex justify-center items-center gap-x-5 mb-5">
                 <Image
-                  src="/sass.png"
+                  src="/skills/sass.png"
                   width={40}
                   height={50}
                   alt="sass"
@@ -207,7 +232,7 @@ const About = () => {
                 data-aos-duration="1000"
                 className="flex justify-center items-center gap-x-5 mb-5">
                 <Image
-                  src="/bootstrap.png"
+                  src="/skills/bootstrap.png"
                   width={40}
                   height={50}
                   alt="bootstrap"
@@ -227,7 +252,7 @@ const About = () => {
                 data-aos-duration="1000"
                 className="flex justify-center items-center gap-x-5 mb-5">
                 <Image
-                  src="/tailwind.png"
+                  src="/skills/tailwind.png"
                   width={40}
                   height={50}
                   alt="tailwind"
@@ -247,7 +272,7 @@ const About = () => {
                 data-aos-duration="1000"
                 className="flex justify-center items-center gap-x-5 mb-5">
                 <Image
-                  src="/js.png"
+                  src="/skills/js.png"
                   width={40}
                   height={50}
                   alt="javascript"
@@ -267,7 +292,7 @@ const About = () => {
                 data-aos-duration="1000"
                 className="flex justify-center items-center gap-x-5 mb-5">
                 <Image
-                  src="/jquery.png"
+                  src="/skills/jquery.png"
                   width={40}
                   height={50}
                   alt="jquery"
@@ -287,7 +312,7 @@ const About = () => {
                 data-aos-duration="1000"
                 className="flex justify-center items-center gap-x-5 mb-5">
                 <Image
-                  src="/react.png"
+                  src="/skills/react.png"
                   width={40}
                   height={50}
                   alt="react"
@@ -307,7 +332,7 @@ const About = () => {
                 data-aos-duration="1000"
                 className="flex justify-center items-center gap-x-5 mb-5">
                 <Image
-                  src="/nextjs.png"
+                  src="/skills/nextjs.png"
                   width={40}
                   height={50}
                   alt="next js"
@@ -319,6 +344,46 @@ const About = () => {
                     style={{ width: "70%" }}>
                     {" "}
                     Next Js 70%
+                  </div>
+                </div>
+              </div>
+              <div
+                data-aos="fade-left"
+                data-aos-duration="1000"
+                className="flex justify-center items-center gap-x-5 mb-5">
+                <Image
+                  src="/skills/php.png"
+                  width={40}
+                  height={50}
+                  alt="wordpress"
+                  className="bg-white p-1 rounded-full shadow-lg shadow-sky-600 animate-pulse"
+                />
+                <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                  <div
+                    className="bg-gradient-to-r from-cyan-500 to-blue-500 text-sm font-medium text-dark2 text-center p-1 leading-none rounded-full"
+                    style={{ width: "60%" }}>
+                    {" "}
+                    PHP 60%
+                  </div>
+                </div>
+              </div>
+              <div
+                data-aos="fade-right"
+                data-aos-duration="1000"
+                className="flex justify-center items-center gap-x-5 mb-5">
+                <Image
+                  src="/skills/mysql.png"
+                  width={40}
+                  height={50}
+                  alt="wordpress"
+                  className="bg-white p-1 rounded-full shadow-lg shadow-sky-600 animate-pulse"
+                />
+                <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                  <div
+                    className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% text-sm font-medium text-dark2 text-center p-1 leading-none rounded-full"
+                    style={{ width: "75%" }}>
+                    {" "}
+                    MySQL 75%
                   </div>
                 </div>
               </div>

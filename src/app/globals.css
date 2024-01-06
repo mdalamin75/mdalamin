@@ -318,4 +318,9 @@ body {
   background-size: 136.75rem 100%;
   height: 82.625rem;
 }
+.shadow_04 {
+  background-image: url("/shadow_04.jpg");
+  background-size: 100% 100%;
+  height: 105%;
+}
 /*======================== Shadow End =======================*/
