@@ -30,7 +30,7 @@ const About = () => {
               className={`${josefin.className} uppercase text-center text-3xl md:text-5xl font-extrabold pb-10 -mt-5 z-30 text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-blue-600`}>
               About Me
             </h1>
-            <div class="absolute right-[18%] top-0 hidden h-[150px] w-[200px] rotate-12 rounded-3xl bg-gradient-to-l from-sky-800 to-sky-700 opacity-20 blur-3xl filter dark:block dark:opacity-30 lg:top-72 lg:-right-0 lg:h-48 lg:w-[350px] xl:h-80 xl:w-[500px]"></div>
+            <div className="absolute right-[18%] top-0 hidden h-[150px] w-[200px] rotate-12 rounded-3xl bg-gradient-to-l from-sky-800 to-sky-700 opacity-20 blur-3xl filter dark:block dark:opacity-30 lg:top-72 lg:-right-0 lg:h-48 lg:w-[350px] xl:h-80 xl:w-[500px]"></div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 justify-between w-full items-center">
             <div className="mx-auto about_image ">
@@ -81,13 +81,13 @@ const About = () => {
         </div>
       </section>
       <section id="education" className="py-10 snap-start relative">
-        <div class="absolute z-20 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
-          <div class="w-[108rem] flex-none flex justify-end">
+        <div className="absolute z-20 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
+          <div className="w-[108rem] flex-none flex justify-end">
             <picture>
-              <Image src={shadow} alt="" class="w-[71.75rem] flex-none max-w-none dark:hidden" decoding="async" />
+              <Image src={shadow} alt="" className="w-[71.75rem] flex-none max-w-none dark:hidden" decoding="async" />
             </picture>
             <picture>
-              <Image src={shadow2} alt="" class="w-[90rem] flex-none max-w-none hidden dark:block" decoding="async" />
+              <Image src={shadow2} alt="" className="w-[90rem] flex-none max-w-none hidden dark:block" decoding="async" />
             </picture>
           </div>
         </div>
@@ -149,7 +149,7 @@ const About = () => {
         </div>
       </section>
       <section id="skill" className="py-10 snap-start relative">
-        <div class="absolute inset-0 top-0 bg-top bg-no-repeat shadow_04"></div>
+        <div className="absolute inset-0 top-0 bg-top bg-no-repeat shadow_04"></div>
         <div className="container mx-auto mx-auto px-3 md:px-5">
           <div className="skill_head">
             <Image
@@ -355,7 +355,7 @@ const About = () => {
                   src="/skills/php.png"
                   width={40}
                   height={50}
-                  alt="wordpress"
+                  alt="php"
                   className="bg-white p-1 rounded-full shadow-lg shadow-sky-600 animate-pulse"
                 />
                 <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
@@ -375,7 +375,7 @@ const About = () => {
                   src="/skills/mysql.png"
                   width={40}
                   height={50}
-                  alt="wordpress"
+                  alt="mysql"
                   className="bg-white p-1 rounded-full shadow-lg shadow-sky-600 animate-pulse"
                 />
                 <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
@@ -392,7 +392,7 @@ const About = () => {
                 data-aos-duration="1000"
                 className="flex justify-center items-center gap-x-5 mb-5">
                 <Image
-                  src="/wordpress.png"
+                  src="/skills/wordpress.png"
                   width={40}
                   height={50}
                   alt="wordpress"

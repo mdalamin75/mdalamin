@@ -26,10 +26,12 @@
 html {
   cursor: none;
   height: 100%;
-  overflow-x: hidden;
 }
 body {
   overflow-x: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .sticky {
   position: sticky;
@@ -126,7 +128,7 @@ body {
 }
 /* ================================= Profile Image animation End Here ======================= */
 
-/* ================================= Esucation Timeline Start Here ======================= */
+/* ================================= Education Timeline Start Here ======================= */
 /* The actual timeline (the vertical ruler) */
 .timeline {
   position: relative;
@@ -170,7 +172,7 @@ body {
   border: 1px solid #ff6e40;
   top: 15px;
   border-radius: 50%;
-  z-index: 999;
+  z-index: 40;
 }
 
 /* Place the container to the left */
@@ -257,7 +259,7 @@ body {
     left: 0%;
   }
 }
-/* ================================= Esucation Timeline End Here ======================= */
+/* ================================= Education Timeline End Here ======================= */
 
 /* ================================= Testimonial Start Here ======================= */
 .swiper {
@@ -316,11 +318,13 @@ body {
 .shadow_03 {
   background-image: url("/shadow_03.png");
   background-size: 136.75rem 100%;
-  height: 82.625rem;
+  height: 100%;
 }
 .shadow_04 {
   background-image: url("/shadow_04.jpg");
   background-size: 100% 100%;
-  height: 105%;
+  min-height: 70vh;
+  height: calc(100% + 3rem);
+  z-index: -1;
 }
 /*======================== Shadow End =======================*/

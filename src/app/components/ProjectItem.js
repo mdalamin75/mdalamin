@@ -12,7 +12,7 @@ const titillium = Titillium_Web({
   weight: ["400", "700"],
 });
 
-const ProjectItem = ({ items }) => {
+const ProjectItem = ({ items, searchProject }) => {
   return (
     <>
       <AnimatePresence>
@@ -20,6 +20,9 @@ const ProjectItem = ({ items }) => {
           {items
             .slice(0)
             .reverse()
+            .filter((element) => {
+              return searchProject.toLowerCase() === "" ? element : element.category.toLowerCase().includes(searchProject)
+            })
             .map((element) => {
               const { id, title, image, category, view, source, description } =
                 element;

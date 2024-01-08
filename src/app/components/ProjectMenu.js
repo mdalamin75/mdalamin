@@ -8,19 +8,18 @@ const josefin = Josefin_Sans({
 const ProjectMenu = ({ filterItem, categoryItems }) => {
   return (
     <>
-      <div data-aos="fade-right" data-aos-duration="1000"  className="bg-gradient-to-r from-sky-700 to-indigo-800 p-3 rounded-lg sticky top-0 z-40">
-        <div className="flex flex-wrap gap-y-5 justify-around">
+      <div data-aos="fade-right" data-aos-duration="1000">
+        <select onChange={(e) => filterItem(e.target.value)} className="bg-gradient-to-r from-sky-700 to-indigo-800 uppercase p-3 rounded-lg sticky top-0 z-40">
           {categoryItems.map((currentElement, index) => {
             return (
-              <button
+              <option
                 key={index}
-                onClick={() => filterItem(currentElement)}
-                className={`${josefin.className} border-solid border-2 border-indigo-100 py-2 px-3 rounded-lg uppercase font-semibold duration-500 hover:bg-gradient-to-r hover:from-purple-700 hover:to-indigo-600`}>
+                className={`${josefin.className} bg-sky-700 uppercase text-sm mb-4`}>
                 {currentElement}
-              </button>
+              </option>
             );
           })}
-        </div>
+        </select>
       </div>
     </>
   );

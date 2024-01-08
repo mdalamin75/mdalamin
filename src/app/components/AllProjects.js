@@ -34,8 +34,8 @@ const AllProjects = [
     title: "Bootstrap",
     image: "/projects/04/bootstrap.png",
     category: "Bootstrap",
-    view: "https://psd-to-html-03.netlify.app",
-    source: "https://github.com/mdalamin75/psd-to-html-03",
+    view: "https://bootstrap-project01.netlify.app",
+    source: "https://github.com/mdalamin75/bootstrap-project",
     description:
       "This is a Bootstrap Projects. This is a responsive landing page.",
   },
@@ -217,6 +217,86 @@ const AllProjects = [
     source: "https://github.com/mdalamin75/GuessMyNumberGame",
     description:
       "This is a Guess My NumberGame Projects. This is a responsive Webpage.",
+  },
+  {
+    id: 23,
+    title: "Design of Email Newsletter",
+    image: "/projects/23/newsletter.png",
+    category: "client",
+    view: "Client Project view not available",
+    source: "Client Project source code not available",
+    description:
+      "This is an email newsletter design. HTML tables and CSS are being used for creating it. [Unfortunately, the source code for this project is not available as it belongs to the client.]",
+  },
+  {
+    id: 24,
+    title: "PSD to HTML",
+    image: "/projects/24/multipurpose.png",
+    category: "psd to html",
+    view: "https://mdalamin75.github.io/Multipurpose",
+    source: "https://github.com/mdalamin75/Multipurpose",
+    description:
+      "This is a modern landing page created using HTML, CSS, Bootstrap, Font Awesome, and Swiper Slider.",
+  },
+  {
+    id: 25,
+    title: "PSD to HTML",
+    image: "/projects/25/landingpage.png",
+    category: "psd to html",
+    view: "https://mdalamin75.github.io/Final-Task-Web-Design/",
+    source: "https://github.com/mdalamin75/Final-Task-Web-Design",
+    description:
+      "This is a modern and responsive landing page created using HTML, CSS, Font Awesome, and Swiper Slider.",
+  },
+  {
+    id: 26,
+    title: "Email Flyer UI Design",
+    image: "/projects/26/Email_Flyer.png",
+    category: "design",
+    view: "https://www.figma.com/file/6abbOj3FZwLZ0UF0eBD5nO/Email_Flyer?type=design&node-id=0-1&mode=design",
+    source: "https://www.figma.com/file/6abbOj3FZwLZ0UF0eBD5nO/Email_Flyer?type=design&node-id=0%3A1&mode=design&t=bK6MHeNsD101mioT-1",
+    description:
+      "This is an email flyer UI design created using Figma.",
+  },
+  {
+    id: 27,
+    title: "UI Design",
+    image: "/projects/27/HomePage.png",
+    category: "design",
+    view: "https://www.figma.com/file/QmFXPfdKQ2rNQMurfptSqL/Jesse-James?type=design&mode=design&t=bK6MHeNsD101mioT-1",
+    source: "https://www.figma.com/file/QmFXPfdKQ2rNQMurfptSqL/Jesse-James?type=design&mode=design&t=bK6MHeNsD101mioT-1",
+    description:
+      "This is an user interface design created using Figma.",
+  },
+  {
+    id: 28,
+    title: "UI design for school",
+    image: "/projects/28/School Landing Page.png",
+    category: "design",
+    view: "https://github.com/mdalamin75/school-landing-page-ui/blob/main/School%20Landing%20Page.png",
+    source: "https://github.com/mdalamin75/school-landing-page-ui",
+    description:
+      "This is a user interface design for a school that was created using Adobe Photoshop."
+  },
+  {
+    id: 29,
+    title: "Shop Management System",
+    image: "/projects/29/shopManagementSystem.png",
+    category: "PHP",
+    view: "http://shopms.wuaze.com",
+    source: "https://github.com/mdalamin75/shopManagementSystem",
+    description:
+      "This is a complete shop management system created using PHP, MySQL, Bootstrap, CSS, DataTables, and Font Awesome."
+  },
+  {
+    id: 30,
+    title: "MCFM - Mohammed Chowdhury Facilities Management",
+    image: "/projects/30/mcfm.png",
+    category: "WordPress",
+    view: "http://mcfm.ae",
+    source: "not available",
+    description:
+      "This website was created using WordPress with the Astra theme, Elementor website builder, Elementor header and footer builder, WPForms, and Chaty plugin."
   },
 ];
 

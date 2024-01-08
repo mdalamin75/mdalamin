@@ -93,7 +93,7 @@ export default function Home() {
                 width={350}
                 alt="mdalamin75"
                 priority="true"
-                className="shadow-xl shadow-sky-600 rounded-full mb-10 md:ml-64"
+                className="shadow-xl shadow-sky-600 rounded-full mb-10 xl:ml-64"
               />
             </div>
           </div>
@@ -184,7 +184,7 @@ export default function Home() {
                   </div>
                 );
               })}
-              <div className="absolute bottom-0 inset-x-0 bg-bottom bg-no-repeat shadow_03 bottom-0 xl:bottom-8"></div>
+              <div className="absolute bottom-0 inset-x-0 bg-bottom bg-no-repeat shadow_03 bottom-0"></div>
           </div>
           <div className="w-full flex justify-center pb-20 mt-5">
             <Link
