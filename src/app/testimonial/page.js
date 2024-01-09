@@ -16,7 +16,7 @@ const titillium = Titillium_Web({
 const Testimonial = () => {
   return (
     <>
-      <section id="testimonial">
+      <section id="testimonial" className="relative bg_pattern">
         <div className="container mx-auto px-3 md:px-5">
           <div className="testimonial_head py-16">
             <Image
@@ -43,6 +43,7 @@ const Testimonial = () => {
             <TestimonialSlider />
           </div>
         </div>
+        <div class="absolute bottom-0 inset-x-0 bg-bottom bg-no-repeat shadow_03 bottom-0"></div>
       </section>
     </>
   );

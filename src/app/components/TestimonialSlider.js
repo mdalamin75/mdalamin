@@ -55,6 +55,7 @@ const TestimonialSlider = () => {
             <>
               <SwiperSlide key={id}>
                 <div
+                  key={id}
                   className="review_card w-64 sm:w-80 h-full sm:h-96 min-h-96 flex flex-col justify-center bg-dark2 m-5 ml-12 sm:ml-5 p-5 rounded-xl shadow-lg shadow-emerald-600 text-center">
                   <h3
                     className={`${josefin.className} font-bold text-lg text-emerald-600`}>

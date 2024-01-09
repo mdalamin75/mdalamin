@@ -27,19 +27,19 @@ const Footer = () => {
             </defs>
             <g className="parallax">
               <use
-                style={{ fill: "#e8d7fc", fillOpacity: 1 }}
+                style={{ fill: "#e5e5e5", fillOpacity: 1 }}
                 xlinkHref="#gentle-wave"
                 x="48"
                 y="0"></use>
               <use
-                style={{ fill: "#283549", fillOpacity: 1 }}
+                style={{ fill: "#161f33", fillOpacity: 1 }}
                 xlinkHref="#gentle-wave"
                 x="48"
                 y="0"></use>
             </g>
           </svg>
         </div>
-        <div className="main_footer bg-slate-700/[0.7] px-4 z-30">
+        <div className="main_footer bg-slate-700/[0.2] px-4 z-30">
           <div className="container mx-auto">
             <div className="grid">
               <div className="flex flex-wrap justify-center">
