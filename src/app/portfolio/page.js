@@ -9,6 +9,9 @@ import portfolio from "../../../public/portfolio/portfolio.svg";
 import shadow from "../../../public/shadow_01.png";
 import shadow2 from "../../../public/shadow_02.png";
 import ProjectSearch from "../components/ProjectSearch";
+export const metadata ={
+  title: "Portfolio",
+};
 const josefin = Josefin_Sans({
   subsets: ["latin"],
   weight: ["400", "700"],
@@ -17,7 +20,6 @@ const titillium = Titillium_Web({
   subsets: ["latin"],
   weight: ["400", "700"],
 });
-
 // All Category
 const allCategoryValue = [
   "all",
@@ -68,7 +70,7 @@ const Portfolio = () => {
           </div>
           <div className="portfolio_data">
             {/* Project Menu */}
-            <div className="flex justify-between items-center mx-5">
+            <div className="flex flex-wrap justify-center md:justify-between items-center gap-10 mx-5">
               <ProjectSearch
                 setSearchProject={setSearchProject}
               />

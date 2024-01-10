@@ -6,9 +6,19 @@ import CursorAnimation from "./components/CursorAnimation";
 import TawkMessenger from "./components/TawkMessenger";
 
 export const metadata = {
-  title: "MD.AL-AMIN",
-  description: "Portfolio",
+  title: {
+    default: "MD.AL-AMIN",
+    template: "%s - MD.AL-AMIN"
+  },
+  description: "MD.AL-AMIN portfolio website",
+  twitter: {
+    card: "summary_large_image"
+  },
+  verification: {
+    google: "google-site-verification=ukw3LwFvjHV9lmixrpwMYH6gmX3psZHdtCVUZGAHyP4"
+  }
 };
+
 
 export default function RootLayout({ children }) {
   return (

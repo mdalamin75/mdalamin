@@ -7,8 +7,6 @@ import Link from "next/link";
 import { FiDownload } from "react-icons/fi";
 import CountUpAnimation from "./components/CountUpAnimation";
 import mdalamin from "../../public/mdalamin.png";
-import shadow from "../../public/shadow_01.png";
-import shadow2 from "../../public/shadow_02.png";
 import AllProjects from "./components/AllProjects";
 import portfolio from "../../public/portfolio/portfolio.svg";
 import Particles from "./components/Particles";
@@ -90,10 +88,10 @@ export default function Home() {
               className="hero_image mx-auto order-first sm:order-first md:order-last">
               <Image
                 src={mdalamin}
-                width={350}
+                // width={350}
                 alt="mdalamin75"
                 priority="true"
-                className="shadow-xl shadow-sky-600 rounded-full mb-10 xl:ml-64"
+                className="w-80 shadow-xl shadow-sky-600 rounded-full mb-10 xl:ml-64"
               />
             </div>
           </div>
@@ -101,16 +99,6 @@ export default function Home() {
       </section>
       <CountUpAnimation />
       <section id="latest_projects" className="relative">
-        {/* <div class="absolute z-20 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
-          <div class="w-[108rem] flex-none flex justify-end">
-            <picture>
-                <Image src={shadow} alt="" class="w-[71.75rem] flex-none max-w-none dark:hidden" decoding="async"/>
-            </picture>
-            <picture>
-                <Image src={shadow2} alt="" class="w-[90rem] flex-none max-w-none hidden dark:block" decoding="async"/>
-            </picture>
-          </div>
-        </div> */}
         <div className="container mx-auto px-3 md:px-5">
           <div className="latest_head pt-16">
             <Image

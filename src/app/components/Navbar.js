@@ -44,12 +44,12 @@ const Navbar = () => {
   ];
   return (
     <>
-      <header className="bg-dark-bg duration-500 shadow shadow-sky-600 py-2 fixed top-0 left-0 w-full z-50">
+      <header className="bg-dark-bg duration-500 shadow shadow-sky-600 py-2 fixed top-0 left-0 w-screen z-50">
         <div className="container mx-auto px-3 md:px-5">
           <nav className="justify-between lg:items-center lg:flex">
             <div className="flex items-center justify-between py-3 lg:block">
               <Link href="/">
-                <Image src={mdalamin75} alt="logo" priority="true" className="w-44 h-16"/>
+                <Image src={mdalamin75} alt="logo" priority="true" className="w-36 h-14 lg:w-44 lg:h-16"/>
               </Link>
               <button className="lg:hidden" onClick={() => setOpen(!open)}>
                 {open ? (<AiOutlineClose className="text-3xl text-white cursor-pointer" />) : (<AiOutlineMenu className="text-3xl text-white cursor-pointer" />)}

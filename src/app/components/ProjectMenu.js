@@ -9,7 +9,7 @@ const ProjectMenu = ({ filterItem, categoryItems }) => {
   return (
     <>
       <div data-aos="fade-right" data-aos-duration="1000">
-        <select onChange={(e) => filterItem(e.target.value)} className="bg-gradient-to-r from-sky-700 to-indigo-800 uppercase p-3 rounded-lg sticky top-0 z-40">
+        <select onChange={(e) => filterItem(e.target.value)} className="w-64 bg-gradient-to-r from-sky-700 to-indigo-800 uppercase p-3 rounded-lg sticky top-0 z-40">
           {categoryItems.map((currentElement, index) => {
             return (
               <option

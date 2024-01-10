@@ -18,7 +18,9 @@ const josefin = Josefin_Sans({
   subsets: ["latin"],
   weight: ["400", "700"],
 });
-
+export const metadata ={
+  title: "About"
+}
 const About = () => {
   return (
     <>
@@ -166,7 +168,7 @@ const About = () => {
             </h1>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-x-10">
-            <div className={`${titillium.className} skills font-bold flex flex-wrap gap-x-16 gap-y-10 p-10`}>
+            <div className={`${titillium.className} skills font-bold flex flex-wrap justify-around items-center gap-x-10 lg:gap-x-16 gap-y-10 py-10 px-3 md:px-5 lg:px-10`}>
               <div
                 data-aos="fade-right"
                 data-aos-duration="1000"

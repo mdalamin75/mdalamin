@@ -13,6 +13,9 @@ const titillium = Titillium_Web({
   subsets: ["latin"],
   weight: ["400", "700"],
 });
+export const metadata ={
+  title: "Testimonial"
+}
 const Testimonial = () => {
   return (
     <>
