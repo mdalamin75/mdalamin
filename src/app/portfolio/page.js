@@ -9,9 +9,7 @@ import portfolio from "../../../public/portfolio/portfolio.svg";
 import shadow from "../../../public/shadow_01.png";
 import shadow2 from "../../../public/shadow_02.png";
 import ProjectSearch from "../components/ProjectSearch";
-export const metadata ={
-  title: "Portfolio",
-};
+
 const josefin = Josefin_Sans({
   subsets: ["latin"],
   weight: ["400", "700"],
