@@ -15,7 +15,7 @@ export const metadata = {
     card: "summary_large_image"
   },
   verification: {
-    google: "google-site-verification=ukw3LwFvjHV9lmixrpwMYH6gmX3psZHdtCVUZGAHyP4"
+    google: "ukw3LwFvjHV9lmixrpwMYH6gmX3psZHdtCVUZGAHyP4"
   }
 };
 
