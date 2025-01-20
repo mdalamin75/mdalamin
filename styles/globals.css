@@ -134,6 +134,7 @@ body {
 	position: relative;
 	max-width: 1200px;
 	margin: 0 auto;
+	flex-direction: column;
 }
 
 /* The actual timeline (the vertical ruler) */
@@ -358,7 +359,7 @@ body {
 .right::before, .left::before {
     display: none;
 }
-.rc-md-editor {
+/* .rc-md-editor {
     z-index: -1;
-}
+} */
 

@@ -1,31 +1,54 @@
+// pages/api/about.js
 import mongooseConnect from "../../lib/connectDB";
-import About from "../../models/About";
+import  About  from "../../models/About";
 
 export default async function handler(req, res) {
-    await mongooseConnect();
+  await mongooseConnect();
 
-    if (req.method === 'GET') {
-        if (req.query?.id) {
-            // Get specific record
-            const about = await About.findById(req.query.id);
-            res.json(about);
-        } else {
-            // Get all records (you might want to limit this to one)
-            const abouts = await About.find();
-            res.json(abouts);
+  if (req.method === 'GET') {
+    try {
+      const about = await About.find();
+      res.json(about);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  if (req.method === 'POST') {
+    try {
+      const aboutDoc = await About.create({
+        aboutimage: req.body.aboutimage,
+        description: req.body.description,
+        education: req.body.education,
+        skillimages: req.body.skillimages,
+        experiencetitle: req.body.experiencetitle,
+        experiencedescription: req.body.experiencedescription,
+        status: req.body.status
+      });
+      res.json(aboutDoc);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  if (req.method === 'PUT') {
+    const { id } = req.query;
+    try {
+      await About.updateOne(
+        { _id: id },
+        {
+          aboutimage: req.body.aboutimage,
+          description: req.body.description,
+          education: req.body.education,
+          skillimages: req.body.skillimages,
+          experiencetitle: req.body.experiencetitle,
+          experiencedescription: req.body.experiencedescription,
+          status: req.body.status
         }
+      );
+      res.json({ message: 'updated' });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
     }
-
-    if (req.method === 'POST') {
-        // Create new record
-        const aboutDoc = await About.create(req.body);
-        res.json(aboutDoc);
-    }
-
-    if (req.method === 'PUT') {
-        // Update existing record
-        const { _id, ...updateData } = req.body;
-        await About.findByIdAndUpdate(_id, updateData);
-        res.json({ message: 'updated' });
-    }
+  }
 }

@@ -7,6 +7,7 @@ import axios from "axios";
 import toast from 'react-hot-toast';
 import { ReactSortable } from "react-sortablejs";
 import { MdDeleteForever } from "react-icons/md";
+import { LoadingScreen } from "./LoadingScreen";
 
 export default function Home() {
   const router = useRouter();
@@ -127,7 +128,7 @@ export default function Home() {
   }
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingScreen/>
   }
 
   return (
