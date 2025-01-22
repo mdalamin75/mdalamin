@@ -353,13 +353,18 @@ body {
 
 
 /*========================================================================Dashboard CSS Start Here =============================================================*/
+/* .drawer-side {
+	z-index: 999999999999999999999999999999 !important; 
+  } */
 .drawer-side > *:not(.drawer-overlay) {
     transform: translateX(-10%);
+    padding-left: 2rem !important;
 }
 .right::before, .left::before {
     display: none;
 }
-/* .rc-md-editor {
-    z-index: -1;
-} */
+.rc-md-editor {
+	/* position: relative; */
+    z-index: 1 !important;
+}
 

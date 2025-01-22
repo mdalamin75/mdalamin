@@ -2,28 +2,27 @@
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
-export const useFetch = (endpoint) => {
-    const [data, setData] = useState(null);
+export default function useFetch(endpoint, initialData = null) {
+    const [data, setData] = useState(initialData);
     const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(!initialData);
 
     const fetchData = useCallback(async () => {
         try {
             setLoading(true);
             const response = await axios.get(`/api/${endpoint}`);
             setData(response.data);
-            setError(null);
         } catch (error) {
-            console.error(`Failed to fetch ${endpoint}:`, error);
             setError(error);
+            setData(initialData);
         } finally {
             setLoading(false);
         }
-    }, [endpoint]);
+    }, [endpoint, initialData]);
 
     useEffect(() => {
-        fetchData();
-    }, [fetchData]);
+        if (!initialData) fetchData();
+    }, [fetchData, initialData]);
 
     return { data, loading, error, refetch: fetchData };
-};
+}
