@@ -10,7 +10,7 @@ import { withAdminAuth } from "../../../layouts/withAdminAuth";
 import { useAuth } from "../../../hooks/useAuth";
 import AdminLayout from "../../../layouts/AdminLayout";
 
-export default function allPortfolio({ initialData }) {
+export default function draftTestimonial({ initialData }) {
     const { isLoading } = useAuth();
 
     // Pagination
@@ -20,32 +20,32 @@ export default function allPortfolio({ initialData }) {
     // Search
     const [searchQuery, setSearchQuery] = useState('');
 
-    // Fetch portfolio data
-    const { data: portfolioData, loading, refetch } = useFetch("portfolio", initialData);
+    // Fetch testimonial data
+    const { data: testimonialData, loading, refetch } = useFetch("testimonial", initialData);
 
     // Function to handle page change
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
     }
 
-    // Total number of portfolios
-    const allportfolio = Array.isArray(portfolioData) ? portfolioData.length : 0;
+    // Total number of testimonials
+    const drafttestimonial = Array.isArray(testimonialData) ? testimonialData.length : 0;
 
     // Filter all data based on search query
-    const filteredPortfolios = Array.isArray(portfolioData)
-        ? (searchQuery.trim() === '' ? portfolioData : portfolioData.filter(portfolio => portfolio.title.toLowerCase().includes(searchQuery.toLowerCase())))
+    const filteredTestimonials = Array.isArray(testimonialData)
+        ? (searchQuery.trim() === '' ? testimonialData : testimonialData.filter(testimonial => testimonial.clientname.toLowerCase().includes(searchQuery.toLowerCase())))
         : [];
 
-    // Calculate index of the first portfolio displayed on the current page
-    const indexOfFirstPortfolio = (currentPage - 1) * perPage;
-    const indexOfLastPortfolio = currentPage * perPage;
+    // Calculate index of the first testimonial displayed on the current page
+    const indexOfFirstTestimonial = (currentPage - 1) * perPage;
+    const indexOfLastTestimonial = currentPage * perPage;
 
-    // Get the current page's portfolios
-    const currentPortfolios = filteredPortfolios.slice(indexOfFirstPortfolio, indexOfLastPortfolio);
-    const publishedPortfolios = currentPortfolios.filter(ab => ab.status === 'publish'); // For draft portfolio
+    // Get the current page's Testimonials
+    const currentTestimonials = filteredTestimonials.slice(indexOfFirstTestimonial, indexOfLastTestimonial);
+    const publishedTestimonials = currentTestimonials.filter(ab => ab.status === 'draft'); // For draft Testimonial
     const pageNumbers = [];
 
-    for (let i = 1; i <= Math.ceil(allportfolio / perPage); i++) {
+    for (let i = 1; i <= Math.ceil(drafttestimonial / perPage); i++) {
         pageNumbers.push(i);
     }
 
@@ -53,19 +53,19 @@ export default function allPortfolio({ initialData }) {
         <AdminLayout>
             <div className="draftportfolio p-6">
                 <div className="titledashboard flex flex-sb">
-                <h1 className="text-2xl font-bold mb-4">Admin All Portfolio</h1>
+                <h1 className="text-2xl font-bold mb-4">Admin Draft Testimonial</h1>
                 </div>
                 <div className="blogstable">
                     <div className="flex items-center gap-2 mb-1">
-                        <h2 className="font-semibold text-lg">Search Projects</h2>
-                        <input value={searchQuery} onChange={ev => setSearchQuery(ev.target.value)} type="text" placeholder="Search by title..." className="file-input file-input-bordered ps-3" />
+                        <h2 className="font-semibold text-lg">Search Testimonial</h2>
+                        <input value={searchQuery} onChange={ev => setSearchQuery(ev.target.value)} type="text" placeholder="Search by name..." className="file-input file-input-bordered ps-3" />
                     </div>
                     <table className="table table-styling">
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Image</th>
-                                <th>Title</th>
+                                <th>Client Name</th>
+                                <th>Review</th>
                                 <th>Edit / Delete</th>
                             </tr>
                         </thead>
@@ -75,20 +75,20 @@ export default function allPortfolio({ initialData }) {
                                     <td colSpan={4}><LoadingScreen /></td>
                                 </tr>
                             ) : (
-                                publishedPortfolios.length === 0 ? (
+                                publishedTestimonials.length === 0 ? (
                                     <tr>
-                                        <td colSpan={4} className="text-center">No Portfolio Found</td>
+                                        <td colSpan={4} className="text-center">No Testimonial Found</td>
                                     </tr>
                                 ) : (
-                                    publishedPortfolios.map((blog, index) => (
-                                        <tr key={blog._id}>
-                                            <td>{indexOfFirstPortfolio + index + 1}</td>
-                                            <td><img src={blog.images[0]} width={180} alt="image" /></td>
-                                            <td><h3>{blog.title}</h3></td>
+                                    publishedTestimonials.map((testimonial, index) => (
+                                        <tr key={testimonial._id}>
+                                            <td>{indexOfFirstTestimonial + index + 1}</td>
+                                            <td><h2>{testimonial.clientname}</h2></td>
+                                            <td><h3>{testimonial.review}</h3></td>
                                             <td>
                                                 <div className="flex gap-2 flex-center">
-                                                    <Link href={'/admin/portfolio/edit/' + blog._id}> <button className="btn btn-accent"> <FaEdit /> </button> </Link>
-                                                    <Link href={'/admin/portfolio/delete/' + blog._id}> <button className="btn btn-warning"> <RiDeleteBin6Fill /> </button> </Link>
+                                                    <Link href={'/admin/testimonial/edit/' + testimonial._id}> <button className="btn btn-accent"> <FaEdit /> </button> </Link>
+                                                    <Link href={'/admin/testimonial/delete/' + testimonial._id}> <button className="btn btn-warning"> <RiDeleteBin6Fill /> </button> </Link>
                                                 </div>
                                             </td>
                                         </tr>
@@ -97,7 +97,7 @@ export default function allPortfolio({ initialData }) {
                             )}
                         </tbody>
                     </table>
-                    {publishedPortfolios.length > 0 && (
+                    {publishedTestimonials.length > 0 && (
                     <div className="flex justify-center mt-10">
                         <button 
                             onClick={() => paginate(currentPage - 1)} 
@@ -122,7 +122,7 @@ export default function allPortfolio({ initialData }) {
                             ))}
                         <button 
                             onClick={() => paginate(currentPage + 1)} 
-                            disabled={currentPage >= Math.ceil(filteredPortfolios.length / perPage)}
+                            disabled={currentPage >= Math.ceil(filteredTestimonials.length / perPage)}
                             className="btn btn-info btn-sm"
                         >
                             Next
@@ -137,7 +137,7 @@ export default function allPortfolio({ initialData }) {
 
 export const getServerSideProps = withAdminAuth(async (context) => {
     try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/portfolio`);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/testimonial`);
         return { props: { initialData: response.data } };
     } catch {
         return { props: { initialData: null } };

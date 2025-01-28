@@ -1,4 +1,4 @@
-import Project from "../../models/Portfolio";
+import Portfolio from "../../models/Portfolio";
 import  mongooseConnect  from "../../lib/connectDB";
 
 
@@ -12,7 +12,7 @@ export default async function handle(req, res) {
         // Use uppercase for consistency with HTTP methods
         if (method === 'POST') {
             const { title, slug, images, description, client, projectcategory, tags, livepreview, status } = req.body;
-            const blogDoc = await Project.create({
+            const blogDoc = await Portfolio.create({
                 title, slug, images, description, client, projectcategory, tags, livepreview, status
             });
             return res.status(201).json(blogDoc);
@@ -20,19 +20,19 @@ export default async function handle(req, res) {
 
         if (method === 'GET') {
             if (req.query?.id) {
-                const blog = await Project.findById(req.query.id);
+                const blog = await Portfolio.findById(req.query.id);
                 if (!blog) {
-                    return res.status(404).json({ error: 'Project not found' });
+                    return res.status(404).json({ error: 'Portfolio not found' });
                 }
                 return res.json(blog);
             }
-            const blogs = await Project.find();
+            const blogs = await Portfolio.find();
             return res.json(blogs.reverse());
         }
 
         if (method === 'PUT') {
             const { _id, title, slug, images, description, client, projectcategory, tags, livepreview, status } = req.body;
-            await Project.updateOne({ _id }, {
+            await Portfolio.updateOne({ _id }, {
                 title, slug, images, description, client, projectcategory, tags, livepreview, status
             });
             return res.json(true);
@@ -40,7 +40,7 @@ export default async function handle(req, res) {
 
         if (method === 'DELETE') {
             if (req.query?.id) {
-                await Project.deleteOne({ _id: req.query?.id });
+                await Portfolio.deleteOne({ _id: req.query?.id });
                 return res.json(true);
             }
             return res.status(400).json({ error: 'ID is required' });

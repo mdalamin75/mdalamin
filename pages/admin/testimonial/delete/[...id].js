@@ -1,4 +1,4 @@
-import Portfolio from "../../../../components/Admin/Portfolio";
+import Testimonial from "../../../../components/Admin/Testimonial";
 import axios from "axios";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -7,29 +7,29 @@ import { BsPostcard } from "react-icons/bs";
 import toast from "react-hot-toast";
 import AdminLayout from "../../../../layouts/AdminLayout";
 
-export default function EditPortfolio() {
+export default function EditTestimonial() {
 	const router = useRouter();
 
 	const { id } = router.query;
 
-	const [portfolioInfo, setPortfolioInfo] = useState(null);
+	const [testimonialInfo, setTestimonialInfo] = useState(null);
 
 	useEffect(() => {
 		if (!id) {
 			return;
 		} else {
-			axios.get("/api/portfolio?id=" + id).then((response) => {
-				setPortfolioInfo(response.data);
+			axios.get("/api/testimonial?id=" + id).then((response) => {
+				setTestimonialInfo(response.data);
 			});
 		}
 	}, [id]);
 
 	function goBack() {
-		router.push("/admin/portfolio");
+		router.push("/admin/testimonial");
 	}
 
 	async function deleteBlog() {
-		await axios.delete("/api/portfolio?id=" + id);
+		await axios.delete("/api/testimonial?id=" + id);
 		toast.success("delete successfully");
 		goBack();
 	}
@@ -37,13 +37,13 @@ export default function EditPortfolio() {
 	return (
 		<AdminLayout>
 			<Head>
-				<title>Delete Portfolio</title>
+				<title>Delete Testimonial</title>
 			</Head>
 			<div className="p-6">
 				<div className="titledashboard flex flex-sb">
 					<div>
 						<h2 className="font-semibold text-xl">
-							Delete <span>{portfolioInfo?.title}</span>
+							Delete <span>{testimonialInfo?.title}</span>
 						</h2>
 					</div>
 				</div>
