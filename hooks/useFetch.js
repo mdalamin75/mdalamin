@@ -1,4 +1,3 @@
-// hooks/useFetch.js
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
@@ -13,6 +12,7 @@ export default function useFetch(endpoint, initialData = null) {
             const response = await axios.get(`/api/${endpoint}`);
             setData(response.data);
         } catch (error) {
+            console.error('Error fetching data:', error);
             setError(error);
             setData(initialData);
         } finally {

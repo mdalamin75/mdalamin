@@ -10,6 +10,8 @@ import mdalamin from "../public/mdalamin.png";
 import AllProjects from "../components/AllProjects";
 import portfolio from "../public/portfolio/portfolio.svg";
 import Particles from "../components/Particles";
+import useFetch from "../hooks/useFetch";
+import ReactMarkdown from "react-markdown";
 
 const titillium = Titillium_Web({
 	subsets: ["latin"],
@@ -20,11 +22,24 @@ const josefin = Josefin_Sans({
 	weight: ["400", "700"],
 });
 
-export default function Home() {
+export default function Home({ initialData }) {
+	// Fetch home data
+	const { data: homeData, loading, refetch } = useFetch("home", initialData);
+
+	if (loading) {
+		return <div>Loading...</div>;
+	}
+
+	if (!homeData || !homeData.length || !homeData[0].title) {
+		return <div>No data available</div>;
+	}
+	const allHomeData = homeData[0]; // Access the first object in the array
+
 	return (
 		<>
-			<section className="pb-10 pt-28 relative">
+			<section className="pb-10 pt-32 relative">
 				<Particles />
+				<div className="absolute bottom-0 inset-x-0 bg-bottom bg-no-repeat shadow_03"></div>
 				<div className="container mx-auto px-3 md:px-5">
 					<div className="grid sm:grid-cols-1 md:grid-cols-2 justify-between items-center mb-20">
 						<div
@@ -36,49 +51,38 @@ export default function Home() {
 							</h5>
 							<h1 className={`${josefin.className} font-serif text-xl py-5`}>
 								My Name is
-								<span className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-indigo-500">
-									MD.AL-AMIN
+								<span className="text-2xl font-extrabold text-transparent bg-clip-text ml-2">
+									MD. AL AMIN
 								</span>
 							</h1>
 							<h2 className={`${josefin.className} font-serif text-3xl`}>
-								I am a{"  "}
-								<Typewriter
-									words={[
-										"Web Developer.",
-										"Web Designer.",
-										"Front-end Developer.",
-										"Wordpress Developer.",
-									]}
-									loop={false}
-									cursor={true}
-									cursorColor="white"
-									typeSpeed={50}
-								/>
+								<span className="mr-2">I am a</span>
+								{allHomeData.title && (
+									<Typewriter
+										words={allHomeData.title.map((title) => title + ".")}
+										loop={false}
+										cursor={true}
+										cursorColor="white"
+										typeSpeed={50}
+									/>
+								)}
 							</h2>
 							<div className={`${titillium.className} font-serif pt-5 pb-10`}>
-								<p className="pb-5 text-lg">
-									Welcome to my portfolio! I am a professional experienced web
-									developer specializing in Modern technologies.
-								</p>
-								<p className="pb-5 text-lg">
-									On this website, you will find a selection of my most recent
-									and notable projects, as well as information about my
-									background and skills. Please feel free to explore and contact
-									me if you have any questions or would like to work together.
-								</p>
-								<p className="text-lg">
-									Thank you for visiting. I hope you enjoy your stay!
+								<p className="pb-5 text-lg font-medium">
+									<ReactMarkdown className="markdown-description">
+										{allHomeData.description}
+									</ReactMarkdown>
 								</p>
 							</div>
 							<div className="flex items-center">
 								<Link href="/MD.AL-AMIN_CV.pdf" download target="_blank">
-									<button className="bg-gradient-to-r from-sky-500 to-indigo-500 px-2 py-2 rounded-md flex gap-x-3">
+									<button className="flex gap-3 px-6 py-3 rounded-lg border transition-all border-[--p] text-[--p] shadow-[0_0_10px_var(--p)] hover:shadow-[0_0_20px_var(--p)]">
 										<span>Download CV</span>
 										<FiDownload className="text-xl font-extrabold animate-bounce delay-200" />
 									</button>
 								</Link>
 								<Link href="/about">
-									<button className="ms-5 bg-gradient-to-r from-cyan-600 to-blue-600 px-2 py-2 rounded-md">
+									<button className="px-6 py-3 rounded-lg bg-white bg-opacity-20 backdrop-blur-md border border-[--bc] text-[--bc] hover:bg-opacity-30 transition-all ms-5">
 										About Me
 									</button>
 								</Link>
@@ -89,8 +93,9 @@ export default function Home() {
 							data-aos-duration="1000"
 							className="hero_image mx-auto order-first sm:order-first md:order-last">
 							<Image
-								src={mdalamin}
-								// width={350}
+								src={allHomeData.image[0]}
+								width={350}
+								height={350}
 								alt="mdalamin75"
 								priority="true"
 								className="w-80 shadow-xl shadow-sky-600 rounded-full mb-10 xl:ml-64"
@@ -138,7 +143,7 @@ export default function Home() {
 										key={id}
 										data-aos="zoom-in"
 										data-aos-duration="1000"
-										className="description flex flex-col md:flex-row gap-x-3 gap-y-3 items-center p-5 bg-dark2 m-3 rounded-xl shadow-md shadow-emerald-600 duration-500 hover:shadow-lg hover:shadow-orange-600">
+										className="description flex flex-col md:flex-row gap-x-3 gap-y-3 items-center p-5 m-3 rounded-xl shadow-md shadow-emerald-600 duration-500 hover:shadow-lg hover:shadow-orange-600 bg-white/10 border border-white/20 backdrop-blur-md">
 										<div className="max-h-56 overflow-hidden tra duration-500 hover:scale-105">
 											<Image
 												src={image}
@@ -160,13 +165,13 @@ export default function Home() {
 												<Link
 													href={view}
 													target="_blank"
-													className="bg-gradient-to-r from-sky-500 to-indigo-500 px-2 py-1 rounded-lg text-base capitalize font-medium delay-300 hover:from-sky-600 hover:to-purple-500">
+													className="px-6 py-3 rounded-lg border transition-all border-[--p] text-[--p] shadow-[0_0_10px_var(--p)] hover:shadow-[0_0_20px_var(--p)]">
 													View
 												</Link>
 												<Link
 													href={source}
 													target="_blank"
-													className="bg-gradient-to-r from-sky-500 to-indigo-500 px-2 py-1 ms-5 rounded-lg text-base capitalize font-medium delay-300 hover:from-indigo-600 hover:to-purple-500">
+													className=" px-6 py-3 rounded-lg bg-white bg-opacity-20 backdrop-blur-md border border-[--bc] text-[--bc] hover:bg-opacity-30 transition-all ms-5">
 													Source
 												</Link>
 											</div>
@@ -181,7 +186,7 @@ export default function Home() {
 							href="/portfolio"
 							data-aos="fade-right"
 							data-aos-duration="1000"
-							className="bg-emerald-700 py-3 px-10 rounded-lg font-bold duration-500 hover:bg-emerald-800">
+							className="btn px-6 py-3 rounded-lg bg-white bg-opacity-20 backdrop-blur-md border border-[--bc] text-[--bc] hover:bg-opacity-30 transition-all">
 							View More
 						</Link>
 					</div>
