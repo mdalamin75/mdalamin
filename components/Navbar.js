@@ -62,30 +62,30 @@ const Navbar = () => {
     setTheme(e.target.checked ? "night" : "light");
   };
   // Logo Animation Control
-  useEffect(() => {
-    function startAnimation() {
-      const spans = document.querySelectorAll('.text-rotate span');
-      spans.forEach(span => {
-        span.style.animationPlayState = 'running';
-      });
+  // useEffect(() => {
+  //   function startAnimation() {
+  //     const spans = document.querySelectorAll('.text-rotate span');
+  //     spans.forEach(span => {
+  //       span.style.animationPlayState = 'running';
+  //     });
 
-      // Stop the animation after 10 seconds
-      setTimeout(() => {
-        spans.forEach(span => {
-          span.style.animationPlayState = 'paused';
-        });
-      }, 3000);
-    }
+  //     // Stop the animation after 10 seconds
+  //     setTimeout(() => {
+  //       spans.forEach(span => {
+  //         span.style.animationPlayState = 'paused';
+  //       });
+  //     }, 4000);
+  //   }
 
-    // Run the animation every minute
-    const interval = setInterval(startAnimation, 5000);
+  //   // Run the animation every minute
+  //   const interval = setInterval(startAnimation, 5000);
 
-    // Initial run
-    startAnimation();
+  //   // Initial run
+  //   startAnimation();
 
-    // Clean up interval on component unmount
-    return () => clearInterval(interval);
-  }, []);
+  //   // Clean up interval on component unmount
+  //   return () => clearInterval(interval);
+  // }, []);
 
 
   return (

@@ -52,7 +52,7 @@ body {
 }
 
 .text-rotate span {
-	animation: text-rotate 3s ease infinite paused;
+	animation: text-rotate 3s ease infinite;
 	/* color: white; */
 }
 .text-rotate span:nth-child(2) {
@@ -275,7 +275,7 @@ body {
 /* The actual content */
 .content {
 	padding: 20px 30px;
-	background-color: #0b1121;
+	/* background-color: #0b1121; */
 	position: relative;
 	border-radius: 6px;
 }

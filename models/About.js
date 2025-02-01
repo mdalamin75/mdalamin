@@ -8,7 +8,10 @@ const AboutSchema = new Schema({
     name: { type: String },
     date: { type: Date }
   }],
-  skillimages: [{ type: String }],
+  skillimages: [{
+    src: { type: String },
+    label: { type: String }
+  }],
   experiencetitle: { type: String },
   experiencedescription: { type: String },
   status: { type: String, required: true }

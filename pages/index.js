@@ -30,9 +30,9 @@ export default function Home({ initialData }) {
 		return <div>Loading...</div>;
 	}
 
-	if (!homeData || !homeData.length || !homeData[0].title) {
-		return <div>No data available</div>;
-	}
+	// if (!homeData || !homeData.length || !homeData[0].title) {
+	// 	return <div>No data available</div>;
+	// }
 	const allHomeData = homeData[0]; // Access the first object in the array
 
 	// Handle CV Download

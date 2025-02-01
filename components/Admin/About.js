@@ -15,7 +15,7 @@ export default function About() {
     aboutimage: [],
     description: "",
     education: [{ name: "", date: "" }],
-    skillimages: [],
+    skillimages: [{ src: "", label: "" }],
     experiencetitle: "",
     experiencedescription: "",
     status: ""
@@ -37,7 +37,7 @@ export default function About() {
             aboutimage: data.aboutimage || [],
             description: data.description || "",
             education: data.education || [{ name: "", date: "" }],
-            skillimages: data.skillimages || [],
+            skillimages: data.skillimages || [{ src: "", label: "" }],
             experiencetitle: data.experiencetitle || "",
             experiencedescription: data.experiencedescription || "",
             status: data.status || ""
@@ -66,13 +66,17 @@ export default function About() {
     try {
       // Create data object with all fields correctly named
       const data = {
+        _id: formData._id,
         aboutimage: formData.aboutimage,
         description: formData.description,
         education: formData.education.map(edu => ({
           name: edu.name,
           date: edu.date ? new Date(edu.date) : null
         })),
-        skillimages: formData.skillimages,
+        skillimages: formData.skillimages.map(skill => ({
+          src: skill.src,
+          label: skill.label
+        })),
         experiencetitle: formData.experiencetitle,
         experiencedescription: formData.experiencedescription,
         status: formData.status
@@ -94,6 +98,7 @@ export default function About() {
       toast.error("Error: " + (error.response?.data?.message || error.message));
     }
   }
+  
 
   async function uploadAboutImages(ev) {
     const files = ev.target?.files;
@@ -128,14 +133,15 @@ export default function About() {
     if (files?.length > 0) {
       setIsUploadingSkills(true);
       try {
-        const uploadPromises = Array.from(files).map(file => {
+        const uploadPromises = Array.from(files).map(async file => {
           const data = new FormData();
           data.append("file", file);
-          return axios.post("/api/upload", data);
+          const response = await axios.post("/api/upload", data);
+          const label = prompt('Enter a label for this skill image:', ''); // Prompt for label input
+          return { src: response.data.links[0], label };
         });
 
-        const responses = await Promise.all(uploadPromises);
-        const newLinks = responses.flatMap(res => res.data.links);
+        const newLinks = await Promise.all(uploadPromises);
 
         setFormData(prev => ({
           ...prev,
@@ -228,7 +234,7 @@ export default function About() {
             animation={200}
             className="flex gap-1">
             {formData.aboutimage.map((link, index) => (
-              <div key={link} className="uploadedimg">
+              <div key={index} className="uploadedimg">
                 <img src={link} alt="about image" className="object-cover w-32" />
                 <div className="deleteimg">
                   <button type="button" onClick={() => handleDeleteAboutImage(index)}>
@@ -280,8 +286,8 @@ export default function About() {
               onChange={(e) => handleEducationChange(index, e)}
               className="input input-bordered my-2 ms-5"
             />
-            <button 
-              type="button" 
+            <button
+              type="button"
               className="btn btn-error ms-5 text-white"
               onClick={() => handleRemoveEducation(index)}
             >
@@ -289,8 +295,8 @@ export default function About() {
             </button>
           </div>
         ))}
-        <button 
-          type="button" 
+        <button
+          type="button"
           className="btn btn-success text-white mt-3"
           onClick={handleAddEducation}
         >
@@ -313,27 +319,28 @@ export default function About() {
             multiple
           />
         </div>
-      </div>
-      {!isUploadingSkills && formData.skillimages.length > 0 && (
-        <div className="flex">
-          <ReactSortable
-            list={formData.skillimages}
-            setList={updateSkillImagesOrder}
-            animation={200}
-            className="flex gap-1">
-            {formData.skillimages.map((link, index) => (
-              <div key={link} className="uploadedimg">
-                <img src={link} alt="skill image" className="object-cover w-32" />
-                <div className="deleteimg">
-                  <button type="button" onClick={() => handleDeleteSkillImage(index)}>
-                    <MdDeleteForever />
-                  </button>
+        {!isUploadingSkills && formData.skillimages.length > 0 && (
+          <div className="flex">
+            <ReactSortable
+              list={formData.skillimages}
+              setList={updateSkillImagesOrder}
+              animation={200}
+              className="flex gap-1">
+              {formData.skillimages.map((item, index) => (
+                <div key={index} className="uploadedimg">
+                  <img src={item.src} alt="skill image" className="object-cover w-32" />
+                  <div className="deleteimg">
+                    <button type="button" onClick={() => handleDeleteSkillImage(index)} className="btn btn-warning text-lg">
+                      <MdDeleteForever />
+                    </button>
+                  </div>
+                  <span className="">{item.label}</span>
                 </div>
-              </div>
-            ))}
-          </ReactSortable>
-        </div>
-      )}
+              ))}
+            </ReactSortable>
+          </div>
+        )}
+      </div>
 
       {/* Experience Title */}
       <div className="w-100 flex flex-col flex-left mb-2">
@@ -391,8 +398,8 @@ export default function About() {
       </div>
 
       <div className="w-100 mb-1">
-        <button 
-          type="submit" 
+        <button
+          type="submit"
           className="btn w-full btn-success font-bold text-white text-xl uppercase"
         >
           {formData._id ? 'Update' : 'Save'}
