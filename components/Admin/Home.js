@@ -15,6 +15,7 @@ export default function Home() {
     title: "",
     image: [],
     description: "",
+    cvUrl: "",
     status: ""
   });
   const [isUploading, setIsUploading] = useState(false);
@@ -33,7 +34,8 @@ export default function Home() {
             title: data.title.join(", "),
             image: data.image || [],
             description: data.description || "",
-            status: data.status || ""
+            cvUrl: data.cvUrl || "", // 🆕 Load existing CV URL
+            status: data.status || "",
           });
         }
       } catch (error) {
@@ -46,6 +48,34 @@ export default function Home() {
 
     fetchExistingData();
   }, []); // Empty dependency array means this only runs once on mount
+
+  // 🆕 Upload PDF Function
+  async function uploadPDF(ev) {
+    const files = ev.target?.files;
+    if (files?.length > 0) {
+      setIsUploading(true);
+  
+      try {
+        const data = new FormData();
+        data.append("file", files[0]);  // ✅ Only upload one file
+  
+        const res = await axios.post("/api/upload", data);
+        
+        setFormData(prev => ({
+          ...prev,
+          cvUrl: res.data.links[0]  // ✅ Save only the first link as a string
+        }));
+  
+        toast.success("PDF Uploaded Successfully");
+      } catch (error) {
+        toast.error("Upload failed: " + error.message);
+      } finally {
+        setIsUploading(false);
+      }
+    }
+  }
+  
+  
 
   async function handleSubmit(ev) {
     ev.preventDefault();
@@ -60,6 +90,7 @@ export default function Home() {
       const data = {
         ...formData,
         title: titleArray,
+        cvUrl: formData.cvUrl,
       };
 
       if (formData._id) {
@@ -128,7 +159,7 @@ export default function Home() {
   }
 
   if (loading) {
-    return <LoadingScreen/>
+    return <LoadingScreen />
   }
 
   return (
@@ -184,6 +215,30 @@ export default function Home() {
               </div>
             ))}
           </ReactSortable>
+        </div>
+      )}
+
+      {/* PDF Upload Field 🆕 */}
+      <div className="my-7">
+        <label htmlFor="cvUpload" className="font-semibold text-lg mr-5">
+          Upload CV (PDF)
+        </label>
+        <input
+          type="file"
+          id="cvUpload"
+          className="mt-1 file-input file-input-bordered"
+          accept="application/pdf"
+          onChange={uploadPDF}
+        />
+      </div>
+
+      {/* Show Uploaded PDF Link */}
+      {formData.cvUrl && (
+        <div className="my-3">
+          <p className="text-lg font-semibold">Uploaded CV:</p>
+          <a href={formData.cvUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500">
+            Download CV
+          </a>
         </div>
       )}
 

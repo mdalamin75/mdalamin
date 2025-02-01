@@ -15,28 +15,31 @@ export default async function handle(req, res) {
     await mongooseConnect();
 
     const form = new multiparty.Form();
-    const {fields, files} = await new Promise((resolve, reject) => {
+    const { fields, files } = await new Promise((resolve, reject) => {
         form.parse(req, (err, fields, files) => {
-            if(err) reject(err);
-            resolve({fields, files})
+            if (err) reject(err);
+            resolve({ fields, files })
         })
     });
 
     const links = [];
-    for (const file of files.file){
+    for (const file of files.file) {
+        const fileType = file.headers['content-type']; // Get file type
+
         const result = await cloudinary.v2.uploader.upload(file.path, {
             folder: 'md-admin',
             public_id: `file_${Date.now()}`,
-            resource_type: 'auto'
+            resource_type: fileType === 'application/pdf' ? 'raw' : 'auto' // Use 'raw' for PDFs
         });
 
         const link = result.secure_url;
         links.push(link);
     }
 
-    return res.json({links});
+
+    return res.json({ links });
 }
 
 export const config = {
-    api: { bodyParser: false}
+    api: { bodyParser: false }
 }

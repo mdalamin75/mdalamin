@@ -35,6 +35,34 @@ export default function Home({ initialData }) {
 	}
 	const allHomeData = homeData[0]; // Access the first object in the array
 
+	// Handle CV Download
+	// Client-side handler in your index.js
+	const handleDownload = async () => {
+		try {
+		  const pdfUrl = allHomeData.cvUrl;
+		  const apiUrl = `/api/download-cv?url=${encodeURIComponent(pdfUrl)}`;
+	  
+		  const response = await fetch(apiUrl);
+		  if (!response.ok) {
+			throw new Error(`Network response was not ok: ${response.statusText}`);
+		  }
+	  
+		  const blob = await response.blob();
+		  const url = window.URL.createObjectURL(blob);
+		  const link = document.createElement('a');
+		  link.href = url;
+		  link.download = 'MD_AL_AMIN_CV.pdf';
+	  
+		  document.body.appendChild(link);
+		  link.click();
+		  document.body.removeChild(link);
+	  
+		} catch (error) {
+		  console.error('Download error:', error);
+		  alert(`Failed to download CV: ${error.message}`);
+		}
+	  };
+	   
 	return (
 		<>
 			<section className="pb-10 pt-32 relative">
@@ -75,12 +103,14 @@ export default function Home({ initialData }) {
 								</p>
 							</div>
 							<div className="flex items-center">
-								<Link href="/MD.AL-AMIN_CV.pdf" download target="_blank">
-									<button className="flex gap-3 px-6 py-3 rounded-lg border transition-all border-[--p] text-[--p] shadow-[0_0_10px_var(--p)] hover:shadow-[0_0_20px_var(--p)]">
-										<span>Download CV</span>
-										<FiDownload className="text-xl font-extrabold animate-bounce delay-200" />
-									</button>
-								</Link>
+								<button
+									onClick={handleDownload}
+									className="flex gap-3 px-6 py-3 rounded-lg border transition-all border-[--p] text-[--p] shadow-[0_0_10px_var(--p)] hover:shadow-[0_0_20px_var(--p)]"
+								>
+									<span>Download CV</span>
+									<FiDownload className="text-xl font-extrabold animate-bounce delay-200" />
+								</button>
+
 								<Link href="/about">
 									<button className="px-6 py-3 rounded-lg bg-white bg-opacity-20 backdrop-blur-md border border-[--bc] text-[--bc] hover:bg-opacity-30 transition-all ms-5">
 										About Me
