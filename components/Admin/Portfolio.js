@@ -163,13 +163,12 @@ export default function Portfolio(
                 <label className="font-semibold text-lg" htmlFor="category">Select Category (for multi select press ctr + mouse left key) </label>
                 <select onChange={(e) => setProjectcategory(Array.from(e.target.selectedOptions, option => option.value))} value={projectcategory} name="category" id="category" multiple className="select select-bordered mt-3">
                     {/* <option value="">Select Category</option> */}
-                    <option value="Website Development" className="text-base my-1 p-2">Website Development</option>
-                    <option value="App Development" className="text-base my-1 p-2">App Development</option>
-                    <option value="Design System" className="text-base my-1 p-2">Design System</option>
-                    <option value="Website Migration" className="text-base my-1 p-2">Website Migration</option>
-                    <option value="E-commerce Site" className="text-base my-1 p-2">E-commerce Site</option>
-                    <option value="Performance Evaluation" className="text-base my-1 p-2">Performance Evaluation</option>
-                    <option value="WordPress" className="text-base my-1 p-2">WordPress</option>
+                    <option value="Frontend Development" className="text-base my-1 p-2">Frontend Development</option>
+                    <option value="Full Stack Development" className="text-base my-1 p-2">Full Stack Development</option>
+                    <option value="WordPress Website" className="text-base my-1 p-2">WordPress Website</option>
+                    <option value="E-commerce Website" className="text-base my-1 p-2">E-commerce Website</option>
+                    <option value="Shopify Store" className="text-base my-1 p-2">Shopify Store</option>
+                    <option value="Email" className="text-base my-1 p-2">Email</option>
                 </select>
             </div>
 
@@ -179,7 +178,7 @@ export default function Portfolio(
                     <label className="font-semibold text-lg" htmlFor="images">Images (first image will be show as thumbnail, you can drag)</label>
                     <input type="file" id="fileInput" className="file-input file-input-bordered mt-3" accept="image/*" multiple onChange={uploadImages} />
                 </div>
-                <div className="w-100 flex flex-left">
+                <div className="w-100 flex flex-left justify-center align-middle ms-5 ">
                     {isUploading && (<Spinner />)}
                 </div>
             </div>
@@ -192,7 +191,7 @@ export default function Portfolio(
                             <div key={link} className='uploadedimg'>
                                 <img src={link} alt="image" className='object-cover w-48' />
                                 <div className="deleteimg">
-                                    <button onClick={() => handleDeleteImage(index)}><MdDeleteForever /></button>
+                                    <button onClick={() => handleDeleteImage(index)} className="btn btn-error btn-sm text-white mt-2 text-lg" ><MdDeleteForever /></button>
                                 </div>
                             </div>
                         ))}
@@ -242,11 +241,21 @@ export default function Portfolio(
                 <select onChange={(e) => setTags(Array.from(e.target.selectedOptions, option => option.value))} value={tags} name="tags" id="tags" multiple className="select select-bordered w-full mt-3">
                     <option value="html" className="text-base my-1 p-2">HTML</option>
                     <option value="css" className="text-base my-1 p-2">CSS</option>
+                    <option value="bootstrap" className="text-base my-1 p-2">Bootstrap</option>
+                    <option value="tailwind" className="text-base my-1 p-2">Tailwind</option>
                     <option value="javascript" className="text-base my-1 p-2">JavaScript</option>
-                    <option value="nextjs" className="text-base my-1 p-2">Next Js</option>
                     <option value="reactjs" className="text-base my-1 p-2">React Js</option>
-                    <option value="database" className="text-base my-1 p-2">Database</option>
-                    <option value="WordPress" className="text-base my-1 p-2">WordPress</option>
+                    <option value="nextjs" className="text-base my-1 p-2">Next Js</option>
+                    <option value="php" className="text-base my-1 p-2">PHP</option>
+                    <option value="mysql" className="text-base my-1 p-2">MySql</option>
+                    <option value="mongodb" className="text-base my-1 p-2">Mongodb</option>
+                    <option value="frontend" className="text-base my-1 p-2">Frontend</option>
+                    <option value="full stack" className="text-base my-1 p-2">Full Stack</option>
+                    <option value="wordPress" className="text-base my-1 p-2">WordPress</option>
+                    <option value="ecommerce" className="text-base my-1 p-2">Ecommerce</option>
+                    <option value="shopify" className="text-base my-1 p-2">Shopify</option>
+                    <option value="email signature" className="text-base my-1 p-2">Email Signature</option>
+                    <option value="email template" className="text-base my-1 p-2">Email Template</option>
                 </select>
             </div>
 

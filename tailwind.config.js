@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const { fontFamily } = require('tailwindcss/defaultTheme');
 module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -7,18 +8,31 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        josefin: ['Josefin Sans', ...fontFamily.sans],
+        titillium: ['Titillium Web', ...fontFamily.sans],
+      },
       colors: {
         'dark-bg': '#0F172A',
         'dark2': '#0B1121',
         'white': '#F1F6F9',
         'color2': '#394867',
         'color3': '#D4ADFC',
-        'gradient': 'linear-gradient(to right, #4776E6 0%, #8E54E9  51%, #4776E6  100%)',
       },
       backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      },
+      keyframes: {
+        gradient: {
+          '50%': { backgroundPosition: '100% 50%' },
+        },
+        'border': {
+          to: { '--border-angle': '360deg' },
+        }
+      },
+      animation: {
+        'border': 'border 4s linear infinite',
+        'spin-slow': 'spin 3s linear infinite',
       },
     },
   },
@@ -28,4 +42,4 @@ module.exports = {
   daisyui: {
     themes: ["night", "light"]
   },
-}
+};

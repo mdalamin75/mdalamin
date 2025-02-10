@@ -1,78 +1,216 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Titillium_Web, Josefin_Sans } from "next/font/google";
+import useFetch from "../hooks/useFetch";
+
 const josefin = Josefin_Sans({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-});
-const titillium = Titillium_Web({
-  subsets: ["latin"],
-  weight: ["400", "700"],
+	subsets: ["latin"],
+	weight: ["400", "700"],
 });
 
-const ProjectItem = ({ items, searchProject }) => {
-  return (
-    <>
-      <AnimatePresence>
-        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 py-10">
-          {items
-            .slice(0)
-            .reverse()
-            .filter((element) => {
-              return searchProject.toLowerCase() === "" ? element : element.category.toLowerCase().includes(searchProject)
-            })
-            .map((element) => {
-              const { id, title, image, category, view, source, description } =
-                element;
-              return (
-                <motion.div
-                  key={id}
-                  layout
-                  animate={{ opacity: 1 }}
-                  initial={{ opacity: 0 }}
-                  exit={{ opacity: 0 }}
-                  className="description flex flex-col md:flex-row gap-x-3 gap-y-3 items-center p-5 bg-dark2 m-3 rounded-xl shadow-md shadow-emerald-600 duration-500 hover:shadow-lg hover:shadow-orange-600">
-                  <div className="max-h-56 overflow-hidden tra duration-500 hover:scale-105">
-                    <Image
-                      src={image}
-                      width={100}
-                      height={100}
-                      alt={category}
-                      className="w-96"
-                    />
-                  </div>
-                  <div className="details">
-                    <h2
-                      className={`${josefin.className} uppercase font-bold text-lg text-emerald-500 mb-3`}>
-                      {title}
-                    </h2>
-                    <p className={`${titillium.className} text-sm mb-3 text-white`}>
-                      {description}
-                    </p>
-                    <div className="flex items-center py-3">
-                      <Link
-                        href={view}
-                        target="_blank"
-                        className="bg-gradient-to-r from-sky-500 to-indigo-500 px-2 py-1 rounded-lg text-base capitalize font-medium delay-300 hover:from-sky-600 hover:to-purple-500 text-white">
-                        View
-                      </Link>
-                      <Link
-                        href={source}
-                        target="_blank"
-                        className="bg-gradient-to-r from-sky-500 to-indigo-500 px-2 py-1 ms-5 rounded-lg text-base capitalize font-medium delay-300 hover:from-indigo-600 hover:to-purple-500">
-                        Source
-                      </Link>
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
-        </motion.div>
-      </AnimatePresence>
-    </>
-  );
+const titillium = Titillium_Web({
+	subsets: ["latin"],
+	weight: ["400", "700"],
+});
+
+const ProjectItem = ({ items, searchProject, initialData }) => {
+	const {
+		data: portfolioData,
+		loading,
+		refetch,
+	} = useFetch("portfolio", initialData);
+
+	const publishedData = portfolioData
+		? portfolioData.filter((ab) => ab.status === "publish")
+		: [];
+
+	const [selectedCategory, setSelectedCategory] = useState("All");
+	const [filteredProjects, setFilteredProjects] = useState([]);
+
+	useEffect(() => {
+		// filter projects based on selectedCategory
+		if (selectedCategory === "All") {
+			setFilteredProjects(
+				portfolioData
+					? portfolioData.filter((pro) => pro.status === "publish")
+					: []
+			);
+		} else {
+			setFilteredProjects(
+				portfolioData
+					? portfolioData.filter(
+							(pro) =>
+								pro.status === "publish" &&
+								pro.projectcategory[0] === selectedCategory
+					  )
+					: []
+			);
+		}
+	}, [selectedCategory, portfolioData]);
+
+	if (loading) {
+		return <div>Loading...</div>;
+	}
+	return (
+		<>
+			<div className="project_buttons flex justify-center gap-x-5">
+				<button
+					className={`${
+						selectedCategory === "All"
+							? "bg-gradient-to-r from-purple-800 to-purple-500 text-white"
+							: "bg-slate-100 text-purple-600"
+					} font-bold font-josefin py-2 px-6 rounded-3xl`}
+					onClick={() => setSelectedCategory("All")}>
+					All
+				</button>
+				<button
+					className={`${
+						selectedCategory === "Frontend Development"
+							? "bg-gradient-to-r from-purple-800 to-purple-500 text-white"
+							: "bg-slate-100 text-purple-600"
+					} font-bold font-josefin py-2 px-6 rounded-3xl`}
+					onClick={() => setSelectedCategory("Frontend Development")}>
+					Frontend
+				</button>
+				<button
+					className={`${
+						selectedCategory === "Full Stack Development"
+							? "bg-gradient-to-r from-purple-800 to-purple-500 text-white"
+							: "bg-slate-100 text-purple-600"
+					} font-bold font-josefin py-2 px-6 rounded-3xl`}
+					onClick={() => setSelectedCategory("Full Stack Development")}>
+					Full Stack
+				</button>
+				<button
+					className={`${
+						selectedCategory === "WordPress Website"
+							? "bg-gradient-to-r from-purple-800 to-purple-500 text-white"
+							: "bg-slate-100 text-purple-600"
+					} font-bold font-josefin py-2 px-6 rounded-3xl`}
+					onClick={() => setSelectedCategory("WordPress Website")}>
+					WordPress
+				</button>
+				<button
+					className={`${
+						selectedCategory === "E-commerce Website"
+							? "bg-gradient-to-r from-purple-800 to-purple-500 text-white"
+							: "bg-slate-100 text-purple-600"
+					} font-bold font-josefin py-2 px-6 rounded-3xl`}
+					onClick={() => setSelectedCategory("E-commerce Website")}>
+					E-commerce
+				</button>
+				<button
+					className={`${
+						selectedCategory === "Shopify Store"
+							? "bg-gradient-to-r from-purple-800 to-purple-500 text-white"
+							: "bg-slate-100 text-purple-600"
+					} font-bold font-josefin py-2 px-6 rounded-3xl`}
+					onClick={() => setSelectedCategory("Shopify Store")}>
+					Shopify
+				</button>
+				<button
+					className={`${
+						selectedCategory === "Email"
+							? "bg-gradient-to-r from-purple-800 to-purple-500 text-white"
+							: "bg-slate-100 text-purple-600"
+					} font-bold font-josefin py-2 px-6 rounded-3xl`}
+					onClick={() => setSelectedCategory("Email")}>
+					Email
+				</button>
+			</div>
+			<AnimatePresence>
+				<motion.div
+					layout
+					className="grid grid-cols-1 md:grid-cols-2 gap-10 py-10">
+					{loading ? (
+						<div className="flex justify-center">
+							<Spinner />
+						</div>
+					) : filteredProjects.length === 0 ? (
+						<h1 className="flex justify-center">No Project Found</h1>
+					) : (
+						filteredProjects.slice(0).map((element) => {
+              const { id, title, slug, images } = element;
+              return(
+							<Link
+								href={`/portfolio/${slug}`}
+								key={element._ID}
+								className="procard" data-aos="flip-left">
+								<div
+									key={id}
+									className="card bg-base-100 image-full w-full h-96 overflow-hidden shadow-xl card_hover hover:shadow-lg hover:shadow-purple-500 duration-500">
+									<figure>
+										<img
+											src={images[0]}
+											alt={title}
+											className="w-full h-96 object-top overflow-hidden"
+										/>
+									</figure>
+									<div className="card-body justify-end">
+										<h2 className="card-title font-bold font-josefin text-stone-100">
+											{title}
+										</h2>
+										<div className="card-actions">
+											<Link
+												href={`/portfolio/${slug}`}
+												className="button w-36 button--nina bg-gradient-to-r from-purple-950 to-purple-600  relative block focus:outline-none border-2 border-solid rounded-lg text-sm text-center font-josefin font-semibold uppercase tracking-widest overflow-hidden me-3 px-5"
+												data-text="View">
+												<span className="align-middle">V</span>
+												<span className="align-middle">i</span>
+												<span className="align-middle">e</span>
+												<span className="align-middle">w</span>
+											</Link>
+										</div>
+									</div>
+								</div>
+							</Link>
+						)})
+					)}
+					{/* {portfolioData
+						.slice(0)
+						.reverse()
+						.filter((element) => {
+							return searchProject.toLowerCase() === ""
+								? element
+								: element.category.toLowerCase().includes(searchProject);
+						})
+						.map((element) => {
+							const { id, title, slug, images } = element;
+							return (
+								<div
+									key={id}
+									className="card bg-base-100 image-full w-full h-96 overflow-hidden shadow-xl card_hover hover:shadow-lg hover:shadow-purple-500 duration-500">
+									<figure>
+										<img
+											src={images[0]}
+											alt={title}
+											className="w-full h-96 object-top overflow-hidden"
+										/>
+									</figure>
+									<div className="card-body justify-end">
+										<h2 className="card-title font-bold font-josefin text-stone-100">
+											{title}
+										</h2>
+										<div className="card-actions">
+											<Link
+												href={`/portfolio/${slug}`}
+												className="button w-36 button--nina bg-gradient-to-r from-purple-950 to-purple-600  relative block focus:outline-none border-2 border-solid rounded-lg text-sm text-center font-josefin font-semibold uppercase tracking-widest overflow-hidden me-3 px-5"
+												data-text="View">
+												<span className="align-middle">V</span>
+												<span className="align-middle">i</span>
+												<span className="align-middle">e</span>
+												<span className="align-middle">w</span>
+											</Link>
+										</div>
+									</div>
+								</div>
+							);
+						})} */}
+				</motion.div>
+			</AnimatePresence>
+		</>
+	);
 };
 
 export default ProjectItem;
