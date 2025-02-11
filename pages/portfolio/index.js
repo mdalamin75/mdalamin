@@ -1,54 +1,15 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-// import AllProjects from "../../components/AllProjects";
 import ProjectItem from "../../components/ProjectItem";
-// import ProjectMenu from "../../components/ProjectMenu";
-// import { Titillium_Web, Josefin_Sans } from "next/font/google";
 import portfolio from "../../public/portfolio/portfolio.svg";
 import shadow from "../../public/shadow_01.png";
 import shadow2 from "../../public/shadow_02.png";
-import ProjectSearch from "../../components/ProjectSearch";
-// import useFetch from "../../hooks/useFetch";
-
-// const josefin = Josefin_Sans({
-//   subsets: ["latin"],
-//   weight: ["400", "700"],
-// });
-// const titillium = Titillium_Web({
-//   subsets: ["latin"],
-//   weight: ["400", "700"],
-// });
-// All Category
-// const allCategoryValue = [
-//   "all",
-//   ...new Set(AllProjects.map((curentElement) => curentElement.category)),
-// ];
 
 const Portfolio = () => {
-  // const [items, setItems] = useState(AllProjects);
-  // const [categoryItems, setCategoryItems] = useState(allCategoryValue);
-  // const [searchProject, setSearchProject] = useState('');
-
-  //   const { data: portfolioData, loading, refetch } = useFetch("portfolio", initialData);
-  
-  //   if (loading) {
-  //     return <div>Loading...</div>;
-  //   }
-
-  // const filterItem = (categoryItem) => {
-  //   if (categoryItem === "all") {
-  //     setItems(AllProjects);
-  //     return;
-  //   }
-  //   const updatedItems = AllProjects.filter((curentElement) => {
-  //     return curentElement.category === categoryItem;
-  //   });
-  //   setItems(updatedItems);
-  // };
   return (
     <>
-      <section id="portfolio" className="relative bg_pattern pt-20">
+      <section id="portfolio" className="relative bg_pattern py-20">
         <div className="absolute z-20 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
           <div className="w-[108rem] flex-none flex justify-end">
             <picture>
@@ -74,18 +35,8 @@ const Portfolio = () => {
             </p>
           </div>
           <div className="portfolio_data">
-            {/* Project Menu */}
-            <div className="flex flex-wrap justify-center md:justify-between items-center gap-10 mx-5">
-              {/* <ProjectSearch
-                setSearchProject={setSearchProject}
-              />
-              <ProjectMenu
-                filterItem={filterItem}
-                categoryItems={categoryItems}
-              /> */}
-            </div>
             {/* Project Item */}
-            <ProjectItem />
+            <ProjectItem  showFilter={true}/>
           </div>
         </div>
       </section>

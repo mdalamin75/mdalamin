@@ -5,22 +5,13 @@ import { Typewriter } from "react-simple-typewriter";
 import { Titillium_Web, Josefin_Sans } from "next/font/google";
 import Link from "next/link";
 import { FiDownload } from "react-icons/fi";
-import CountUpAnimation from "../components/CountUpAnimation";
-import mdalamin from "../public/mdalamin.png";
-import AllProjects from "../components/AllProjects";
 import portfolio from "../public/portfolio/portfolio.svg";
 import Particles from "../components/Particles";
 import useFetch from "../hooks/useFetch";
 import ReactMarkdown from "react-markdown";
-
-const titillium = Titillium_Web({
-	subsets: ["latin"],
-	weight: ["400", "700"],
-});
-const josefin = Josefin_Sans({
-	subsets: ["latin"],
-	weight: ["400", "700"],
-});
+import review from "../public/testimonial/review.svg";
+import TestimonialSlider from "../components/TestimonialSlider";
+import ProjectItem from "../components/ProjectItem";
 
 export default function Home({ initialData }) {
 	// Fetch home data
@@ -29,61 +20,57 @@ export default function Home({ initialData }) {
 	if (loading) {
 		return <div>Loading...</div>;
 	}
-
-	// if (!homeData || !homeData.length || !homeData[0].title) {
-	// 	return <div>No data available</div>;
-	// }
 	const allHomeData = homeData[0]; // Access the first object in the array
 
 	// Handle CV Download
 	// Client-side handler in your index.js
 	const handleDownload = async () => {
 		try {
-		  const pdfUrl = allHomeData.cvUrl;
-		  const apiUrl = `/api/download-cv?url=${encodeURIComponent(pdfUrl)}`;
-	  
-		  const response = await fetch(apiUrl);
-		  if (!response.ok) {
-			throw new Error(`Network response was not ok: ${response.statusText}`);
-		  }
-	  
-		  const blob = await response.blob();
-		  const url = window.URL.createObjectURL(blob);
-		  const link = document.createElement('a');
-		  link.href = url;
-		  link.download = 'MD_AL_AMIN_CV.pdf';
-	  
-		  document.body.appendChild(link);
-		  link.click();
-		  document.body.removeChild(link);
-	  
+			const pdfUrl = allHomeData.cvUrl;
+			const apiUrl = `/api/download-cv?url=${encodeURIComponent(pdfUrl)}`;
+
+			const response = await fetch(apiUrl);
+			if (!response.ok) {
+				throw new Error(`Network response was not ok: ${response.statusText}`);
+			}
+
+			const blob = await response.blob();
+			const url = window.URL.createObjectURL(blob);
+			const link = document.createElement('a');
+			link.href = url;
+			link.download = 'MD_AL_AMIN_CV.pdf';
+
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+
 		} catch (error) {
-		  console.error('Download error:', error);
-		  alert(`Failed to download CV: ${error.message}`);
+			console.error('Download error:', error);
+			alert(`Failed to download CV: ${error.message}`);
 		}
-	  };
-	   
+	};
+
 	return (
 		<>
-			<section className="pb-10 pt-32 relative">
+			<section id="hero" className="relative">
 				<Particles />
 				<div className="absolute bottom-0 inset-x-0 bg-bottom bg-no-repeat shadow_03"></div>
 				<div className="container mx-auto px-3 md:px-5">
-					<div className="grid sm:grid-cols-1 md:grid-cols-2 justify-between items-center mb-20">
+					<div className="grid sm:grid-cols-1 md:grid-cols-2 justify-between items-center h-screen">
 						<div
 							data-aos="fade-right"
 							data-aos-duration="1000"
 							className="hero_text sm:order-last md:order-first">
-							<h5 className="bg-white text-dark-bg text-lg font-bold w-fit px-2">
+							<h5 className="bg-slate-500 dark:bg-opacity-25 text-lg font-bold w-fit px-4 rounded-sm">
 								Hello!
 							</h5>
-							<h1 className={`${josefin.className} font-serif text-xl py-5`}>
+							<h1 className="font-josefin text-xl py-5">
 								My Name is
-								<span className="text-2xl font-extrabold text-transparent bg-clip-text ml-2">
+								<span className="font-josefin text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-500 ml-2">
 									MD. AL AMIN
 								</span>
 							</h1>
-							<h2 className={`${josefin.className} font-serif text-3xl`}>
+							<h2 className="font-josefin text-3xl">
 								<span className="mr-2">I am a</span>
 								{allHomeData.title && (
 									<Typewriter
@@ -95,7 +82,7 @@ export default function Home({ initialData }) {
 									/>
 								)}
 							</h2>
-							<div className={`${titillium.className} font-serif pt-5 pb-10`}>
+							<div className="font-titillium pt-5 pb-10">
 								<p className="pb-5 text-lg font-medium">
 									<ReactMarkdown className="markdown-description">
 										{allHomeData.description}
@@ -105,15 +92,22 @@ export default function Home({ initialData }) {
 							<div className="flex items-center">
 								<button
 									onClick={handleDownload}
-									className="flex gap-3 px-6 py-3 rounded-lg border transition-all border-[--p] text-[--p] shadow-[0_0_10px_var(--p)] hover:shadow-[0_0_20px_var(--p)]"
+									className="flex gap-3 px-5 py-3 button button--aylen bg-gradient-to-r from-blue-950 to-blue-600 hover:from-blue-600  text-white relative  focus:outline-none border-2 border-solid rounded-lg text-sm text-center font-semibold uppercase tracking-widest overflow-hidden"
+									data-text="Download CV"
 								>
-									<span>Download CV</span>
-									<FiDownload className="text-xl font-extrabold animate-bounce delay-200" />
+									<span class="align-middle">Download CV</span>
+									<FiDownload className="text-xl font-extrabold animate-bounce delay-200 align-middle" />
 								</button>
-
 								<Link href="/about">
-									<button className="px-6 py-3 rounded-lg bg-white bg-opacity-20 backdrop-blur-md border border-[--bc] text-[--bc] hover:bg-opacity-30 transition-all ms-5">
-										About Me
+									<button className="button button--nina bg-gradient-to-r from-blue-950 to-blue-600 hover:from-blue-600 hover:to-blue-950  relative block focus:outline-none border-2 border-solid rounded-lg text-sm text-center font-josefin font-semibold uppercase tracking-widest overflow-hidden ms-5 px-5 text-white" data-text="About Me">
+										{/* About Me */}
+										<span className="align-middle">A</span>
+										<span className="align-middle">b</span>
+										<span className="align-middle">o</span>
+										<span className="align-middle">u</span>
+										<span className="align-middle">t</span>
+										<span className="align-middle ms-1">M</span>
+										<span className="align-middle">e</span>
 									</button>
 								</Link>
 							</div>
@@ -134,10 +128,9 @@ export default function Home({ initialData }) {
 					</div>
 				</div>
 			</section>
-			<CountUpAnimation />
-			<section id="latest_projects" className="relative">
+			<section id="latest_projects" className="relative py-20">
 				<div className="container mx-auto px-3 md:px-5">
-					<div className="latest_head pt-16">
+					<div className="latest_head">
 						<Image
 							src={portfolio}
 							width={150}
@@ -148,79 +141,60 @@ export default function Home({ initialData }) {
 							data-aos-duration="1000"
 						/>
 						<h1
-							className={`${josefin.className} uppercase text-center text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-orange-600 drop-shadow-2xl`}>
+							className="font-josefin uppercase text-center text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-purple-300 drop-shadow-2xl">
 							Latest Projects
 						</h1>
-						<p className={`${titillium.className} text-center py-3`}>
+						<p className="font-titillium text-center text-lg py-3">
 							Here you will find my all New Projects.
 						</p>
 					</div>
-					<div className="grid grid-cols-1 md:grid-cols-2 py-10">
-						{AllProjects.slice(16)
-							.reverse()
-							.map((element) => {
-								const {
-									id,
-									title,
-									image,
-									category,
-									view,
-									source,
-									description,
-								} = element;
-								return (
-									<div
-										key={id}
-										data-aos="zoom-in"
-										data-aos-duration="1000"
-										className="description flex flex-col md:flex-row gap-x-3 gap-y-3 items-center p-5 m-3 rounded-xl shadow-md shadow-emerald-600 duration-500 hover:shadow-lg hover:shadow-orange-600 bg-white/10 border border-white/20 backdrop-blur-md">
-										<div className="max-h-56 overflow-hidden tra duration-500 hover:scale-105">
-											<Image
-												src={image}
-												width={100}
-												height={100}
-												alt={category}
-												className="w-96"
-											/>
-										</div>
-										<div className="details">
-											<h2
-												className={`${josefin.className} uppercase font-bold text-lg text-emerald-500 mb-3`}>
-												{title}
-											</h2>
-											<p className={`${titillium.className} text-sm mb-3 `}>
-												{description}
-											</p>
-											<div className="flex items-center py-3">
-												<Link
-													href={view}
-													target="_blank"
-													className="px-6 py-3 rounded-lg border transition-all border-[--p] text-[--p] shadow-[0_0_10px_var(--p)] hover:shadow-[0_0_20px_var(--p)]">
-													View
-												</Link>
-												<Link
-													href={source}
-													target="_blank"
-													className=" px-6 py-3 rounded-lg bg-white bg-opacity-20 backdrop-blur-md border border-[--bc] text-[--bc] hover:bg-opacity-30 transition-all ms-5">
-													Source
-												</Link>
-											</div>
-										</div>
-									</div>
-								);
-							})}
+					<div className="">
+						<ProjectItem showFilter={false} limit={6} />
 						<div className="absolute bottom-0 inset-x-0 bg-bottom bg-no-repeat shadow_03"></div>
 					</div>
-					<div className="w-full flex justify-center pb-20 mt-5">
+					<div className="w-full flex justify-center">
 						<Link
 							href="/portfolio"
 							data-aos="fade-right"
 							data-aos-duration="1000"
-							className="btn px-6 py-3 rounded-lg bg-white bg-opacity-20 backdrop-blur-md border border-[--bc] text-[--bc] hover:bg-opacity-30 transition-all">
-							View More
+							className="button button--nina bg-gradient-to-r from-blue-950 to-blue-600 hover:from-blue-600 hover:to-blue-950  relative block focus:outline-none border-2 border-solid rounded-lg text-sm text-center font-josefin font-semibold uppercase tracking-widest overflow-hidden ms-5 px-10 text-white" data-text="View More">
+							{/* View More */}
+							<span className="align-middle">V</span>
+							<span className="align-middle">i</span>
+							<span className="align-middle">e</span>
+							<span className="align-middle">w</span>
+							<span className="align-middle ms-1">M</span>
+							<span className="align-middle">o</span>
+							<span className="align-middle">r</span>
+							<span className="align-middle">e</span>
 						</Link>
 					</div>
 				</div>
+			</section>
+			<section id="testimonial" className="relative py-20">
+				<div className="container mx-auto px-3 md:px-5">
+					<div className="testimonial_head">
+						<Image
+							src={review}
+							width={150}
+							priority="true"
+							alt="testimonial"
+							className="mx-auto z-10"
+						/>
+						<h1
+							className="font-josefin uppercase text-center text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-purple-700 to-slate-100 drop-shadow-2xl">
+							Testimonial
+						</h1>
+						<p className="font-titillium text-lg text-center py-3">
+							Here you will find all my Reviews. <br /> There is my web
+							development journey review from my valuable clients.
+						</p>
+					</div>
+					<div className="testimonial_slider py-10">
+						<TestimonialSlider />
+					</div>
+				</div>
+				<div className="absolute bottom-0 inset-x-0 bg-bottom bg-no-repeat shadow_03"></div>
 			</section>
 		</>
 	);
