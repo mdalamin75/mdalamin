@@ -9,14 +9,14 @@ const SocialList = () => {
       <div
         className="flex flex-wrap gap-x-5 gap-y-3 justify-center my-5">
         <Link
-          href="https://www.facebook.com/webmdalamin"
+          href="https://www.facebook.com/mdalaminn75"
           target="_blank"
           className="animate-pulse duration-500 hover:scale-125 hover:animate-none">
           <Image
             src="/social_icon/facebook.png"
             width={30}
             height={30}
-            alt="webmdalamin mdalamin md_alamin75"
+            alt="mdalaminn75 mdalamin md_alamin75"
           />
         </Link>
         <Link
