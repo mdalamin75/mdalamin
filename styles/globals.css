@@ -7,35 +7,92 @@
 	@apply visible z-50;
 }
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&family=Titillium+Web:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&family=Titillium+Web:wght@400;700&display=swap");
 
 :root {
-	/* --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255; */
 	--swiper-theme-color: #f1f6f9 !important;
 }
-
-@media (prefers-color-scheme: dark) {
-	/* :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  } */
-}
 .card.image-full:before {
-    opacity: 0.55;
+	opacity: 0.55;
 }
-.card_hover:hover figure img{
+.card_hover:hover figure img {
 	transition: all ease-in-out 0.5s;
 	transform: scale(102%);
 }
 /*======================== Animation Start =======================*/
+/* styles/preloader.css */
+.preloader {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	background: transparent;
+	z-index: 9999;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+}
+
+.preloader svg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+}
+
+.preloader svg path {
+	fill: #0b1121;
+}
+
+.preloader-heading {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 2;
+	color: #fff;
+	width: 100%;
+	text-align: center;
+}
+
+.load-text {
+	font-size: 2.5rem;
+	font-weight: 700;
+	text-align: center;
+	line-height: 1;
+}
+
+.load-text span {
+	display: inline-block;
+	animation: fadeInUp 0.5s ease forwards;
+	opacity: 0;
+	transform: translateY(20px);
+	margin: 0 1px;
+}
+
+@keyframes fadeInUp {
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Add letter spacing for better readability */
+.load-text span {
+	animation: fadeInUp 0.5s ease forwards;
+	opacity: 0;
+	transform: translateY(20px);
+	letter-spacing: 2px;
+}
 /* Border Animation */
 @property --border-angle {
-    inherits: false;
-    initial-value: 0deg;
-    syntax: '<angle>';
+	inherits: false;
+	initial-value: 0deg;
+	syntax: "<angle>";
 }
 /* Button Animation */
 /* Nina */
@@ -118,8 +175,8 @@
 	transition-delay: 0.45s;
 }
 .button--nina:hover > span:nth-child(11) {
-	-webkit-transition-delay: 0.50s;
-	transition-delay: 0.50s;
+	-webkit-transition-delay: 0.5s;
+	transition-delay: 0.5s;
 }
 /* Button Aylen */
 .button.button--aylen {
@@ -128,7 +185,7 @@
 }
 .button--aylen::before,
 .button--aylen::after {
-	content: '';
+	content: "";
 	position: absolute;
 	height: 100%;
 	width: 100%;

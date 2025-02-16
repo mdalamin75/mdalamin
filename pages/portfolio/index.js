@@ -1,14 +1,27 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ProjectItem from "../../components/ProjectItem";
 import portfolio from "../../public/portfolio/portfolio.svg";
 import shadow from "../../public/shadow_01.png";
 import shadow2 from "../../public/shadow_02.png";
+import Preloader from "../../components/Preloader";
 
 const Portfolio = () => {
+  const [pageLoaded, setPageLoaded] = useState(false);
+
+  useEffect(() => {
+    // Set page as loaded once mounted
+    setPageLoaded(true);
+
+    // Cleanup function
+    return () => {
+      setPageLoaded(false);
+    };
+  }, []);
   return (
     <>
+      <Preloader isDataLoading={!pageLoaded} />
       <section id="portfolio" className="relative bg_pattern py-20">
         <div className="absolute z-20 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
           <div className="w-[108rem] flex-none flex justify-end">
@@ -36,7 +49,7 @@ const Portfolio = () => {
           </div>
           <div className="portfolio_data">
             {/* Project Item */}
-            <ProjectItem  showFilter={true}/>
+            <ProjectItem showFilter={true} />
           </div>
         </div>
       </section>
