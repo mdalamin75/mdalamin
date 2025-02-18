@@ -190,7 +190,7 @@ export default function Portfolio(
                     <ReactSortable list={Array.isArray(images) ? images : []} setList={updateImagesOrder} animation={200} className='flex gap-1' >
                         {images?.map((link, index) => (
                             <div key={link} className='uploadedimg'>
-                                <Image src={link} alt="image" className='object-cover w-48' />
+                                <Image src={link} width={100} height={100} alt="image" className='object-cover w-48' />
                                 <div className="deleteimg">
                                     <button onClick={() => handleDeleteImage(index)} className="btn btn-error btn-sm text-white mt-2 text-lg" ><MdDeleteForever /></button>
                                 </div>

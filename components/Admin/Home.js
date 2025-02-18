@@ -207,7 +207,7 @@ export default function Home() {
             className="flex gap-1">
             {formData.image.map((link, index) => (
               <div key={link} className="uploadedimg">
-                <Image src={link} alt="image" className="object-cover w-32" />
+                <Image src={link} alt="image"  width={100} height={100} className="object-cover w-32" />
                 <div className="deleteimg">
                   <button type="button" onClick={() => handleDeleteImage(index)}>
                     <MdDeleteForever />

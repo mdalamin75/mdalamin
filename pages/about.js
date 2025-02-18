@@ -1,6 +1,5 @@
 import Image from "next/image";
 import React from "react";
-import { Titillium_Web, Josefin_Sans } from "next/font/google";
 import Link from "next/link";
 import { FcBriefcase } from "react-icons/fc";
 import { SiFreelancer } from "react-icons/si";
@@ -12,14 +11,6 @@ import shadow2 from "../public/shadow_02.png";
 import useFetch from "../hooks/useFetch";
 import ReactMarkdown from "react-markdown";
 import Preloader from "../components/Preloader";
-const titillium = Titillium_Web({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-});
-const josefin = Josefin_Sans({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-});
 export const metadata = {
   title: "About"
 }
@@ -42,7 +33,7 @@ const About = ({ initialData }) => {
           <section id="about" className="py-10 pt-32 snap-start bg_pattern2">
             <div className="container mx-auto px-3 md:px-5">
               <div className="about_head">
-                <Image src={Programming} width={150} alt="programming" priority="true" className="mx-auto z-10" />
+                <Image src={Programming} width={150} height={150} alt="programming" priority="true" className="mx-auto z-10" />
                 <h1
                   className="font-josefin uppercase text-center text-3xl md:text-5xl font-extrabold pb-10 -mt-5 z-30 text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-green-600">
                   About Me
@@ -79,10 +70,10 @@ const About = ({ initialData }) => {
             <div className="absolute z-20 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
               <div className="w-[108rem] flex-none flex justify-end">
                 <picture>
-                  <Image src={shadow} alt="" className="w-[71.75rem] flex-none max-w-none dark:hidden" decoding="async" />
+                  <Image src={shadow} alt="shadow" className="w-[71.75rem] flex-none max-w-none dark:hidden" decoding="async" />
                 </picture>
                 <picture>
-                  <Image src={shadow2} alt="" className="w-[90rem] flex-none max-w-none hidden dark:block" decoding="async" />
+                  <Image src={shadow2} alt="shadow" className="w-[90rem] flex-none max-w-none hidden dark:block" decoding="async" />
                 </picture>
               </div>
             </div>
@@ -91,6 +82,7 @@ const About = ({ initialData }) => {
                 <Image
                   src={education}
                   width={150}
+                  height={150}
                   alt="education"
                   data-aos="fade-up"
                   data-aos-duration="1000"
@@ -104,7 +96,7 @@ const About = ({ initialData }) => {
               <div className="timeline">
                 {Array.isArray(educationData) && educationData.length > 0 ? (
                   educationData.reverse().map((edu, index) => (
-                    <div key={index} className="timeline_container after:animate-bounce ${index % 2 === 0 ? 'right' : 'left'}">
+                    <div key={index} className={`timeline_container after:animate-bounce ${index % 2 === 0 ? 'right' : 'left'}`}>
                       <div
                         data-aos={index % 2 === 0 ? 'fade-left' : 'fade-right'}
                         data-aos-duration="1000"
@@ -128,6 +120,7 @@ const About = ({ initialData }) => {
                 <Image
                   src={skill}
                   width={150}
+                  height={150}
                   alt="skill"
                   data-aos="fade-up"
                   data-aos-duration="1000"
@@ -179,7 +172,7 @@ const About = ({ initialData }) => {
                       href="/portfolio"
                       data-aos="zoom-in-right"
                       data-aos-duration="1000">
-                      <button className="flex gap-3 px-6 py-3 rounded-lg border transition-all border-[--p] text-[--p] shadow-[0_0_10px_var(--p)] hover:shadow-[0_0_20px_var(--p)]">
+                      <button className="flex gap-3 px-5 py-3 button button--aylen bg-gradient-to-r from-blue-950 to-blue-600 hover:from-blue-600  text-white relative  focus:outline-none border-2 border-solid rounded-lg text-sm text-center font-semibold uppercase tracking-widest overflow-hidden">
                         <span>Portfolio</span>
                         <FcBriefcase className="text-xl font-extrabold" />
                       </button>
@@ -189,9 +182,14 @@ const About = ({ initialData }) => {
                       data-aos-duration="1000"
                       href="https://www.freelancer.com/u/mdalamin75"
                       target="_blanck">
-                      <button className="flex gap-3 px-6 py-3 rounded-lg bg-white bg-opacity-20 backdrop-blur-md border border-[--bc] text-[--bc] hover:bg-opacity-30 transition-all ms-5">
-                        <SiFreelancer className="text-2xl font-extrabold animate-pulse text-dark2" />
-                        <span>Hire Me</span>
+                      <button className="button button--nina bg-gradient-to-r from-blue-950 to-blue-600 hover:from-blue-600 hover:to-blue-950  relative focus:outline-none border-2 border-solid rounded-lg text-sm text-center font-josefin font-semibold uppercase tracking-widest overflow-hidden ms-5 px-5 text-white flex items-center gap-1" data-text="Hire Me">
+                        <SiFreelancer className="text-2xl font-extrabold animate-pulse text-white" />
+                        <span className="align-middle">H</span>
+												<span className="align-middle">i</span>
+												<span className="align-middle">r</span>
+												<span className="align-middle">e</span>
+												<span className="align-middle ms-1">M</span>
+												<span className="align-middle">e</span>
                       </button>
                     </Link>
                   </div>

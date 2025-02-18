@@ -259,7 +259,7 @@ const AdminHeader = () => {
 						role="button"
 						className="btn btn-ghost btn-circle avatar">
 						<div className="w-10 rounded-full bg-slate-100">
-							<Image alt="Profile Picture" src={profile} />
+							<Image alt="Profile Picture" src={profile}  width={50} height={50} />
 						</div>
 					</div>
 					<ul

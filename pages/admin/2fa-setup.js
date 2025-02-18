@@ -62,7 +62,7 @@ const TwoFactorSetup = () => {
   return (
     <SimpleLayout>
       <h1>Scan this QR Code with Google Authenticator</h1>
-      <Image src={qrCode} alt="QR Code" /> 
+      <Image src={qrCode} width={300} height={300} alt="QR Code" /> 
     </SimpleLayout>
   );
 };

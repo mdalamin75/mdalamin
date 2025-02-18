@@ -236,7 +236,7 @@ export default function About() {
             className="flex gap-1">
             {formData.aboutimage.map((link, index) => (
               <div key={index} className="uploadedimg">
-                <Image src={link} alt="about image" className="object-cover w-32" />
+                <Image src={link} width={100} height={100} alt="about image" className="object-cover w-32" />
                 <div className="deleteimg">
                   <button type="button" onClick={() => handleDeleteAboutImage(index)}>
                     <MdDeleteForever />
@@ -329,7 +329,7 @@ export default function About() {
               className="flex gap-1">
               {formData.skillimages.map((item, index) => (
                 <div key={index} className="uploadedimg">
-                  <Image src={item.src} alt="skill image" className="object-cover w-32" />
+                  <Image src={item.src} width={100} height={100} alt="skill image" className="object-cover w-32" />
                   <div className="deleteimg">
                     <button type="button" onClick={() => handleDeleteSkillImage(index)} className="btn btn-warning text-lg">
                       <MdDeleteForever />

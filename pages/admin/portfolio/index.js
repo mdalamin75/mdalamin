@@ -83,7 +83,7 @@ export default function AllPortfolio({ initialData }) {
                                     publishedPortfolios.map((blog, index) => (
                                         <tr key={blog._id}>
                                             <td>{indexOfFirstPortfolio + index + 1}</td>
-                                            <td><Image src={blog.images[0]} width={180} alt="image" /></td>
+                                            <td><Image src={blog.images[0]} width={180} height={180} alt="image" /></td>
                                             <td><h3>{blog.title}</h3></td>
                                             <td>
                                                 <div className="flex gap-2 flex-center">
