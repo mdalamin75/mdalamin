@@ -1,5 +1,4 @@
 // pages/robots.js
-
 export default function Robots() {
     return `
         User-agent: *
