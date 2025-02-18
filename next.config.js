@@ -2,15 +2,22 @@
 const nextConfig = {
     reactStrictMode: true,
     images: {
-      domains: ['res.cloudinary.com'],
+        domains: ['res.cloudinary.com'],
     },
     exportPathMap: async function (defaultPathMap) {
-      return {
-        ...defaultPathMap,
-        '/robots': { page: '/robots' },
-      };
+        return {
+            ...defaultPathMap,
+            '/robots': { page: '/robots' },
+        };
     },
-  };
-  
-  module.exports = nextConfig;
-  
+    async rewrites() {
+        return [
+            {
+                source: '/sitemap.xml',
+                destination: '/api/sitemap.xml',
+            },
+        ];
+    },
+};
+
+module.exports = nextConfig;
