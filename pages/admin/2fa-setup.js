@@ -1,8 +1,8 @@
-// pages/admin/2fa-setup.js
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import SimpleLayout from '../../layouts/SimpleLayout';
+import Image from 'next/image';
 
 const TwoFactorSetup = () => {
   const { data: session } = useSession();
@@ -49,7 +49,7 @@ const TwoFactorSetup = () => {
     };
 
     fetchQrCode();
-  }, [session]);
+  }, [session, router]); // Include `router` in the dependency array
 
   if (error) {
     return <div>{error}</div>;
@@ -62,7 +62,7 @@ const TwoFactorSetup = () => {
   return (
     <SimpleLayout>
       <h1>Scan this QR Code with Google Authenticator</h1>
-      <img src={qrCode} alt="QR Code" />
+      <Image src={qrCode} alt="QR Code" /> 
     </SimpleLayout>
   );
 };

@@ -137,6 +137,7 @@ export default function Home({ initialData }) {
 								<Image
 									src={portfolio}
 									width={150}
+									height={150}
 									priority="true"
 									alt="portfolio"
 									className="mx-auto z-10"
@@ -180,6 +181,7 @@ export default function Home({ initialData }) {
 								<Image
 									src={review}
 									width={150}
+									height={150}
 									priority="true"
 									alt="testimonial"
 									className="mx-auto z-10"

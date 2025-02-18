@@ -8,6 +8,7 @@ import toast from 'react-hot-toast';
 import { ReactSortable } from "react-sortablejs";
 import { MdDeleteForever } from "react-icons/md";
 import { LoadingScreen } from "./LoadingScreen";
+import Image from "next/image";
 
 export default function About() {
   const router = useRouter();
@@ -235,7 +236,7 @@ export default function About() {
             className="flex gap-1">
             {formData.aboutimage.map((link, index) => (
               <div key={index} className="uploadedimg">
-                <img src={link} alt="about image" className="object-cover w-32" />
+                <Image src={link} alt="about image" className="object-cover w-32" />
                 <div className="deleteimg">
                   <button type="button" onClick={() => handleDeleteAboutImage(index)}>
                     <MdDeleteForever />
@@ -328,7 +329,7 @@ export default function About() {
               className="flex gap-1">
               {formData.skillimages.map((item, index) => (
                 <div key={index} className="uploadedimg">
-                  <img src={item.src} alt="skill image" className="object-cover w-32" />
+                  <Image src={item.src} alt="skill image" className="object-cover w-32" />
                   <div className="deleteimg">
                     <button type="button" onClick={() => handleDeleteSkillImage(index)} className="btn btn-warning text-lg">
                       <MdDeleteForever />

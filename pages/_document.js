@@ -4,7 +4,6 @@ export default function Document() {
     return (
         <Html lang="en">
             <Head>
-                <title>MD. AL AMIN</title>
                 <meta name="description" content="mdalamin portfolio website" />
                 <meta name="keywords" content="mdalamin, mdalamin75, webdeveloper, freelancer, webdesigner, wordpress, frontenddeveloper, emailsignature, reactjs, nextjs, html, css, bootstrap, tailwind, website, git, shopify, wordpresscustomization, bugfixing, wordpressoptimization" />
                 {/* Twitter Card meta tags */} <meta name="twitter:card" content="summary_large_image" /> {/* Google site verification meta tag */} 

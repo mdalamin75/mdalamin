@@ -9,6 +9,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { a11yDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import useFetch from "../../hooks/useFetch";
 import { useState } from 'react'; // Added missing import
+import Image from "next/image";
 
 export default function ProjectSlug({ initialData }) {
 	const router = useRouter();
@@ -89,7 +90,9 @@ export default function ProjectSlug({ initialData }) {
 							<div className="container">
 								<div className="max-h-96 overflow-hidden">
 									{firstImage && (
-										<img
+										<Image
+											width={900}
+											height={300}
 											src={firstImage}
 											alt={project?.title || 'Project image'}
 											className="w-full object-top"
@@ -147,7 +150,9 @@ export default function ProjectSlug({ initialData }) {
 											className="mySwiper">
 											{projectImages.map((image, index) => (
 												<SwiperSlide key={index}>
-													<img
+													<Image
+														width={700}
+														height={300}
 														src={image}
 														alt={`Project image ${index + 1}`}
 														className="h-48 shadow border border-gray-300"

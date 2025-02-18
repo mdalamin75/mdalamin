@@ -9,6 +9,7 @@ import axios from "axios";
 import { withAdminAuth } from "../../../layouts/withAdminAuth";
 import { useAuth } from "../../../hooks/useAuth";
 import AdminLayout from "../../../layouts/AdminLayout";
+import Image from "next/image";
 
 export default function draftPortfolio({ initialData }) {
     const { isLoading } = useAuth();
@@ -83,7 +84,7 @@ export default function draftPortfolio({ initialData }) {
                                     publishedPortfolios.map((blog, index) => (
                                         <tr key={blog._id}>
                                             <td>{indexOfFirstPortfolio + index + 1}</td>
-                                            <td><img src={blog.images[0]} width={180} alt="image" /></td>
+                                            <td><Image src={blog.images[0]} width={180} alt="image" /></td>
                                             <td><h3>{blog.title}</h3></td>
                                             <td>
                                                 <div className="flex gap-2 flex-center">

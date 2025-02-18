@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import useFetch from "../hooks/useFetch";
+import Image from "next/image";
 
 const ProjectItem = ({ initialData, showFilter = true, limit = null }) => {
   const {
@@ -29,10 +30,10 @@ const ProjectItem = ({ initialData, showFilter = true, limit = null }) => {
       setFilteredProjects(
         portfolioData
           ? portfolioData.filter(
-              (pro) =>
-                pro.status === "publish" &&
-                pro.projectcategory[0] === selectedCategory
-            )
+            (pro) =>
+              pro.status === "publish" &&
+              pro.projectcategory[0] === selectedCategory
+          )
           : []
       );
     }
@@ -54,7 +55,7 @@ const ProjectItem = ({ initialData, showFilter = true, limit = null }) => {
             className={`${selectedCategory === "All"
               ? "bg-gradient-to-r from-purple-800 to-purple-500 text-white"
               : "bg-slate-100 text-purple-600"
-            } font-bold font-josefin py-2 px-6 rounded-3xl`}
+              } font-bold font-josefin py-2 px-6 rounded-3xl`}
             onClick={() => setSelectedCategory("All")}>
             All
           </button>
@@ -62,7 +63,7 @@ const ProjectItem = ({ initialData, showFilter = true, limit = null }) => {
             className={`${selectedCategory === "Frontend Development"
               ? "bg-gradient-to-r from-purple-800 to-purple-500 text-white"
               : "bg-slate-100 text-purple-600"
-            } font-bold font-josefin py-2 px-6 rounded-3xl`}
+              } font-bold font-josefin py-2 px-6 rounded-3xl`}
             onClick={() => setSelectedCategory("Frontend Development")}>
             Frontend
           </button>
@@ -70,7 +71,7 @@ const ProjectItem = ({ initialData, showFilter = true, limit = null }) => {
             className={`${selectedCategory === "Full Stack Development"
               ? "bg-gradient-to-r from-purple-800 to-purple-500 text-white"
               : "bg-slate-100 text-purple-600"
-            } font-bold font-josefin py-2 px-6 rounded-3xl`}
+              } font-bold font-josefin py-2 px-6 rounded-3xl`}
             onClick={() => setSelectedCategory("Full Stack Development")}>
             Full Stack
           </button>
@@ -78,7 +79,7 @@ const ProjectItem = ({ initialData, showFilter = true, limit = null }) => {
             className={`${selectedCategory === "WordPress Website"
               ? "bg-gradient-to-r from-purple-800 to-purple-500 text-white"
               : "bg-slate-100 text-purple-600"
-            } font-bold font-josefin py-2 px-6 rounded-3xl`}
+              } font-bold font-josefin py-2 px-6 rounded-3xl`}
             onClick={() => setSelectedCategory("WordPress Website")}>
             WordPress
           </button>
@@ -86,7 +87,7 @@ const ProjectItem = ({ initialData, showFilter = true, limit = null }) => {
             className={`${selectedCategory === "E-commerce Website"
               ? "bg-gradient-to-r from-purple-800 to-purple-500 text-white"
               : "bg-slate-100 text-purple-600"
-            } font-bold font-josefin py-2 px-6 rounded-3xl`}
+              } font-bold font-josefin py-2 px-6 rounded-3xl`}
             onClick={() => setSelectedCategory("E-commerce Website")}>
             E-commerce
           </button>
@@ -94,7 +95,7 @@ const ProjectItem = ({ initialData, showFilter = true, limit = null }) => {
             className={`${selectedCategory === "Shopify Store"
               ? "bg-gradient-to-r from-purple-800 to-purple-500 text-white"
               : "bg-slate-100 text-purple-600"
-            } font-bold font-josefin py-2 px-6 rounded-3xl`}
+              } font-bold font-josefin py-2 px-6 rounded-3xl`}
             onClick={() => setSelectedCategory("Shopify Store")}>
             Shopify
           </button>
@@ -102,7 +103,7 @@ const ProjectItem = ({ initialData, showFilter = true, limit = null }) => {
             className={`${selectedCategory === "Email"
               ? "bg-gradient-to-r from-purple-800 to-purple-500 text-white"
               : "bg-slate-100 text-purple-600"
-            } font-bold font-josefin py-2 px-6 rounded-3xl`}
+              } font-bold font-josefin py-2 px-6 rounded-3xl`}
             onClick={() => setSelectedCategory("Email")}>
             Email
           </button>
@@ -130,7 +131,9 @@ const ProjectItem = ({ initialData, showFilter = true, limit = null }) => {
                     key={id}
                     className="card bg-base-100 image-full w-full h-96 overflow-hidden shadow-xl card_hover hover:shadow-lg hover:shadow-purple-500 duration-500">
                     <figure>
-                      <img
+                      <Image
+                        width={700}
+                        height={300}
                         src={images[0]}
                         alt={title}
                         className="w-full h-96 object-top overflow-hidden"
