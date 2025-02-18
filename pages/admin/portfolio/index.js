@@ -10,7 +10,7 @@ import { useAuth } from "../../../hooks/useAuth";
 import AdminLayout from "../../../layouts/AdminLayout";
 import Image from "next/image";
 
-export default function allPortfolio({ initialData }) {
+export default function AllPortfolio({ initialData }) {
     const { isLoading } = useAuth();
 
     // Pagination

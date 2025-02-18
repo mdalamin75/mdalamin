@@ -10,7 +10,7 @@ import { withAdminAuth } from "../../../layouts/withAdminAuth";
 import { useAuth } from "../../../hooks/useAuth";
 import AdminLayout from "../../../layouts/AdminLayout";
 
-export default function draftTestimonial({ initialData }) {
+export default function DraftTestimonial({ initialData }) {
     const { isLoading } = useAuth();
 
     // Pagination

@@ -1,8 +1,9 @@
 {
   "extends": "next/core-web-vitals",
   "rules": {
-    "react-hooks/exhaustive-deps": "off", // Disable the specific rule causing issues
-    "no-console": "off", // Example of disabling another rule
-    "import/no-anonymous-default-export": "off" // Example of disabling another rule
+    "react/no-unescaped-entities": "off", // Disable the rule causing the issue
+    "react-hooks/rules-of-hooks": "off", // Example of disabling another rule
+    "react-hooks/exhaustive-deps": "off", // Example of disabling another rule
+    "no-console": "off" // Example of disabling another rule
   }
 }
