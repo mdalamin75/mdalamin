@@ -1,7 +1,6 @@
 import useFetch from "../../../hooks/useFetch";
 import Link from "next/link";
 import { useState } from "react";
-import { SiBloglovin } from "react-icons/si";
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { LoadingScreen } from "../../../components/Admin/LoadingScreen";
@@ -11,7 +10,7 @@ import { useAuth } from "../../../hooks/useAuth";
 import AdminLayout from "../../../layouts/AdminLayout";
 import Image from "next/image";
 
-export default function draftPortfolio({ initialData }) {
+export default function DraftPortfolio({ initialData }) {
     const { isLoading } = useAuth();
 
     // Pagination
@@ -84,7 +83,7 @@ export default function draftPortfolio({ initialData }) {
                                     publishedPortfolios.map((blog, index) => (
                                         <tr key={blog._id}>
                                             <td>{indexOfFirstPortfolio + index + 1}</td>
-                                            <td><Image src={blog.images[0]} width={180} alt="image" /></td>
+                                            <td><Image src={blog.images[0]} width={180} height={180} alt="image" /></td>
                                             <td><h3>{blog.title}</h3></td>
                                             <td>
                                                 <div className="flex gap-2 flex-center">
