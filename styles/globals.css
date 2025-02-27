@@ -261,9 +261,10 @@ html {
 	height: 100%;
 }
 body {
-	overflow-x: hidden;
+	width: 100%;
 	height: 100%;
 	display: flex;
+	overflow-x: hidden;
 	flex-direction: column;
 }
 .sticky {
@@ -325,22 +326,51 @@ body {
 /* ===============================Header End Here ============================  */
 
 /* ===============================Scrollbar Start Here ============================  */
-::-webkit-scrollbar-track {
-	-webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.548);
-	background-color: #0b1121;
-	border-radius: 0.7rem;
+/* Custom Scrollbar for WebKit Browsers */
+::-webkit-scrollbar {
+	width: 5px !important; /* Width of the entire scrollbar */
+	height: 5px !important;; /* Height of the entire scrollbar */
 }
 
-::-webkit-scrollbar {
-	width: 0.7rem;
-	background-color: #f5f5f575;
+::-webkit-scrollbar-track {
+	background: #f1f1f1; /* Background of the track */
 }
 
 ::-webkit-scrollbar-thumb {
-	border-radius: 0.7rem;
-	background-color: #e583f893;
-	background-image: linear-gradient(62deg, #043ebde5 0%, #0090c9f6 100%);
+	background: #888; /* Color of the scroll thumb */
+	-webkit-border-radius: 10px;
+	border-radius: 10px; /* Rounded corners */
 }
+
+::-webkit-scrollbar-thumb:hover {
+	background: #555; /* Color of the scroll thumb when hovered */
+}
+/* Applying custom scrollbar to a specific element */
+.my-custom-scrollbar {
+	overflow-y: scroll; /* Enable vertical scrolling */
+	scrollbar-width: thin; /* Firefox: set scrollbar width */
+	scrollbar-color: #888 #f1f1f1; /* Firefox: set thumb and track color */
+}
+
+/* Custom Scrollbar for WebKit Browsers */
+.my-custom-scrollbar::-webkit-scrollbar {
+	width: 4px !important; /* Width of the entire scrollbar */
+	height: 4px !important;; /* Height of the entire scrollbar */
+}
+
+.my-custom-scrollbar::-webkit-scrollbar-track {
+	background: #f1f1f1; /* Background of the track */
+}
+
+.my-custom-scrollbar::-webkit-scrollbar-thumb {
+	background: #888; /* Color of the scroll thumb */
+	border-radius: 10px; /* Rounded corners */
+}
+
+.my-custom-scrollbar::-webkit-scrollbar-thumb:hover {
+	background: #555; /* Color of the scroll thumb when hovered */
+}
+
 /* ===============================Scrollbar End Here ============================  */
 
 /* ======================= Profile Image animation Start Here ============================== */
@@ -657,11 +687,11 @@ body {
 }
 /*======================== Shadow & Pattern End =======================*/
 
-/*======================== Footer Start =======================*/
-/* .main_footer {
-	background-color: rgb(22 31 51);
-} */
-/*======================== Footer End =======================*/
+/*======================== TawkMessanger Start =======================*/
+div#bel2v2fgq4g81740672454873 {
+	display: none !important;
+}
+/*======================== TawkMessanger End =======================*/
 
 /*========================================================================Dashboard CSS Start Here =============================================================*/
 /* .drawer-side {

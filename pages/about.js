@@ -32,7 +32,7 @@ const About = ({ initialData }) => {
         <Head>
           <title>About</title>
         </Head>
-          <section id="about" className="py-10 pt-32 snap-start bg_pattern2">
+          <section id="about" className="pb-10 pt-32 snap-start bg_pattern2">
             <div className="container mx-auto px-3 md:px-5">
               <div className="about_head">
                 <Image src={Programming} width={150} height={150} alt="programming" priority="true" className="mx-auto z-10" />

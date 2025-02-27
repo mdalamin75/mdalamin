@@ -18,6 +18,10 @@ module.exports = {
         'white': '#F1F6F9',
         'color2': '#394867',
         'color3': '#D4ADFC',
+        cursorDotLight: "black",
+        cursorOutlineLight: "rgba(0, 0, 0, 0.5)",
+        cursorDotNight: "white",
+        cursorOutlineNight: "rgba(255, 255, 255, 0.5)",
       },
       backgroundImage: {
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
@@ -40,6 +44,6 @@ module.exports = {
     require('daisyui'),
   ],
   daisyui: {
-    themes: ["light", "night"]
+    themes: ["night", "light"]
   },
 };
