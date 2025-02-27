@@ -60,7 +60,7 @@ export default function Home({ initialData }) {
 				<Head>
 					<title>MD. AL AMIN</title>
 				</Head>
-					<section id="hero" className="relative pt-32 md:pt-10 pb-32 md:pb-0">
+					<section id="hero" className="relative pt-32 md:pt-10 pb-20 md:pb-0">
 						<Particles />
 						<div className="absolute bottom-0 inset-x-0 bg-bottom bg-no-repeat shadow_03"></div>
 						<div className="container mx-auto px-3 md:px-5">
@@ -104,7 +104,7 @@ export default function Home({ initialData }) {
 												{allHomeData.description}
 											</ReactMarkdown>
 									</div>
-									<div className="flex items-center">
+									<div className="flex flex-wrap flex-col-reverse sm:flex-row sm:flex-nowrap  gap-5">
 										<button
 											onClick={handleDownload}
 											className="flex gap-3 px-5 py-3 button button--aylen bg-gradient-to-r from-blue-950 to-blue-600 hover:from-blue-600  text-white relative  focus:outline-none border-2 border-solid rounded-lg text-sm text-center font-semibold uppercase tracking-widest overflow-hidden"
@@ -114,7 +114,7 @@ export default function Home({ initialData }) {
 											<FiDownload className="text-xl font-extrabold animate-bounce delay-200 align-middle" />
 										</button>
 										<Link href="/about">
-											<button className="button button--nina bg-gradient-to-r from-blue-950 to-blue-600 hover:from-blue-600 hover:to-blue-950  relative block focus:outline-none border-2 border-solid rounded-lg text-sm text-center font-josefin font-semibold uppercase tracking-widest overflow-hidden ms-5 px-5 text-white" data-text="About Me">
+											<button className="button button--nina bg-gradient-to-r from-blue-950 to-blue-600 hover:from-blue-600 hover:to-blue-950  relative block focus:outline-none border-2 border-solid rounded-lg text-sm text-center font-josefin font-semibold uppercase tracking-widest overflow-hidden px-5 text-white" data-text="About Me">
 												{/* About Me */}
 												<span className="align-middle">A</span>
 												<span className="align-middle">b</span>
@@ -143,7 +143,7 @@ export default function Home({ initialData }) {
 							</div>
 						</div>
 					</section>
-					<section id="latest_projects" className="relative mt-40 md:mt-40 py-20">
+					<section id="latest_projects" className="relative mt-20 md:mt-0 py-10 md:py-20">
 						<div className="container mx-auto px-3 md:px-5">
 							<div className="latest_head">
 								<Image
@@ -187,7 +187,7 @@ export default function Home({ initialData }) {
 							</div>
 						</div>
 					</section>
-					<section id="testimonial" className="relative py-20">
+					<section id="testimonial" className="relative py-10 md:py-20">
 						<div className="container mx-auto px-3 md:px-5">
 							<div className="testimonial_head">
 								<Image
@@ -213,7 +213,7 @@ export default function Home({ initialData }) {
 						</div>
 						<div className="absolute bottom-0 inset-x-0 bg-bottom bg-no-repeat shadow_03"></div>
 					</section>
-					<section id="service" className="relative py-20">
+					<section id="service" className="relative py-10 md:py-20">
 						<div className="container mx-auto px-3 md:px-5">
 							<div className="service_head">
 								<h1

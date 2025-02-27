@@ -21,8 +21,8 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       <Preloader isDataLoading={isLoading} />
       <SessionProvider session={session}>
         {!isAdminRoute && <Navbar />}
-        <ClientAnimations />
         <Component {...pageProps} />
+        <ClientAnimations />
         {!isAdminRoute && <Footer />}
       </SessionProvider>
     </>

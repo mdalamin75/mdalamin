@@ -51,7 +51,7 @@ const ProjectItem = ({ initialData, showFilter = true, limit = null }) => {
   return (
     <>
       {showFilter && (
-        <div className="project_buttons flex justify-center gap-x-5">
+        <div className="project_buttons flex justify-center gap-5 flex-wrap">
           <button
             className={`${selectedCategory === "All"
               ? "bg-gradient-to-r from-purple-800 to-purple-500 text-white"
