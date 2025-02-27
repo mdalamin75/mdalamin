@@ -85,8 +85,8 @@ const AdminHeader = () => {
 			href: "/admin/services",
 			submenu: [
 				{ text: "All Service", href: "/admin/service/" },
-				{ text: "Add Service", href: "/admin/service/add-service" },
-				{ text: "Draft Service", href: "/admin/service/draft-service" },
+				{ text: "Add Service", href: "/admin/service/addservice" },
+				{ text: "Draft Service", href: "/admin/service/draftservice" },
 			],
 		},
 		{
@@ -145,13 +145,14 @@ const AdminHeader = () => {
 						type="checkbox"
 						className="drawer-toggle"
 						onChange={handleSidebar}
+						checked={isDrawerOpen}
 					/>
 					<div className="drawer-content">
 						<label
 							htmlFor="my-drawer"
 							className="btn drawer-button swap swap-rotate"
 							onClick={handleSidebar}>
-							<input type="checkbox" checked={sidebar === "swap-on"} />
+							<input type="checkbox" checked={sidebar === "swap-on"} onChange={handleSidebar}/>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								className="h-8 w-8 swap-off fill-current"

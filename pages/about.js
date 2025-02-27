@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { FcBriefcase } from "react-icons/fc";
 import { SiFreelancer } from "react-icons/si";
-import Programming from "../public/about/programming-animate.svg";
+import Programming from "../public/about/programming.svg";
 import education from "../public/about/education.svg";
 import skill from "../public/about/skill.svg";
 import shadow from "../public/shadow_01.png";
@@ -11,9 +11,8 @@ import shadow2 from "../public/shadow_02.png";
 import useFetch from "../hooks/useFetch";
 import ReactMarkdown from "react-markdown";
 import Preloader from "../components/Preloader";
-export const metadata = {
-  title: "About"
-}
+import Head from "next/head";
+
 const About = ({ initialData }) => {
   // Fetch about data
   const { data: aboutData, loading, refetch } = useFetch("about", initialData);
@@ -30,6 +29,9 @@ const About = ({ initialData }) => {
       <Preloader isDataLoading={loading} />
       {!loading && (
         <>
+        <Head>
+          <title>About</title>
+        </Head>
           <section id="about" className="py-10 pt-32 snap-start bg_pattern2">
             <div className="container mx-auto px-3 md:px-5">
               <div className="about_head">
@@ -58,7 +60,15 @@ const About = ({ initialData }) => {
                   data-aos-duration="1000"
                   className="font-titillium text-lg font-medium flex flex-col justify-around gap-y-5 pt-7">
                   <p>
-                    <ReactMarkdown className="markdown-description">
+                    <ReactMarkdown className="markdown-description"
+                      components={{
+                        p: ({ children }) => (
+                          <p className="font-titillium text-lg font-medium mb-1">
+                            {children}
+                          </p>
+                        )
+                      }}
+                    >
                       {allAboutData.description}
                     </ReactMarkdown>
                   </p>
@@ -102,8 +112,8 @@ const About = ({ initialData }) => {
                         data-aos-duration="1000"
                         className="font-titillium content shadow-lg shadow-emerald-600"
                       >
-                        <h2 className="font-bold">{new Date(edu.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}</h2>
-                        <p className="font-medium">{edu.name}</p>
+                        <h2 className="font-bold text-lg">{new Date(edu.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}</h2>
+                        <p className="font-medium text-lg">{edu.name}</p>
                       </div>
                     </div>
                   ))
@@ -127,7 +137,7 @@ const About = ({ initialData }) => {
                   className="mx-auto z-10"
                 />
                 <h1
-                  className="font-josefin uppercase text-center text-3xl md:text-5xl font-extrabold pb-16 text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-blue-600 drop-shadow-2xl">
+                  className="font-josefin uppercase text-center text-3xl md:text-5xl font-extrabold pb-16 text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-blue-400 drop-shadow-2xl">
                   Skill & Experience
                 </h1>
               </div>
@@ -159,14 +169,22 @@ const About = ({ initialData }) => {
                     {/* Experience in the Freelancer.com */}
                     {allAboutData.experiencetitle}
                   </h2>
-                  <h3
+                  <div
                     data-aos="zoom-in"
                     data-aos-duration="1000"
                     className="font-titillium ">
-                    <ReactMarkdown className="markdown-description">
+                    <ReactMarkdown className="markdown-description"
+                      components={{
+                        p: ({ children }) => (
+                          <p className="font-titillium text-lg font-medium">
+                            {children}
+                          </p>
+                        )
+                      }}
+                    >
                       {allAboutData.experiencedescription}
                     </ReactMarkdown>
-                  </h3>
+                  </div>
                   <div className="flex items-center mt-5">
                     <Link
                       href="/portfolio"
@@ -185,11 +203,11 @@ const About = ({ initialData }) => {
                       <button className="button button--nina bg-gradient-to-r from-blue-950 to-blue-600 hover:from-blue-600 hover:to-blue-950  relative focus:outline-none border-2 border-solid rounded-lg text-sm text-center font-josefin font-semibold uppercase tracking-widest overflow-hidden ms-5 px-5 text-white flex items-center gap-1" data-text="Hire Me">
                         <SiFreelancer className="text-2xl font-extrabold animate-pulse text-white" />
                         <span className="align-middle">H</span>
-												<span className="align-middle">i</span>
-												<span className="align-middle">r</span>
-												<span className="align-middle">e</span>
-												<span className="align-middle ms-1">M</span>
-												<span className="align-middle">e</span>
+                        <span className="align-middle">i</span>
+                        <span className="align-middle">r</span>
+                        <span className="align-middle">e</span>
+                        <span className="align-middle ms-1">M</span>
+                        <span className="align-middle">e</span>
                       </button>
                     </Link>
                   </div>

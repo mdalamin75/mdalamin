@@ -4,6 +4,7 @@ import ContactForm from "../components/ContactForm";
 import contact from "../public/ContactPage/contact-us-animate.svg";
 import SocialList from "../components/SocialList";
 import Preloader from "../components/Preloader";
+import Head from "next/head";
 
 export const metadata = {
   title: "Contact"
@@ -25,6 +26,9 @@ const Contact = () => {
 
   return (
     <>
+      <Head>
+        <title>Contact</title>
+      </Head>
       {!initialLoadComplete.current && <Preloader isDataLoading={!pageLoaded} />}
       <section id="contact" className="bg_pattern2 py-20">
         <div className="container mx-auto px-3 md:px-5">

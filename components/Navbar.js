@@ -32,11 +32,11 @@ const Navbar = () => {
       title: "Portfolio",
       icon: <FcBriefcase />,
     },
-    // {
-    //   src: "/testimonial",
-    //   title: "Testimonial",
-    //   icon: <MdReviews />,
-    // },
+    {
+      src: "/service",
+      title: "Services",
+      icon: <MdReviews />,
+    },
     {
       src: "/contact",
       title: "Contact",
