@@ -1,154 +1,317 @@
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
+import { useLoading } from "../contexts/LoadingContext";
 import gsap from "gsap";
 
-const Preloader = ({ isDataLoading }) => {
+const Preloader = () => {
     const router = useRouter();
-    const [isRouteChanging, setIsRouteChanging] = useState(false);
-    const [loadingText, setLoadingText] = useState("");
-    const animationComplete = useRef(false);
-    const timeline = useRef(null);
-
+    const preloaderRef = useRef(null);
+    const svgPathRef = useRef(null);
+    const textRef = useRef(null);
+    const textContainerRef = useRef(null);
+    const { 
+        isLoading, 
+        setIsLoading, 
+        isRouteChanging, 
+        setIsRouteChanging 
+    } = useLoading();
+    const [pageText, setPageText] = useState("");
+    const [hiddenClass, setHiddenClass] = useState("");
+    
+    // Extract page name from URL path
     const getPageName = (path) => {
         if (path === "/") return "HOME";
-        const routeName = path.split("/")[1].toUpperCase();
+        const routeName = path.split("/")[1]?.toUpperCase();
         return routeName || "HOME";
     };
 
-    const runAnimation = (onComplete) => {
-        // Kill any existing animation
-        if (timeline.current) {
-            timeline.current.kill();
+    // Apply hidden class when not loading
+    useEffect(() => {
+        if (!isLoading && !isRouteChanging) {
+            // Add a small delay before adding hidden class
+            const timer = setTimeout(() => {
+                setHiddenClass("hidden");
+            }, 100);
+            return () => clearTimeout(timer);
+        } else {
+            setHiddenClass("");
+        }
+    }, [isLoading, isRouteChanging]);
+
+    // Ensure preloader shows on every page load
+    useEffect(() => {
+        // Force loading state to true on initial mount
+        setIsLoading(true);
+        
+        // Set a minimum display time for the preloader
+        const minDisplayTimer = setTimeout(() => {
+            // After minimum time, check if data is loaded
+            if (!isRouteChanging) {
+                animateOut();
+            }
+        }, 800); // Ensure preloader shows for at least 800ms
+        
+        return () => clearTimeout(minDisplayTimer);
+    }, []);
+
+    // Set up route change event handlers
+    useEffect(() => {
+        const handleRouteChangeStart = (url) => {
+            // Set the state for route change start
+            setIsRouteChanging(true);
+            setIsLoading(true);
+            setPageText(getPageName(url));
+            
+            // Show preloader
+            if (preloaderRef.current) {
+                gsap.set(preloaderRef.current, { 
+                    autoAlpha: 1, 
+                    display: "flex",
+                    y: 0,
+                    visibility: "visible"
+                });
+            }
+            
+            // Reset text container
+            if (textContainerRef.current) {
+                gsap.set(textContainerRef.current, {
+                    autoAlpha: 1,
+                    visibility: "visible"
+                });
+            }
+            
+            // Ensure text is visible
+            if (textRef.current) {
+                gsap.set(textRef.current, {
+                    autoAlpha: 1,
+                    visibility: "visible"
+                });
+            }
+        };
+
+        const handleRouteChangeComplete = () => {
+            // After route change is complete, animate out preloader
+            animateOut();
+        };
+
+        const handleRouteChangeError = () => {
+            // Handle route change error the same way
+            animateOut();
+        };
+
+        // Set initial page text
+        setPageText(getPageName(router.pathname));
+
+        // Attach route events
+        router.events.on("routeChangeStart", handleRouteChangeStart);
+        router.events.on("routeChangeComplete", handleRouteChangeComplete);
+        router.events.on("routeChangeError", handleRouteChangeError);
+
+        // Initial animation if needed
+        if (isLoading && !isRouteChanging) {
+            animateIn();
         }
 
-        timeline.current = gsap.timeline({
+        // Clean up event listeners
+        return () => {
+            router.events.off("routeChangeStart", handleRouteChangeStart);
+            router.events.off("routeChangeComplete", handleRouteChangeComplete);
+            router.events.off("routeChangeError", handleRouteChangeError);
+        };
+    }, [router, setIsLoading, setIsRouteChanging, isLoading, isRouteChanging]);
+
+    // Animate in the preloader
+    const animateIn = () => {
+        const tl = gsap.timeline();
+        if (preloaderRef.current && svgPathRef.current && textRef.current) {
+            // Ensure preloader is visible
+            gsap.set(preloaderRef.current, { 
+                autoAlpha: 1, 
+                display: "flex",
+                visibility: "visible"
+            });
+            
+            // Ensure text container is visible
+            gsap.set(textContainerRef.current, {
+                autoAlpha: 1,
+                visibility: "visible"
+            });
+            
+            // Prepare each letter for animation
+            const textChars = textRef.current.children;
+            gsap.set(textChars, {
+                y: 50,
+                opacity: 0,
+                visibility: "visible"
+            });
+            
+            // Animate each letter with a fixed timeline
+            gsap.to(textChars, {
+                y: 0, 
+                opacity: 1,
+                duration: 0.3,
+                stagger: 0.04,
+                ease: "power2.out",
+                visibility: "visible"
+            });
+        }
+    };
+
+    // Animate out the preloader
+    const animateOut = () => {
+        const tl = gsap.timeline({
             onComplete: () => {
-                animationComplete.current = true;
-                if (onComplete) onComplete();
+                setIsRouteChanging(false);
+                setIsLoading(false);
             }
         });
 
-        const curve = "M0 500S175 300 500 300s500 200 500 200V0H0Z";
-        const flat = "M0 0S175 0 500 0s500 0 500 0V0H0Z";
-
-        // Reset states
-        gsap.set(".preloader", {
-            y: 0,
-            display: "flex",
-            zIndex: 9999,
-            opacity: 1,
-            visibility: "visible"
-        });
-
-        gsap.set("#preloaderSvg", {
-            attr: { d: "M0 1000S175 1000 500 1000s500 0 500 0V0H0Z" }
-        });
-
-        gsap.set(".preloader-heading .load-text", {
-            y: 0,
-            opacity: 1
-        });
-
-        // Run animation sequence
-        timeline.current
-            .to(".preloader-heading .load-text", {
-                delay: 0.3,
-                y: -50,
+        if (preloaderRef.current && svgPathRef.current && textRef.current && textContainerRef.current) {
+            // Hide all text letters first with improved animation
+            const textChars = textRef.current.children;
+            
+            // Animate all text characters out with staggered animation
+            gsap.to(textChars, {
+                y: -30,
                 opacity: 0,
-                duration: 0.5,
-                ease: "power2.inOut"
-            })
-            .to("#preloaderSvg", {
-                duration: 0.8,
-                attr: { d: curve },
-                ease: "power2.inOut"
-            })
-            .to("#preloaderSvg", {
-                duration: 0.8,
-                attr: { d: flat },
-                ease: "power2.inOut"
-            })
-            .to(".preloader", {
-                duration: 0.8,
-                y: -1500,
-                ease: "power4.inOut",
+                duration: 0.3,
+                stagger: 0.03, 
+                ease: "power2.in",
                 onComplete: () => {
-                    gsap.set(".preloader", {
-                        display: "none",
-                        y: 0,
+                    // After all letters are gone, hide the entire text container
+                    gsap.set(textContainerRef.current, {
+                        autoAlpha: 0,
+                        visibility: "hidden",
+                        display: "none"
+                    });
+                    
+                    // Hide all individual letters
+                    gsap.set(textChars, {
+                        opacity: 0,
                         visibility: "hidden"
                     });
                 }
             });
-    };
-
-    useEffect(() => {
-        // Set initial page name
-        setLoadingText(getPageName(router.pathname));
-
-        const handleStart = (url) => {
-            animationComplete.current = false;
-            setIsRouteChanging(true);
-            setLoadingText(getPageName(url));
             
-            gsap.set(".preloader", {
-                display: "flex",
-                y: 0,
-                visibility: "visible",
-                zIndex: 9999
+            // Continue with the SVG animation after a delay
+            tl.to(svgPathRef.current, {
+                attr: { d: "M0 500S175 300 500 300s500 200 500 200V0H0Z" },
+                duration: 0.8,
+                ease: "power2.inOut",
+                delay: 0.3
             });
             
-            runAnimation();
-        };
-
-        const handleComplete = () => {
-            if (!animationComplete.current) {
-                runAnimation(() => {
-                    setIsRouteChanging(false);
-                });
-            } else {
-                setIsRouteChanging(false);
-            }
-        };
-
-        const handleError = handleComplete;
-
-        router.events.on("routeChangeStart", handleStart);
-        router.events.on("routeChangeComplete", handleComplete);
-        router.events.on("routeChangeError", handleError);
-
-        // Initial load animation
-        if (!isDataLoading && !isRouteChanging) {
-            runAnimation();
+            tl.to(svgPathRef.current, {
+                attr: { d: "M0 0S175 0 500 0s500 0 500 0V0H0Z" },
+                duration: 0.8,
+                ease: "power2.inOut"
+            });
+            
+            // Hide preloader completely
+            tl.to(preloaderRef.current, {
+                y: -window.innerHeight,
+                duration: 0.8,
+                ease: "power4.inOut",
+                onComplete: () => {
+                    // Apply multiple visibility/display settings to ensure it's hidden
+                    gsap.set(preloaderRef.current, { 
+                        autoAlpha: 0, 
+                        y: 0,
+                        display: "none",
+                        visibility: "hidden"
+                    });
+                    
+                    // Double-check to ensure all text elements are completely gone
+                    gsap.set(textContainerRef.current, { 
+                        autoAlpha: 0,
+                        visibility: "hidden",
+                        display: "none"
+                    });
+                    
+                    // Hide all individual text elements
+                    gsap.set(textChars, { 
+                        opacity: 0,
+                        visibility: "hidden" 
+                    });
+                }
+            });
         }
+    };
 
-        return () => {
-            router.events.off("routeChangeStart", handleStart);
-            router.events.off("routeChangeComplete", handleComplete);
-            router.events.off("routeChangeError", handleError);
-            if (timeline.current) {
-                timeline.current.kill();
-            }
-        };
-    }, [router, isDataLoading, isRouteChanging]);
+    // Don't render if not loading and not route changing AND if hiddenClass is applied
+    if (!isLoading && !isRouteChanging && hiddenClass) {
+        return null;
+    }
 
     return (
-        <div className="preloader">
+        <div 
+            ref={preloaderRef} 
+            className={`preloader ${hiddenClass}`}
+            style={{
+                position: "fixed",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100vh",
+                background: "transparent",
+                zIndex: 9999,
+                display: isLoading || isRouteChanging ? "flex" : "none",
+                justifyContent: "center",
+                alignItems: "center",
+                overflow: "hidden",
+                pointerEvents: "none",
+                opacity: isLoading || isRouteChanging ? 1 : 0,
+                visibility: isLoading || isRouteChanging ? "visible" : "hidden"
+            }}
+        >
             <svg viewBox="0 0 1000 1000" preserveAspectRatio="none">
                 <path 
-                    id="preloaderSvg" 
+                    ref={svgPathRef}
                     d="M0 1000S175 1000 500 1000s500 0 500 0V0H0Z"
+                    fill="#0b1121"
                 ></path>
             </svg>
             
-            <div className="preloader-heading">
-                <div className="load-text">
-                    {loadingText.split("").map((char, index) => (
+            <div 
+                ref={textContainerRef}
+                className="preloader-text"
+                style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    zIndex: 2,
+                    color: "#fff",
+                    width: "100%",
+                    textAlign: "center",
+                    opacity: 1,
+                    visibility: "visible"
+                }}
+            >
+                <div 
+                    ref={textRef}
+                    style={{
+                        fontSize: "2.5rem",
+                        fontWeight: 700,
+                        textAlign: "center",
+                        lineHeight: 1,
+                        visibility: "visible",
+                        opacity: 1,
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center"
+                    }}
+                >
+                    {pageText.split("").map((char, index) => (
                         <span 
                             key={index}
                             style={{
-                                animationDelay: `${index * 0.1}s`,
-                                display: 'inline-block'
+                                display: 'inline-block',
+                                margin: '0 2px',
+                                letterSpacing: '1px',
+                                opacity: 1,
+                                visibility: "visible",
+                                transform: "translateY(0)"
                             }}
                         >
                             {char}

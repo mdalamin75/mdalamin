@@ -4,29 +4,35 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ClientAnimations from "../components/ClientAnimations";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Preloader from "../components/Preloader";
+import { LoadingProvider } from "../contexts/LoadingContext";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter();
   const isAdminRoute = router.pathname.startsWith('/admin');
-  const [isLoading, setIsLoading] = useState(true);
 
+  // Initialize route for LoadingContext
   useEffect(() => {
-    // Allow time for initial animations
-    setTimeout(() => setIsLoading(false), 500);
-  }, [])
+    // We'll handle initial loading in the LoadingContext
+  }, [router.pathname]);
+
   return (
-    <>
-      <Preloader isDataLoading={isLoading} />
+    <LoadingProvider>
       <SessionProvider session={session}>
-        {!isAdminRoute && <Navbar />}
-        <Component {...pageProps} />
-        <ClientAnimations />
-        {!isAdminRoute && <Footer />}
+        {/* Preloader must be the first element */}
+        <Preloader />
+        
+        {/* Main content */}
+        <div id="app-content">
+          {!isAdminRoute && <Navbar />}
+          <Component {...pageProps} />
+          <ClientAnimations />
+          {!isAdminRoute && <Footer />}
+        </div>
       </SessionProvider>
-    </>
-  )
+    </LoadingProvider>
+  );
 }
 
 export default MyApp;

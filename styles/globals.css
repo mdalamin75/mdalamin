@@ -19,75 +19,71 @@
 	transition: all ease-in-out 0.5s;
 	transform: scale(102%);
 }
-/*======================== Animation Start =======================*/
-/* styles/preloader.css */
+
+/* Clear all previous preloader styles as we're using inline styles now */
 .preloader {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100vh;
-	background: transparent;
-	z-index: 9999;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	overflow: hidden;
+	/* We're using inline styles now */
 }
 
-.preloader svg {
-	position: absolute;
-	top: 0;
-	left: 0;
+/* Additional protection against text visibility issues */
+.preloader.hidden,
+.preloader.hidden * {
+	opacity: 0 !important;
+	visibility: hidden !important;
+	display: none !important;
+}
+
+/* Ensure body content doesn't get affected by preloader */
+#app-content {
+	position: relative;
+	z-index: 1;
+	visibility: visible !important;
+	opacity: 1 !important;
+}
+
+section {
+	/* Making sure sections maintain their proper overflow behavior */
+	overflow: visible !important;
+}
+
+/* Protection against z-index issues */
+section, main, div {
+	position: relative;
+}
+
+/* ============================ Global Body Style =========================== */
+html,
+body {
+	overflow-x: clip;
+}
+html {
+	/* cursor: none; */
+	height: 100%;
+	/* Prevent scrollbar jump */
+	scrollbar-gutter: stable;
+	cursor: none !important;
+}
+body {
 	width: 100%;
 	height: 100%;
-	pointer-events: none;
+	display: flex;
+	/* overflow-x: hidden; */
+	flex-direction: column;
 }
 
-.preloader svg path {
-	fill: #0b1121;
+/* Ensure content is always visible regardless of preloader state */
+#app-content {
+	visibility: visible !important;
+	opacity: 1 !important;
+	position: relative;
+	z-index: 1;
 }
 
-.preloader-heading {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	z-index: 2;
-	color: #fff;
-	width: 100%;
-	text-align: center;
+.sticky {
+	position: sticky;
 }
 
-.load-text {
-	font-size: 2.5rem;
-	font-weight: 700;
-	text-align: center;
-	line-height: 1;
-}
-
-.load-text span {
-	display: inline-block;
-	animation: fadeInUp 0.5s ease forwards;
-	opacity: 0;
-	transform: translateY(20px);
-	margin: 0 1px;
-}
-
-@keyframes fadeInUp {
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
-/* Add letter spacing for better readability */
-.load-text span {
-	animation: fadeInUp 0.5s ease forwards;
-	opacity: 0;
-	transform: translateY(20px);
-	letter-spacing: 2px;
-}
+/*======================== Animation Start =======================*/
 /* Border Animation */
 @property --border-angle {
 	inherits: false;
@@ -255,43 +251,24 @@
 }
 /*======================== Animation End =======================*/
 
-/* ===============================Header Start Here ============================  */
-html,
-body {
-	overflow-x: clip;
-}
-html {
-	/* cursor: none; */
-	height: 100%;
-}
-body {
-	width: 100%;
-	height: 100%;
-	display: flex;
-	/* overflow-x: hidden; */
-	flex-direction: column;
-}
-.sticky {
-	position: sticky;
-}
 /*==================== Logo Style Start =======================*/
 .text-rotate {
-	position: absolute;
-	-webkit-transform: translate(-5%, -50%);
-	-moz-transform: translate(-5%, -50%);
-	-ms-transform: translate(-5%, -50%);
-	-o-transform: translate(-5%, -50%);
-	transform: translate(-5%, -50%);
+	position: relative;
+	display: inline-block;
 }
+
 .text-rotate span {
 	display: inline-block;
 	flex: 1;
 	letter-spacing: 0;
+	transform-style: preserve-3d;
+	perspective: 500px;
+	position: relative;
+	z-index: 1;
 }
 
 .text-rotate span {
 	animation: text-rotate 3s ease infinite;
-	/* color: white; */
 }
 .text-rotate span:nth-child(2) {
 	animation-delay: 0.1s;
@@ -327,6 +304,30 @@ body {
 	}
 }
 /*=================== Logo Style End ===========================*/
+
+/* ===============================Header Start Here ============================  */
+html,
+body {
+	overflow-x: clip;
+}
+html {
+	/* cursor: none; */
+	height: 100%;
+	/* Prevent scrollbar jump */
+	scrollbar-gutter: stable;
+}
+body {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	/* overflow-x: hidden; */
+	flex-direction: column;
+}
+.sticky {
+	position: sticky;
+}
+/*======================== Animation End =======================*/
+
 /* ===============================Header End Here ============================  */
 
 /* ===============================Scrollbar Start Here ============================  */
@@ -698,9 +699,80 @@ div#bel2v2fgq4g81740672454873 {
 /*======================== TawkMessanger End =======================*/
 
 /*========================================================================Dashboard CSS Start Here =============================================================*/
+/* Admin Sidebar Styles */
+.admin-sidebar {
+	z-index: 9999 !important;
+	position: fixed !important;
+}
+
+/* Ensure dropdowns appear above other content */
+.dropdown-content, 
+.menu-dropdown-show {
+	z-index: 10000 !important;
+}
+
+/* Ensure cursor displays properly on buttons and links */
+button, a, label, [role="button"], 
+.btn, .cursor-pointer {
+	cursor: pointer !important;
+}
+
+/* Fix cursor animation in admin pages */
+html {
+	cursor: none !important;
+}
+
+/* Ensure the animated cursor is above all elements */
+#cursor-dot, 
+#cursor-dot-outline, 
+.animated-cursor {
+	z-index: 999999 !important;
+	position: fixed !important;
+	pointer-events: none !important;
+}
+
+/* Make sure animated cursor doesn't have pointer-events */
+.animated-cursor__cursor, 
+.animated-cursor__inner, 
+.animated-cursor__outer {
+	pointer-events: none !important;
+	z-index: 999999 !important;
+}
+
+/* Ensure sidebar never has click-through issues */
+.navbar + div:has(.fixed) {
+	pointer-events: none !important;
+}
+
+.menu, 
+.menu li, 
+.menu a, 
+.menu div,
+.menu button,
+.menu span,
+.menu svg {
+	pointer-events: auto !important;
+	cursor: pointer !important;
+}
+
+.fixed[style*="pointer-events"] {
+	pointer-events: auto !important;
+}
+
+/* Ensure editor doesn't overlap with sidebar */
+.rc-md-editor {
+	z-index: 1 !important;
+}
+
+/* Add explicit z-index to main content */
+main {
+	z-index: 0;
+	position: relative;
+}
+
 /* .drawer-side {
 	z-index: 999999999999999999999999999999 !important; 
-  } */
+} */
 .drawer-side > *:not(.drawer-overlay) {
 	transform: translateX(-10%);
 	padding-left: 2rem !important;
@@ -709,7 +781,4 @@ div#bel2v2fgq4g81740672454873 {
 .left::before {
 	display: none;
 }
-.rc-md-editor {
-	/* position: relative; */
-	z-index: 1 !important;
-}
+

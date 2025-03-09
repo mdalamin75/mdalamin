@@ -43,6 +43,9 @@ const CursorAnimation = () => {
       "button",
       ".link",
       "svg",
+      ".btn",
+      "[role='button']",
+      ".cursor-pointer",
       "h1",
       "h2",
       "h3",
@@ -77,7 +80,7 @@ const CursorAnimation = () => {
   const cursorMixBlendMode = hoveringClickable ? "difference" : "normal";
 
   return (
-    <>
+    <div style={{ zIndex: 999999, position: 'fixed', pointerEvents: 'none' }}>
       <AnimatedCursor
         innerSize={8}
         outerSize={40}
@@ -87,14 +90,16 @@ const CursorAnimation = () => {
         outerScale={1.5}
         innerStyle={{
           backgroundColor: hoveringClickable ? "transparent" : cursorInnerColor,
+          zIndex: 999999,
         }}
         outerStyle={{
           border: `2px solid ${hoveringClickable ? "currentColor" : cursorOuterColor}`,
           mixBlendMode: cursorMixBlendMode,
+          zIndex: 999999,
         }}
-        clickables={["a", "input", "label", "select", "textarea", "button", ".link", "svg", "h1", "h2", "h3", "h4"]}
+        clickables={["a", "input", "label", "select", "textarea", "button", ".link", "svg", ".btn", "[role='button']", ".cursor-pointer", "h1", "h2", "h3", "h4"]}
       />
-    </>
+    </div>
   );
 };
 

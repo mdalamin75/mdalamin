@@ -11,18 +11,16 @@ import ReactMarkdown from "react-markdown";
 import review from "../public/testimonial/review.svg";
 import TestimonialSlider from "../components/TestimonialSlider";
 import ProjectItem from "../components/ProjectItem";
-import Preloader from "../components/Preloader";
 import Services from "../components/Services";
 import Head from "next/head";
 
 export default function Home({ initialData }) {
-	// Fetch home data
 	const { data: homeData, loading, refetch } = useFetch("home", initialData);
 
 	if (loading) {
-		return <div>Loading...</div>;
+		return null;
 	}
-	const allHomeData = homeData[0]; // Access the first object in the array
+	const allHomeData = homeData[0];
 
 	// Handle CV Download
 	// Client-side handler in your index.js
@@ -54,7 +52,6 @@ export default function Home({ initialData }) {
 
 	return (
 		<>
-			<Preloader isDataLoading={loading} />
 			{!loading && (
 				<>
 				<Head>
@@ -166,7 +163,7 @@ export default function Home({ initialData }) {
 							</div>
 							<div className="">
 								<ProjectItem showFilter={false} limit={6} />
-								<div className="absolute bottom-0 inset-x-0 bg-bottom bg-no-repeat shadow_03"></div>
+								
 							</div>
 							<div className="w-full flex justify-center">
 								<Link
@@ -186,6 +183,7 @@ export default function Home({ initialData }) {
 								</Link>
 							</div>
 						</div>
+						<div className="absolute bottom-0 inset-x-0 bg-bottom bg-no-repeat shadow_03"></div>
 					</section>
 					<section id="testimonial" className="relative py-10 md:py-20">
 						<div className="container mx-auto px-3 md:px-5">

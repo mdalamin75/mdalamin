@@ -22,14 +22,19 @@ const SignIn = () => {
         setError(result.error);
       } else {
         const session = await getSession();
-        const { twoFactorVerified } = session.user;
-        if (twoFactorVerified) {
+        console.log("Login success, session:", session);
+        
+        // Check if 2FA is already setup for this user
+        if (session.user?.twoFactorEnabled) {
+          // If 2FA is enabled but not verified for this session, redirect to verify
           router.push('/admin/2fa-verify');
         } else {
+          // If 2FA is not set up yet, redirect to setup
           router.push('/admin/2fa-setup');
         }
       }
     } catch (err) {
+      console.error("Login error:", err);
       setError('An unexpected error occurred.');
     }
   };

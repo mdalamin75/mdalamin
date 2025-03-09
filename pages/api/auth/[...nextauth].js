@@ -19,12 +19,16 @@ const authOptions = {
           const user = await User.findOne({ email: credentials.email });
 
           if (user && bcrypt.compareSync(credentials.password, user.password)) {
+            console.log("User authenticated:", user.email);
+            console.log("2FA status:", Boolean(user.twoFactorSecret));
+            
+            // Return user with 2FA information
             return {
               id: user._id.toString(),
               email: user.email,
               role: user.role,
               twoFactorEnabled: Boolean(user.twoFactorSecret),
-              twoFactorVerified: false,
+              twoFactorVerified: false, // Always false on new login session
             };
           }
           return null;
@@ -68,6 +72,7 @@ const authOptions = {
     strategy: 'jwt',
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
+  debug: process.env.NODE_ENV === 'development',
 };
 
 export default NextAuth(authOptions);

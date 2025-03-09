@@ -20,7 +20,7 @@ const Services = ({ initialData }) => {
         ? serviceData.filter((ab) => ab.status === "publish")
         : [];
     return (
-        <div className="grid gap-5">
+        <div className="grid gap-5 grid-cols-12">
             {servicePublishedData
                 .slice() // Avoid mutating the original array
                 .reverse()
@@ -29,17 +29,24 @@ const Services = ({ initialData }) => {
 
                     // Check if it's the last item and if the total items are odd
                     const isLastItemOdd = index === array.length - 1 && array.length % 2 !== 0;
-                    const desktopSpan = isLastItemOdd
-                        ? "col-span-12"
-                        : index % 4 === 0 || index % 4 === 3
-                            ? "col-span-5"
-                            : "col-span-7";
+                    
+                    // Create CSS classes for different column spans
+                    let columnClasses = "col-span-12"; // Default for mobile
+                    
+                    // Only apply these classes on md screens and up
+                    if (isLastItemOdd) {
+                        columnClasses += " md:col-span-12"; // Full width for last odd item
+                    } else if (index % 4 === 0 || index % 4 === 3) {
+                        columnClasses += " md:col-span-5"; // 5/12 width
+                    } else {
+                        columnClasses += " md:col-span-7"; // 7/12 width
+                    }
 
                     return (
                         <Link
                             href={btnurl || "mailto:mdalamiin75@gmail.com"}
                             key={id}
-                            className={`card card-bordered border-purple-200 p-5 group col-span-12 md:${desktopSpan}`}
+                            className={`card card-bordered border-purple-200 p-5 group ${columnClasses}`}
                             data-aos={index % 2 === 0 ? "fade-left" : "fade-right"}
                             data-aos-duration="1000"
                         >
@@ -86,7 +93,6 @@ const Services = ({ initialData }) => {
                     );
                 })}
         </div>
-
     );
 };
 
