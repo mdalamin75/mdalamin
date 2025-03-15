@@ -12,13 +12,14 @@ import "swiper/css/pagination";
 // import required modules
 import { Autoplay, EffectCoverflow, Pagination, Keyboard } from "swiper";
 import useFetch from "../hooks/useFetch";
+import LoadingSpinner from "./LoadingSpinner";
 
 const TestimonialSlider = ({ initialData }) => {
   // Fetch Testimonial data
   const { data: testimonialData, loading, refetch } = useFetch("testimonial", initialData);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner variant="ring" size="md" text="Loading testimonials" />;
   }
   const testimonialPublishedData = testimonialData
     ? testimonialData.filter((ab) => ab.status === "publish")

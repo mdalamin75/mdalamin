@@ -1,6 +1,8 @@
 // components/CheckSession.js
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import LoadingSpinner from "../LoadingSpinner";
 
 const CheckSession = () => {
   const { data: session, status } = useSession();
@@ -10,7 +12,7 @@ const CheckSession = () => {
   }, [session]);
 
   if (status === 'loading') {
-    return <div>Loading...</div>;
+    return <LoadingSpinner variant="ring" size="lg" text="Checking session" fullContainer={true} />;
   }
 
   if (!session) {

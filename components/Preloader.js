@@ -251,8 +251,12 @@ const Preloader = () => {
                 position: "fixed",
                 top: 0,
                 left: 0,
+                right: 0,
+                bottom: 0,
                 width: "100%",
-                height: "100dvh",
+                height: "100%",
+                minHeight: "100vh",
+                minHeight: "100dvh", /* Dynamic viewport height */
                 background: "transparent",
                 zIndex: 9999,
                 display: isLoading || isRouteChanging ? "flex" : "none",
@@ -264,7 +268,17 @@ const Preloader = () => {
                 visibility: isLoading || isRouteChanging ? "visible" : "hidden"
             }}
         >
-            <svg viewBox="0 0 1000 1000" preserveAspectRatio="none">
+            <svg 
+                viewBox="0 0 1000 1000" 
+                preserveAspectRatio="none"
+                style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%"
+                }}
+            >
                 <path 
                     ref={svgPathRef}
                     d="M0 1000S175 1000 500 1000s500 0 500 0V0H0Z"

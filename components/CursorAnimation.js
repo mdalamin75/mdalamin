@@ -9,7 +9,31 @@ const AnimatedCursor = dynamic(() => import("react-animated-cursor"), {
 const CursorAnimation = () => {
   const [theme, setTheme] = useState("light");
   const [hoveringClickable, setHoveringClickable] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
   const clickablesRef = useRef(null);
+
+  // Detect touch devices
+  useEffect(() => {
+    // Function to detect if the device is a touch device
+    const detectTouchDevice = () => {
+      const isTouchCapable = 'ontouchstart' in window || 
+        navigator.maxTouchPoints > 0 || 
+        navigator.msMaxTouchPoints > 0 ||
+        (window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+      
+      setIsTouchDevice(isTouchCapable);
+    };
+
+    // Detect on initial load
+    detectTouchDevice();
+
+    // Also detect on resize in case of device orientation changes or external displays
+    window.addEventListener('resize', detectTouchDevice);
+    
+    return () => {
+      window.removeEventListener('resize', detectTouchDevice);
+    };
+  }, []);
 
   useEffect(() => {
     // Function to update theme based on the current DaisyUI theme
@@ -29,6 +53,9 @@ const CursorAnimation = () => {
   }, []);
 
   useEffect(() => {
+    // Skip setup if it's a touch device
+    if (isTouchDevice) return;
+
     // Define the selectors for clickable elements
     const selectors = [
       "a",
@@ -73,10 +100,16 @@ const CursorAnimation = () => {
         });
       }
     };
-  }, []);
+  }, [isTouchDevice]);
 
-  const cursorInnerColor = theme === "night" ? "white" : "black";
-  const cursorOuterColor = theme === "night" ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.5)";
+  // If it's a touch device, don't render the cursor animation
+  if (isTouchDevice) {
+    return null;
+  }
+
+  // Improved theme-based colors with more reliable detection
+  const cursorInnerColor = theme === "night" || theme === "dark" ? "255, 255, 255" : "0, 0, 0";
+  const cursorOuterColor = theme === "night" || theme === "dark" ? "255, 255, 255" : "0, 0, 0";
   const cursorMixBlendMode = hoveringClickable ? "difference" : "normal";
 
   return (
@@ -84,16 +117,16 @@ const CursorAnimation = () => {
       <AnimatedCursor
         innerSize={8}
         outerSize={40}
-        color="255, 255, 255"
+        color={cursorInnerColor}
         outerAlpha={0.1}
         innerScale={1}
         outerScale={1.5}
         innerStyle={{
-          backgroundColor: hoveringClickable ? "transparent" : cursorInnerColor,
+          backgroundColor: hoveringClickable ? "transparent" : `rgb(${cursorInnerColor})`,
           zIndex: 999999,
         }}
         outerStyle={{
-          border: `2px solid ${hoveringClickable ? "currentColor" : cursorOuterColor}`,
+          border: `2px solid ${hoveringClickable ? "currentColor" : `rgba(${cursorOuterColor}, 0.5)`}`,
           mixBlendMode: cursorMixBlendMode,
           zIndex: 999999,
         }}

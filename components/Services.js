@@ -4,6 +4,8 @@ import ReactMarkdown from "react-markdown";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import Link from "next/link";
 import { IoIosArrowRoundForward } from "react-icons/io";
+import Image from "next/image";
+import LoadingSpinner from "./LoadingSpinner";
 
 const Services = ({ initialData }) => {
     // Fetch Service data
@@ -14,7 +16,7 @@ const Services = ({ initialData }) => {
     } = useFetch("service", initialData);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <LoadingSpinner variant="ring" size="lg" text="Loading services" />;
     }
     const servicePublishedData = serviceData
         ? serviceData.filter((ab) => ab.status === "publish")

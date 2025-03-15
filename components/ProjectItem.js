@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import useFetch from "../hooks/useFetch";
 import Image from "next/image";
 import Spinner from "./Admin/Spiner";
+import LoadingSpinner from "./LoadingSpinner";
 
 const ProjectItem = ({ initialData, showFilter = true, limit = null }) => {
   const {
@@ -41,7 +42,7 @@ const ProjectItem = ({ initialData, showFilter = true, limit = null }) => {
   }, [selectedCategory, portfolioData]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner variant="ring" size="md" text="Loading projects" />;
   }
 
   const displayedProjects = limit
@@ -115,9 +116,7 @@ const ProjectItem = ({ initialData, showFilter = true, limit = null }) => {
           layout
           className="grid grid-cols-1 md:grid-cols-2 gap-10 py-10">
           {loading ? (
-            <div className="flex justify-center">
-              <Spinner />
-            </div>
+            <LoadingSpinner variant="ring" size="sm" />
           ) : displayedProjects.length === 0 ? (
             <h1 className="flex justify-center">No Project Found</h1>
           ) : (

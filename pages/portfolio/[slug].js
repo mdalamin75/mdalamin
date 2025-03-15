@@ -10,6 +10,7 @@ import { a11yDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import useFetch from "../../hooks/useFetch";
 import { useState } from 'react'; // Added missing import
 import Image from "next/image";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 export default function ProjectSlug({ initialData }) {
 	const router = useRouter();
@@ -22,11 +23,14 @@ export default function ProjectSlug({ initialData }) {
 	} = useFetch(`portfolio?slug=${slug}`, initialData);
 
 	if (loading) {
-		return <div>Loading...</div>;
+		return <LoadingSpinner variant="ring" size="lg" text="Loading project details" fullContainer={true} />;
 	}
 
 	if (error) {
-		return <div>Error loading project</div>;
+		return <div className="container mx-auto py-20 text-center">
+			<h2 className="text-2xl font-semibold text-red-500">Error loading project</h2>
+			<p className="mt-4">Please try again later or contact the administrator.</p>
+		</div>;
 	}
 
 	if (!project) {
@@ -107,7 +111,7 @@ export default function ProjectSlug({ initialData }) {
 										{project?.livepreview && (
 											<a
 												href={project.livepreview}
-												className="button w-44 button--nina bg-gradient-to-r from-purple-950 to-purple-600 relative block focus:outline-none text-white border-2 border-solid rounded-2xl text-sm text-center font-josefin font-semibold uppercase tracking-widest overflow-hidden me-3 px-5"
+												className="button w-44 button--nina bg-gradient-to-r from-purple-950 to-purple-600 relative block focus:outline-none text-white border-2 border-solid rounded-2xl text-sm text-center font-josefin font-semibold uppercase tracking-widest overflow-hidden me-3 mb-5 px-5"
 												data-text="Live Preview"
 												target="_blank"
 												rel="noopener noreferrer">
