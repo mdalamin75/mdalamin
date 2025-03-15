@@ -21,9 +21,9 @@
 }
 
 /* Clear all previous preloader styles as we're using inline styles now */
-.preloader {
+/* .preloader { */
 	/* We're using inline styles now */
-}
+/* } */
 
 /* Additional protection against text visibility issues */
 .preloader.hidden,
@@ -770,9 +770,6 @@ main {
 	position: relative;
 }
 
-/* .drawer-side {
-	z-index: 999999999999999999999999999999 !important; 
-} */
 .drawer-side > *:not(.drawer-overlay) {
 	transform: translateX(-10%);
 	padding-left: 2rem !important;

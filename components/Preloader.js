@@ -252,7 +252,7 @@ const Preloader = () => {
                 top: 0,
                 left: 0,
                 width: "100%",
-                height: "100vh",
+                height: "100dvh",
                 background: "transparent",
                 zIndex: 9999,
                 display: isLoading || isRouteChanging ? "flex" : "none",

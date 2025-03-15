@@ -13,7 +13,7 @@ const Portfolio = () => {
       <Head>
         <title>Portfolio</title>
       </Head>
-      <section id="portfolio" className="relative pb-10 pt-32 snap-start">
+      <section id="portfolio" className="relative pb-10 md:mb-20 pt-20 snap-start">
         <div className="absolute z-20 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
           <div className="w-[108rem] flex-none flex justify-end">
             <picture>
@@ -29,7 +29,7 @@ const Portfolio = () => {
           <div className="portfolio_head py-16">
             <Image src={portfolio} width={150} height={150} priority="true" alt="portfolio" className="mx-auto z-10" />
             <h1
-              className={`font-josefin uppercase text-center text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-900 to-purple-500 drop-shadow-2xl`}>
+              className={`font-josefin uppercase text-center text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-700 to-indigo-300 drop-shadow-2xl`}>
               My Projects
             </h1>
             <p className={`font-titillium text-center py-3 text-lg`}>

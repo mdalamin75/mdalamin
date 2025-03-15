@@ -28,7 +28,7 @@ const About = ({ initialData }) => {
       <Head>
         <title>About</title>
       </Head>
-      <section id="about" className="pb-10 pt-32 snap-start bg_pattern2">
+      <section id="about" className="pb-10 md:pb-20 pt-32 min-h-screen snap-start bg_pattern2">
         <div className="container mx-auto px-3 md:px-5">
           <div className="about_head">
             <Image src={Programming} width={150} height={150} alt="programming" priority="true" className="mx-auto z-10" />
@@ -72,7 +72,7 @@ const About = ({ initialData }) => {
           </div>
         </div>
       </section>
-      <section id="education" className="py-10 snap-start relative bg_pattern2">
+      <section id="education" className="py-10 md:py-20 snap-start relative bg_pattern2">
         <div className="absolute z-20 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
           <div className="w-[108rem] flex-none flex justify-end">
             <picture>
@@ -119,7 +119,7 @@ const About = ({ initialData }) => {
           </div>
         </div>
       </section>
-      <section id="skill" className="py-10 snap-start relative bg_pattern2">
+      <section id="skill" className="py-10 md:py-20 snap-start relative bg_pattern2">
         <div className="absolute inset-0 top-0 bg-top bg-no-repeat shadow_06"></div>
         <div className="container mx-auto px-3 md:px-5">
           <div className="skill_head">
@@ -138,7 +138,7 @@ const About = ({ initialData }) => {
             </h1>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-x-10">
-            <div className="font-titillium skills font-bold flex flex-wrap justify-between items-center gap-5 py-10 px-3 md:px-5 lg:px-10">
+            <div className="font-titillium skills font-bold flex flex-wrap justify-evenly items-center gap-5 py-10 px-3 md:px-5 lg:px-10">
               {skillImages.map((skill, index) => (
                 <div
                   key={index}

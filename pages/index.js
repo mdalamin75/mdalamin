@@ -57,11 +57,11 @@ export default function Home({ initialData }) {
 				<Head>
 					<title>MD. AL AMIN</title>
 				</Head>
-					<section id="hero" className="relative pt-32 md:pt-10 pb-20 md:pb-0">
+					<section id="hero" className="relative pt-32 md:pt-10 pb-10 md:pb-20">
 						<Particles />
 						<div className="absolute bottom-0 inset-x-0 bg-bottom bg-no-repeat shadow_03"></div>
 						<div className="container mx-auto px-3 md:px-5">
-							<div className="grid sm:grid-cols-1 md:grid-cols-2 justify-between items-center h-screen">
+							<div className="grid sm:grid-cols-1 md:grid-cols-2 justify-between items-center min-h-screen">
 								<div
 									data-aos="fade-right"
 									data-aos-duration="1000"
@@ -104,7 +104,7 @@ export default function Home({ initialData }) {
 									<div className="flex flex-wrap flex-col-reverse sm:flex-row sm:flex-nowrap  gap-5">
 										<button
 											onClick={handleDownload}
-											className="flex gap-3 px-5 py-3 button button--aylen bg-gradient-to-r from-blue-950 to-blue-600 hover:from-blue-600  text-white relative  focus:outline-none border-2 border-solid rounded-lg text-sm text-center font-semibold uppercase tracking-widest overflow-hidden"
+											className="flex gap-3 px-5 py-3 button button--aylen bg-gradient-to-r from-blue-950 to-blue-600 hover:from-blue-600  text-white relative  focus:outline-none border-2 border-solid rounded-lg text-sm text-center font-semibold uppercase tracking-widest overflow-hidden w-52"
 											data-text="Download CV"
 										>
 											<span className="align-middle">Download CV</span>
@@ -140,7 +140,7 @@ export default function Home({ initialData }) {
 							</div>
 						</div>
 					</section>
-					<section id="latest_projects" className="relative mt-20 md:mt-0 py-10 md:py-20">
+					<section id="latest_projects" className="relative py-10 md:py-20">
 						<div className="container mx-auto px-3 md:px-5">
 							<div className="latest_head">
 								<Image
