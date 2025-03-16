@@ -5,6 +5,7 @@ import useFetch from "../hooks/useFetch";
 import Image from "next/image";
 import Spinner from "./Admin/Spiner";
 import LoadingSpinner from "./LoadingSpinner";
+import Head from "next/head";
 
 const ProjectItem = ({ initialData, showFilter = true, limit = null }) => {
   const {
@@ -49,8 +50,38 @@ const ProjectItem = ({ initialData, showFilter = true, limit = null }) => {
     ? filteredProjects.slice(0, limit)
     : filteredProjects;
 
+  // Generate structured data for all projects for SEO
+  const projectsSchema = displayedProjects.map(project => ({
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": project.title,
+    "description": project.description?.substring(0, 150) || "Portfolio project by MD. AL AMIN",
+    "creator": {
+      "@type": "Person",
+      "name": "MD. AL AMIN",
+      "url": "https://mdalamin.com"
+    },
+    "thumbnailUrl": project.images && project.images.length > 0 ? 
+      (project.images[0].startsWith('http') ? project.images[0] : `https://mdalamin.com${project.images[0]}`) : 
+      null,
+    "url": `https://mdalamin.com/portfolio/${project.slug}`,
+    "datePublished": project.createdAt || new Date().toISOString(),
+    "dateModified": project.updatedAt || new Date().toISOString(),
+    "genre": project.projectcategory ? project.projectcategory.join(", ") : "",
+  }));
+
   return (
     <>
+      {/* Add structured data for projects */}
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(projectsSchema)
+          }}
+        />
+      </Head>
+
       {showFilter && (
         <div className="project_buttons flex justify-center gap-5 flex-wrap">
           <button
@@ -118,29 +149,49 @@ const ProjectItem = ({ initialData, showFilter = true, limit = null }) => {
           {loading ? (
             <LoadingSpinner variant="ring" size="sm" />
           ) : displayedProjects.length === 0 ? (
-            <h1 className="flex justify-center">No Project Found</h1>
+            <h1 className="flex justify-center py-5">No Project Found</h1>
           ) : (
-            displayedProjects.map((element) => {
-              const { id, title, slug, images } = element;
-              return (
-                <Link
-                  href={`/portfolio/${slug}`}
-                  key={element._ID}
-                  className="procard" data-aos="flip-left">
-                  <div
+              displayedProjects.map((element) => {
+                const { id, title, slug, images, projectcategory } = element;
+                // Create SEO-friendly alt text
+                const altText = `${title} - ${projectcategory ? projectcategory.join(', ') : 'Web Project'} by MD. AL AMIN | Professional Portfolio Project`;
+                
+                return (
+                  <Link
+                    href={`/portfolio/${slug}`}
+                    key={id}
+                    className="procard" 
+                    data-aos="flip-left"
+                    data-aos-duration="1000"
+                  >
+                    <div
                     key={id}
                     className="card bg-base-100 image-full w-full h-96 overflow-hidden shadow-xl card_hover hover:shadow-lg hover:shadow-purple-500 duration-500">
                     <figure>
-                      <Image
-                        width={700}
-                        height={300}
-                        src={images[0]}
-                        alt={title}
-                        className="w-full h-96 object-top overflow-hidden"
-                      />
+                      {images[0] ? (
+                        <Image
+                          src={images[0]}
+                          alt={altText}
+                          width={700}
+                          height={300}
+                          className="w-full h-96 object-top overflow-hidden transition duration-300 hover:scale-105"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div className="w-full h-[50vw] md:h-[30vw] lg:h-[20vw] min-h-60 border">
+                          <Image
+                            src="/no-image.jpg"
+                            alt="No image available - Portfolio project placeholder"
+                            width={700}
+                            height={300}
+                            className="w-full h-96 object-top overflow-hidden"
+                            loading="lazy"
+                          />
+                        </div>
+                      )}
                     </figure>
                     <div className="card-body justify-end">
-                      <h2 className="card-title font-bold font-josefin text-stone-100">
+                      <h2 className="card-title text-xl font-josefin font-bold">
                         {title}
                       </h2>
                       <div className="card-actions">
@@ -155,10 +206,10 @@ const ProjectItem = ({ initialData, showFilter = true, limit = null }) => {
                         </Link>
                       </div>
                     </div>
-                  </div>
-                </Link>
-              )
-            })
+                    </div>
+                  </Link>
+                );
+              })
           )}
         </motion.div>
       </AnimatePresence>

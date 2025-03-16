@@ -11,6 +11,7 @@ import useFetch from "../../hooks/useFetch";
 import { useState } from 'react'; // Added missing import
 import Image from "next/image";
 import LoadingSpinner from "../../components/LoadingSpinner";
+import SEO from "../../components/SEO";
 
 export default function ProjectSlug({ initialData }) {
 	const router = useRouter();
@@ -82,14 +83,87 @@ export default function ProjectSlug({ initialData }) {
 		}
 	}
 
+	// Project data extracted from API response
+	const projectData = Array.isArray(project) && project.length > 0 ? project[0] : project;
+
+	// Early return if no project found
+	if (!projectData) {
+		return <div className="container mx-auto py-20 text-center">
+			<h2 className="text-2xl font-semibold">Project not found</h2>
+			<p className="mt-4">The project you're looking for doesn't exist or has been removed.</p>
+		</div>;
+	}
+
+	// Extract data for convenience
+	const {
+		title,
+		description,
+		thumbnail,
+		images,
+		projectcategory,
+		techstack,
+		github,
+		livelink,
+		tags,
+	} = projectData;
+
+	// Create SEO description from project description
+	const seoDescription = description ? 
+		`${description.substring(0, 150)}... View this ${projectcategory ? projectcategory.join(', ') : ''} project by MD. AL AMIN.` : 
+		`${title} - A ${projectcategory ? projectcategory.join(', ') : 'web development'} project by MD. AL AMIN. View details, technologies used, and screenshots.`;
+
+	// Create SEO keywords from project tags and categories
+	const seoKeywords = [
+		"mdalamin", 
+		"mdalamin75", 
+		"web developer portfolio", 
+		...((projectcategory && projectcategory.length) ? projectcategory : []),
+		...((tags && tags.length) ? tags : []),
+		...((techstack && techstack.length) ? techstack : []),
+		"portfolio project",
+		"web development",
+		"case study"
+	].join(", ");
+
 	return (
 		<>
-			<section id="portfolio" className="relative bg_pattern pt-20">
-				<Head>
-					<title>{project?.title || 'Project'}</title>
-				</Head>
+			<SEO
+				title={`${title} | Project by MD. AL AMIN`}
+				description={seoDescription}
+				keywords={seoKeywords}
+				ogImage={thumbnail || (images && images.length > 0 ? images[0] : '/profile.jpg')}
+				ogType="article"
+			/>
+			
+			{/* Structured Data for Project */}
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{
+					__html: JSON.stringify({
+						"@context": "https://schema.org",
+						"@type": "CreativeWork",
+						"name": title,
+						"description": description,
+						"creator": {
+							"@type": "Person",
+							"name": "MD. AL AMIN",
+							"url": "https://mdalamin.com"
+						},
+						"image": images && images.length > 0 ? images.map(img => img.startsWith('http') ? img : `https://mdalamin.com${img}`) : [],
+						"thumbnailUrl": thumbnail ? (thumbnail.startsWith('http') ? thumbnail : `https://mdalamin.com${thumbnail}`) : null,
+						"keywords": tags ? tags.join(", ") : "",
+						"url": `https://mdalamin.com/portfolio/${projectData.slug}`,
+						"datePublished": projectData.createdAt || new Date().toISOString(),
+						"dateModified": projectData.updatedAt || new Date().toISOString(),
+						"genre": projectcategory ? projectcategory.join(", ") : "",
+						"workExample": livelink ? { "@type": "WebSite", "url": livelink } : null
+					})
+				}}
+			/>
+
+			<section id="portfolio" className="relative bg_pattern py-20">
 				<div className="container mx-auto px-3 md:px-5">
-					<div className="projectslug">
+					<div className="projectslug pt-10">
 						<div className="projectslugimg">
 							<div className="container">
 								<div className="max-h-96 overflow-hidden">
@@ -98,8 +172,9 @@ export default function ProjectSlug({ initialData }) {
 											width={900}
 											height={300}
 											src={firstImage}
-											alt={project?.title || 'Project image'}
+											alt={`${title} - ${projectcategory ? projectcategory.join(', ') : 'Web Project'} by MD. AL AMIN`}
 											className="w-full object-top"
+											priority
 										/>
 									)}
 								</div>

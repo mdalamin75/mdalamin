@@ -3,7 +3,7 @@ import Image from "next/image";
 import ContactForm from "../components/ContactForm";
 import contact from "../public/ContactPage/contact-us-animate.svg";
 import SocialList from "../components/SocialList";
-import Head from "next/head";
+import SEO from "../components/SEO";
 
 export const metadata = {
   title: "Contact"
@@ -25,9 +25,34 @@ const Contact = () => {
 
   return (
     <>
-      <Head>
-        <title>Contact</title>
-      </Head>
+      <SEO 
+        title="Contact MD. AL AMIN - Hire a Professional Web Developer"
+        description="Get in touch with MD. AL AMIN for your web development needs. Hire an expert developer for your next project or discuss a collaboration opportunity."
+        keywords="contact MD. AL AMIN, hire web developer, freelance developer contact, web development services, mdalamin75 contact, professional developer for hire"
+        ogImage="/ContactPage/contact-us-animate.svg"
+      />
+
+      {/* Structured data for Contact page */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            "name": "Contact MD. AL AMIN",
+            "description": "Get in touch with MD. AL AMIN for web development services",
+            "url": "https://mdalamin.com/contact",
+            "mainEntity": {
+              "@type": "Person",
+              "name": "MD. AL AMIN",
+              "email": "mdalamiin75@gmail.com",
+              "url": "https://mdalamin.com",
+              "jobTitle": "Full Stack Web Developer"
+            }
+          })
+        }}
+      />
+      
       <section id="contact" className="bg_pattern2 pt-32 pb-20">
         <div className="container mx-auto px-3 md:px-5">
           <div className="absolute left-[18%] top-10 hidden rotate-12 rounded-3xl bg-sky-800 opacity-90 blur-3xl filter dark:opacity-30 lg:h-32 lg:w-[450px] dark:lg:block xl:h-44 xl:w-[600px]"></div>

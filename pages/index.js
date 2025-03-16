@@ -12,7 +12,7 @@ import review from "../public/testimonial/review.svg";
 import TestimonialSlider from "../components/TestimonialSlider";
 import ProjectItem from "../components/ProjectItem";
 import Services from "../components/Services";
-import Head from "next/head";
+import SEO from "../components/SEO";
 
 export default function Home({ initialData }) {
 	const { data: homeData, loading, refetch } = useFetch("home", initialData);
@@ -54,9 +54,12 @@ export default function Home({ initialData }) {
 		<>
 			{!loading && (
 				<>
-				<Head>
-					<title>MD. AL AMIN</title>
-				</Head>
+				<SEO 
+					title="MD. AL AMIN - Professional Web Developer & Designer"
+					description={`${allHomeData.description} Professional web developer specializing in React, Next.js, WordPress, and custom solutions.`}
+					keywords="mdalamin, mdalamin75, web developer, portfolio, freelancer, React developer, WordPress expert, frontend developer, website designer"
+					ogImage={allHomeData.image || "/profile.jpg"}
+				/>
 					<section id="hero" className="relative pt-32 md:pt-10 pb-10 md:pb-20">
 						<Particles />
 						<div className="absolute bottom-0 inset-x-0 bg-bottom bg-no-repeat shadow_03"></div>
@@ -154,7 +157,7 @@ export default function Home({ initialData }) {
 									data-aos-duration="1000"
 								/>
 								<h1
-									className="font-josefin uppercase text-center text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-purple-300 drop-shadow-2xl">
+									className="font-josefin uppercase text-center text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-purple-600 to-purple-300 drop-shadow-2xl">
 									Latest Projects
 								</h1>
 								<p className="font-titillium text-center text-lg py-3">

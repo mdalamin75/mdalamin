@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState("dark");
+  const [isDesktop, setIsDesktop] = useState(false);
   const Menus = [
     {
       src: "/",
@@ -29,6 +30,18 @@ const Navbar = () => {
       title: "Contact",
     },
   ];
+
+  // Check if we're on desktop - only runs on client side
+  useEffect(() => {
+    setIsDesktop(window.innerWidth >= 1024);
+    
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Theme Handler
   useEffect(() => {
@@ -144,7 +157,7 @@ const Navbar = () => {
               </motion.button>
             </div>
             <AnimatePresence>
-              {(open || window?.innerWidth >= 1024) && (
+              {(open || isDesktop) && (
                 <motion.div
                   className={`flex-1 justify-self-center pb-3 lg:block lg:pb-0 lg:mt-0 ${
                     open

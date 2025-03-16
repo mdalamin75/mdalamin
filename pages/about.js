@@ -10,7 +10,7 @@ import shadow from "../public/shadow_01.png";
 import shadow2 from "../public/shadow_02.png";
 import useFetch from "../hooks/useFetch";
 import ReactMarkdown from "react-markdown";
-import Head from "next/head";
+import SEO from "../components/SEO";
 
 const About = ({ initialData }) => {
   // Fetch about data
@@ -25,9 +25,12 @@ const About = ({ initialData }) => {
 
   return (
     <>
-      <Head>
-        <title>About</title>
-      </Head>
+      <SEO 
+        title="About MD. AL AMIN - Skills, Experience & Education"
+        description={`Learn about MD. AL AMIN's background, skills, and experience as a professional web developer. ${allAboutData?.description?.substring(0, 100)}...`}
+        keywords="MD. AL AMIN biography, web developer skills, programmer experience, freelance developer, mdalamin75 about, web development expertise"
+        ogImage={allAboutData?.image || "/profile.jpg"}
+      />
       <section id="about" className="pb-10 md:pb-20 pt-32 min-h-screen snap-start bg_pattern2">
         <div className="container mx-auto px-3 md:px-5">
           <div className="about_head">

@@ -23,10 +23,12 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
         {/* Preloader must be the first element */}
         <Preloader />
         
-        {/* Main content */}
-        <div id="app-content">
+        {/* Main content with flex layout to keep footer at bottom */}
+        <div className="app-wrapper min-h-screen flex flex-col">
           {!isAdminRoute && <Navbar />}
-          <Component {...pageProps} />
+          <main className="flex-grow">
+            <Component {...pageProps} />
+          </main>
           <ClientAnimations />
           {!isAdminRoute && <Footer />}
         </div>
