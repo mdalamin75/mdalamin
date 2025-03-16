@@ -8,7 +8,7 @@ import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { a11yDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import useFetch from "../../hooks/useFetch";
-import { useState } from 'react'; // Added missing import
+import { useState, useEffect } from 'react'; // Added useEffect
 import Image from "next/image";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import SEO from "../../components/SEO";
@@ -22,6 +22,16 @@ export default function ProjectSlug({ initialData }) {
 		loading,
 		error
 	} = useFetch(`portfolio?slug=${slug}`, initialData);
+	
+	// Redirect to 404 when project not found
+	useEffect(() => {
+		if (!loading && !error) {
+			// Check if there's no project data or if it's an empty array
+			if (!project || (Array.isArray(project) && project.length === 0)) {
+				router.push('/404');
+			}
+		}
+	}, [project, loading, error, router]);
 
 	if (loading) {
 		return <LoadingSpinner variant="ring" size="lg" text="Loading project details" fullContainer={true} />;
@@ -34,13 +44,17 @@ export default function ProjectSlug({ initialData }) {
 		</div>;
 	}
 
-	if (!project) {
-		return <div>Project not found</div>;
+	// Project data extracted from API response
+	const projectData = Array.isArray(project) && project.length > 0 ? project[0] : project;
+
+	// If no project data, return null (useEffect will handle redirect)
+	if (!projectData) {
+		return null;
 	}
 
 	// Safely access the images array
-	const firstImage = project?.images?.[0] || '';
-	const projectImages = project?.images || [];
+	const firstImage = projectData?.images?.[0] || '';
+	const projectImages = projectData?.images || [];
 
 	const Code = ({ node, inline, className, children, ...props }) => {
 		const match = /language-(\w+)/.exec(className || '');
@@ -81,17 +95,6 @@ export default function ProjectSlug({ initialData }) {
 				</code>
 			)
 		}
-	}
-
-	// Project data extracted from API response
-	const projectData = Array.isArray(project) && project.length > 0 ? project[0] : project;
-
-	// Early return if no project found
-	if (!projectData) {
-		return <div className="container mx-auto py-20 text-center">
-			<h2 className="text-2xl font-semibold">Project not found</h2>
-			<p className="mt-4">The project you're looking for doesn't exist or has been removed.</p>
-		</div>;
 	}
 
 	// Extract data for convenience
@@ -147,12 +150,12 @@ export default function ProjectSlug({ initialData }) {
 						"creator": {
 							"@type": "Person",
 							"name": "MD. AL AMIN",
-							"url": "https://mdalamin.com"
+							"url": "https://mdalamin.vercel.app"
 						},
-						"image": images && images.length > 0 ? images.map(img => img.startsWith('http') ? img : `https://mdalamin.com${img}`) : [],
-						"thumbnailUrl": thumbnail ? (thumbnail.startsWith('http') ? thumbnail : `https://mdalamin.com${thumbnail}`) : null,
+						"image": images && images.length > 0 ? images.map(img => img.startsWith('http') ? img : `https://mdalamin.vercel.app${img}`) : [],
+						"thumbnailUrl": thumbnail ? (thumbnail.startsWith('http') ? thumbnail : `https://mdalamin.vercel.app${thumbnail}`) : null,
 						"keywords": tags ? tags.join(", ") : "",
-						"url": `https://mdalamin.com/portfolio/${projectData.slug}`,
+						"url": `https://mdalamin.vercel.app/portfolio/${projectData.slug}`,
 						"datePublished": projectData.createdAt || new Date().toISOString(),
 						"dateModified": projectData.updatedAt || new Date().toISOString(),
 						"genre": projectcategory ? projectcategory.join(", ") : "",
@@ -181,11 +184,11 @@ export default function ProjectSlug({ initialData }) {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 py-10">
 									<div className="leftmainproinfo">
 										<h1 className="text-2xl font-bold font-josefin mb-5">
-											{project?.title}
+											{projectData?.title}
 										</h1>
-										{project?.livepreview && (
+										{projectData?.livepreview && (
 											<a
-												href={project.livepreview}
+												href={projectData.livepreview}
 												className="button w-44 button--nina bg-gradient-to-r from-purple-950 to-purple-600 relative block focus:outline-none text-white border-2 border-solid rounded-2xl text-sm text-center font-josefin font-semibold uppercase tracking-widest overflow-hidden me-3 mb-5 px-5"
 												data-text="Live Preview"
 												target="_blank"
@@ -198,18 +201,18 @@ export default function ProjectSlug({ initialData }) {
 										<div>
 											<h3 className="text-xl font-bold font-josefin">Category</h3>
 											<h2>
-												{Array.isArray(project?.projectcategory)
-													? project.projectcategory.join(', ')
-													: project?.projectcategory}
+												{Array.isArray(projectData?.projectcategory)
+													? projectData.projectcategory.join(', ')
+													: projectData?.projectcategory}
 											</h2>
 										</div>
 										<div>
 											<h3 className="text-xl font-bold font-josefin">Client Name</h3>
-											<h2>{project?.client}</h2>
+											<h2>{projectData?.client}</h2>
 										</div>
 										<div>
 											<h3 className="text-xl font-bold font-josefin">Start Date</h3>
-											<h2>{project?.createdAt ? new Date(project.createdAt).toLocaleDateString() : ''}</h2>
+											<h2>{projectData?.createdAt ? new Date(projectData.createdAt).toLocaleDateString() : ''}</h2>
 										</div>
 										<div>
 											<h3 className="text-xl font-bold font-josefin">Developer Name</h3>
@@ -254,7 +257,7 @@ export default function ProjectSlug({ initialData }) {
 											components={{
 												code: Code,
 											}}>
-											{project?.description || ''}
+											{projectData?.description || ''}
 										</ReactMarkdown>
 									</div>
 								</div>
