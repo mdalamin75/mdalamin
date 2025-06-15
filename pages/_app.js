@@ -6,23 +6,18 @@ import ClientAnimations from "../components/ClientAnimations";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Preloader from "../components/Preloader";
-import { LoadingProvider } from "../contexts/LoadingContext";
+import { LoadingProvider, useLoading } from "../contexts/LoadingContext";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter();
   const isAdminRoute = router.pathname.startsWith('/admin');
-
-  // Initialize route for LoadingContext
-  useEffect(() => {
-    // We'll handle initial loading in the LoadingContext
-  }, [router.pathname]);
 
   return (
     <LoadingProvider>
       <SessionProvider session={session}>
         {/* Preloader must be the first element */}
         <Preloader />
-        
+
         {/* Main content with flex layout to keep footer at bottom */}
         <div className="app-wrapper min-h-screen flex flex-col">
           {!isAdminRoute && <Navbar />}

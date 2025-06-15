@@ -22,7 +22,7 @@ export default function ProjectSlug({ initialData }) {
 		loading,
 		error
 	} = useFetch(`portfolio?slug=${slug}`, initialData);
-	
+
 	// Redirect to 404 when project not found
 	useEffect(() => {
 		if (!loading && !error) {
@@ -111,15 +111,15 @@ export default function ProjectSlug({ initialData }) {
 	} = projectData;
 
 	// Create SEO description from project description
-	const seoDescription = description ? 
-		`${description.substring(0, 150)}... View this ${projectcategory ? projectcategory.join(', ') : ''} project by MD. AL AMIN.` : 
+	const seoDescription = description ?
+		`${description.substring(0, 150)}... View this ${projectcategory ? projectcategory.join(', ') : ''} project by MD. AL AMIN.` :
 		`${title} - A ${projectcategory ? projectcategory.join(', ') : 'web development'} project by MD. AL AMIN. View details, technologies used, and screenshots.`;
 
 	// Create SEO keywords from project tags and categories
 	const seoKeywords = [
-		"mdalamin", 
-		"mdalamin75", 
-		"web developer portfolio", 
+		"mdalamin",
+		"mdalamin75",
+		"web developer portfolio",
 		...((projectcategory && projectcategory.length) ? projectcategory : []),
 		...((tags && tags.length) ? tags : []),
 		...((techstack && techstack.length) ? techstack : []),
@@ -137,7 +137,7 @@ export default function ProjectSlug({ initialData }) {
 				ogImage={thumbnail || (images && images.length > 0 ? images[0] : '/profile.jpg')}
 				ogType="article"
 			/>
-			
+
 			{/* Structured Data for Project */}
 			<script
 				type="application/ld+json"
@@ -268,4 +268,27 @@ export default function ProjectSlug({ initialData }) {
 			</section>
 		</>
 	);
+}
+
+export async function getServerSideProps(context) {
+	const { slug } = context.params;
+
+	// Use your API or directly query your database/model here
+	const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'https://mdalamin.vercel.app'}/api/portfolio?slug=${slug}`);
+	let data = null;
+	try {
+		data = await res.json();
+	} catch (e) {
+		data = null;
+	}
+
+	if (!data || data.error) {
+		return { notFound: true };
+	}
+
+	return {
+		props: {
+			initialData: Array.isArray(data) ? data : [data],
+		},
+	};
 }

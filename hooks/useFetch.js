@@ -13,7 +13,7 @@ export default function useFetch(endpoint, initialData = null) {
             // Set both local and global loading states
             setLoading(true);
             setIsLoading(true);
-            
+
             // Fetch data
             const response = await axios.get(`/api/${endpoint}`);
             setData(response.data);
@@ -24,9 +24,6 @@ export default function useFetch(endpoint, initialData = null) {
         } finally {
             // Set local loading state to false
             setLoading(false);
-            
-            // We'll only control the global preloader for initial page load
-            // but keep content visible even while preloader is showing
         }
     }, [endpoint, initialData, setIsLoading]);
 
@@ -41,16 +38,20 @@ export default function useFetch(endpoint, initialData = null) {
         } else {
             // No initial data, so fetch from API
             fetchData();
-            
-            // Always ensure preloader disappears after a timeout
-            // This prevents preloader from getting stuck
-            const timer = setTimeout(() => {
-                setIsLoading(false);
-            }, 2000);
-            
-            return () => clearTimeout(timer);
         }
     }, [fetchData, initialData, setIsLoading]);
+
+    // Effect to manage global loading state based on local loading state
+    useEffect(() => {
+        if (!loading) {
+            // Add a small delay before hiding the preloader
+            // This ensures smooth transitions
+            const timer = setTimeout(() => {
+                setIsLoading(false);
+            }, 300);
+            return () => clearTimeout(timer);
+        }
+    }, [loading, setIsLoading]);
 
     return { data, loading, error, refetch: fetchData };
 }

@@ -9,15 +9,15 @@ const Preloader = () => {
     const svgPathRef = useRef(null);
     const textRef = useRef(null);
     const textContainerRef = useRef(null);
-    const { 
-        isLoading, 
-        setIsLoading, 
-        isRouteChanging, 
-        setIsRouteChanging 
+    const {
+        isLoading,
+        setIsLoading,
+        isRouteChanging,
+        setIsRouteChanging
     } = useLoading();
     const [pageText, setPageText] = useState("");
     const [hiddenClass, setHiddenClass] = useState("");
-    
+
     // Extract page name from URL path
     const getPageName = (path) => {
         if (path === "/") return "HOME";
@@ -31,28 +31,12 @@ const Preloader = () => {
             // Add a small delay before adding hidden class
             const timer = setTimeout(() => {
                 setHiddenClass("hidden");
-            }, 100);
+            }, 500); // Increased delay for smoother transition
             return () => clearTimeout(timer);
         } else {
             setHiddenClass("");
         }
     }, [isLoading, isRouteChanging]);
-
-    // Ensure preloader shows on every page load
-    useEffect(() => {
-        // Force loading state to true on initial mount
-        setIsLoading(true);
-        
-        // Set a minimum display time for the preloader
-        const minDisplayTimer = setTimeout(() => {
-            // After minimum time, check if data is loaded
-            if (!isRouteChanging) {
-                animateOut();
-            }
-        }, 800); // Ensure preloader shows for at least 800ms
-        
-        return () => clearTimeout(minDisplayTimer);
-    }, []);
 
     // Set up route change event handlers
     useEffect(() => {
@@ -60,32 +44,49 @@ const Preloader = () => {
             // Set the state for route change start
             setIsRouteChanging(true);
             setIsLoading(true);
+
+            // Immediately update page text for the new route
             setPageText(getPageName(url));
-            
-            // Show preloader
+
+            // Show preloader with smooth animation
             if (preloaderRef.current) {
-                gsap.set(preloaderRef.current, { 
-                    autoAlpha: 1, 
+                gsap.to(preloaderRef.current, {
+                    autoAlpha: 1,
                     display: "flex",
                     y: 0,
-                    visibility: "visible"
+                    visibility: "visible",
+                    duration: 0.3,
+                    ease: "power2.inOut"
                 });
             }
-            
-            // Reset text container
+
+            // Reset and show text container with animation
             if (textContainerRef.current) {
-                gsap.set(textContainerRef.current, {
+                gsap.to(textContainerRef.current, {
                     autoAlpha: 1,
-                    visibility: "visible"
+                    visibility: "visible",
+                    duration: 0.3,
+                    ease: "power2.inOut"
                 });
             }
-            
-            // Ensure text is visible
+
+            // Animate text in
             if (textRef.current) {
-                gsap.set(textRef.current, {
-                    autoAlpha: 1,
-                    visibility: "visible"
-                });
+                const textChars = textRef.current.children;
+                gsap.fromTo(textChars,
+                    {
+                        y: 30,
+                        opacity: 0,
+                        visibility: "visible"
+                    },
+                    {
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.4,
+                        stagger: 0.03,
+                        ease: "power2.out"
+                    }
+                );
             }
         };
 
@@ -122,38 +123,40 @@ const Preloader = () => {
 
     // Animate in the preloader
     const animateIn = () => {
-        const tl = gsap.timeline();
         if (preloaderRef.current && svgPathRef.current && textRef.current) {
-            // Ensure preloader is visible
-            gsap.set(preloaderRef.current, { 
-                autoAlpha: 1, 
-                display: "flex",
-                visibility: "visible"
-            });
-            
-            // Ensure text container is visible
-            gsap.set(textContainerRef.current, {
+            // Ensure preloader is visible with animation
+            gsap.to(preloaderRef.current, {
                 autoAlpha: 1,
-                visibility: "visible"
-            });
-            
-            // Prepare each letter for animation
-            const textChars = textRef.current.children;
-            gsap.set(textChars, {
-                y: 50,
-                opacity: 0,
-                visibility: "visible"
-            });
-            
-            // Animate each letter with a fixed timeline
-            gsap.to(textChars, {
-                y: 0, 
-                opacity: 1,
+                display: "flex",
+                visibility: "visible",
                 duration: 0.3,
-                stagger: 0.04,
-                ease: "power2.out",
-                visibility: "visible"
+                ease: "power2.inOut"
             });
+
+            // Ensure text container is visible with animation
+            gsap.to(textContainerRef.current, {
+                autoAlpha: 1,
+                visibility: "visible",
+                duration: 0.3,
+                ease: "power2.inOut"
+            });
+
+            // Animate text with improved timing
+            const textChars = textRef.current.children;
+            gsap.fromTo(textChars,
+                {
+                    y: 30,
+                    opacity: 0,
+                    visibility: "visible"
+                },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.4,
+                    stagger: 0.03,
+                    ease: "power2.out"
+                }
+            );
         }
     };
 
@@ -167,74 +170,56 @@ const Preloader = () => {
         });
 
         if (preloaderRef.current && svgPathRef.current && textRef.current && textContainerRef.current) {
-            // Hide all text letters first with improved animation
+            // Animate text out with improved timing
             const textChars = textRef.current.children;
-            
-            // Animate all text characters out with staggered animation
-            gsap.to(textChars, {
+
+            tl.to(textChars, {
                 y: -30,
                 opacity: 0,
-                duration: 0.3,
-                stagger: 0.03, 
+                duration: 0.4,
+                stagger: 0.02,
                 ease: "power2.in",
                 onComplete: () => {
-                    // After all letters are gone, hide the entire text container
                     gsap.set(textContainerRef.current, {
                         autoAlpha: 0,
                         visibility: "hidden",
                         display: "none"
                     });
-                    
-                    // Hide all individual letters
+
                     gsap.set(textChars, {
                         opacity: 0,
                         visibility: "hidden"
                     });
                 }
             });
-            
-            // Continue with the SVG animation after a delay
+
+            // Animate SVG with improved timing
             tl.to(svgPathRef.current, {
                 attr: { d: "M0 500S175 300 500 300s500 200 500 200V0H0Z" },
-                duration: 0.8,
-                ease: "power2.inOut",
-                delay: 0.3
-            });
-            
+                duration: 0.6,
+                ease: "power2.inOut"
+            }, "-=0.2");
+
             tl.to(svgPathRef.current, {
                 attr: { d: "M0 0S175 0 500 0s500 0 500 0V0H0Z" },
-                duration: 0.8,
+                duration: 0.6,
                 ease: "power2.inOut"
             });
-            
-            // Hide preloader completely
+
+            // Hide preloader with improved animation
             tl.to(preloaderRef.current, {
                 y: -window.innerHeight,
-                duration: 0.8,
-                ease: "power4.inOut",
+                duration: 0.6,
+                ease: "power3.inOut",
                 onComplete: () => {
-                    // Apply multiple visibility/display settings to ensure it's hidden
-                    gsap.set(preloaderRef.current, { 
-                        autoAlpha: 0, 
+                    gsap.set(preloaderRef.current, {
+                        autoAlpha: 0,
                         y: 0,
                         display: "none",
                         visibility: "hidden"
                     });
-                    
-                    // Double-check to ensure all text elements are completely gone
-                    gsap.set(textContainerRef.current, { 
-                        autoAlpha: 0,
-                        visibility: "hidden",
-                        display: "none"
-                    });
-                    
-                    // Hide all individual text elements
-                    gsap.set(textChars, { 
-                        opacity: 0,
-                        visibility: "hidden" 
-                    });
                 }
-            });
+            }, "-=0.4");
         }
     };
 
@@ -244,8 +229,8 @@ const Preloader = () => {
     }
 
     return (
-        <div 
-            ref={preloaderRef} 
+        <div
+            ref={preloaderRef}
             className={`preloader ${hiddenClass}`}
             style={{
                 position: "fixed",
@@ -256,7 +241,7 @@ const Preloader = () => {
                 width: "100%",
                 height: "100%",
                 minHeight: "100vh",
-                minHeight: "100dvh", /* Dynamic viewport height */
+                minHeight: "100dvh",
                 background: "transparent",
                 zIndex: 9999,
                 display: isLoading || isRouteChanging ? "flex" : "none",
@@ -268,8 +253,8 @@ const Preloader = () => {
                 visibility: isLoading || isRouteChanging ? "visible" : "hidden"
             }}
         >
-            <svg 
-                viewBox="0 0 1000 1000" 
+            <svg
+                viewBox="0 0 1000 1000"
                 preserveAspectRatio="none"
                 style={{
                     position: "absolute",
@@ -279,14 +264,14 @@ const Preloader = () => {
                     height: "100%"
                 }}
             >
-                <path 
+                <path
                     ref={svgPathRef}
                     d="M0 1000S175 1000 500 1000s500 0 500 0V0H0Z"
                     fill="#0b1121"
                 ></path>
             </svg>
-            
-            <div 
+
+            <div
                 ref={textContainerRef}
                 className="preloader-text"
                 style={{
@@ -302,7 +287,7 @@ const Preloader = () => {
                     visibility: "visible"
                 }}
             >
-                <div 
+                <div
                     ref={textRef}
                     style={{
                         fontSize: "2.5rem",
@@ -317,7 +302,7 @@ const Preloader = () => {
                     }}
                 >
                     {pageText.split("").map((char, index) => (
-                        <span 
+                        <span
                             key={index}
                             style={{
                                 display: 'inline-block',
