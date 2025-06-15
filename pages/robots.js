@@ -1,6 +1,6 @@
 // pages/robots.js
 export default function Robots() {
-    return `# https://mdalamin.com robots.txt
+    return `# https://mdalamin.vercel.app/robots.txt
 User-agent: *
 Allow: /
 Disallow: /admin
@@ -20,8 +20,8 @@ Allow: /about
 Allow: /contact
 
 # Sitemaps
-Sitemap: https://mdalamin.com/sitemap.xml
-Sitemap: https://mdalamin.com/services-sitemap.xml
+Sitemap: https://mdalamin.vercel.app/sitemap.xml
+Sitemap: https://mdalamin.vercel.app/services-sitemap.xml
 `;
 }
 
