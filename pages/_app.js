@@ -2,6 +2,7 @@ import { SessionProvider } from "next-auth/react";
 import "../styles/globals.css";
 import { useRouter } from "next/router";
 import { LoadingProvider } from "../contexts/LoadingContext";
+import Head from "next/head";
 
 // Static imports to prevent dynamic loading issues
 import Navbar from "../components/Navbar";
@@ -15,6 +16,10 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <LoadingProvider>
       <SessionProvider session={session}>
+        <Head>
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+        </Head>
+        
         {/* Simplified layout without dynamic loading */}
         <div className="app-wrapper min-h-screen flex flex-col">
           {!isAdminRoute && <Navbar />}
