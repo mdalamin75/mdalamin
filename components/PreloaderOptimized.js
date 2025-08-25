@@ -1,10 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useRouter } from "next/router";
 import { useLoading } from "../contexts/LoadingContext";
-import dynamic from "next/dynamic";
-
-// Dynamic import for GSAP to reduce initial bundle size
-const gsap = dynamic(() => import("gsap"), { ssr: false });
 
 const PreloaderOptimized = () => {
     const router = useRouter();
@@ -18,19 +14,6 @@ const PreloaderOptimized = () => {
     } = useLoading();
     const [pageText, setPageText] = useState("");
     const [isVisible, setIsVisible] = useState(false);
-    const [gsapLoaded, setGsapLoaded] = useState(false);
-
-    // Load GSAP only when needed
-    useEffect(() => {
-        if (isLoading || isRouteChanging) {
-            import("gsap").then(() => {
-                setGsapLoaded(true);
-            }).catch(() => {
-                // Fallback without animations
-                setGsapLoaded(false);
-            });
-        }
-    }, [isLoading, isRouteChanging]);
 
     // Extract page name from URL path
     const getPageName = useCallback((path) => {
@@ -39,74 +22,19 @@ const PreloaderOptimized = () => {
         return routeName || "HOME";
     }, []);
 
-    // Optimized animation functions
-    const animateIn = useCallback(async () => {
-        if (!gsapLoaded) {
-            setIsVisible(true);
-            return;
-        }
+    // Simplified animation functions using CSS transitions
+    const animateIn = useCallback(() => {
+        setIsVisible(true);
+    }, []);
 
-        try {
-            const gsapModule = await import("gsap");
-            const { gsap } = gsapModule;
-
-            setIsVisible(true);
-            
-            if (preloaderRef.current) {
-                gsap.fromTo(preloaderRef.current, 
-                    { opacity: 0, y: -20 },
-                    { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }
-                );
-            }
-
-            if (textRef.current) {
-                gsap.fromTo(textRef.current,
-                    { opacity: 0, y: 10 },
-                    { opacity: 1, y: 0, duration: 0.4, delay: 0.1, ease: "power2.out" }
-                );
-            }
-        } catch (error) {
-            console.warn("Animation failed, showing preloader without animation:", error);
-            setIsVisible(true);
-        }
-    }, [gsapLoaded]);
-
-    const animateOut = useCallback(async () => {
-        if (!gsapLoaded) {
+    const animateOut = useCallback(() => {
+        // Small delay for better UX, then hide
+        setTimeout(() => {
             setIsVisible(false);
             setIsLoading(false);
             setIsRouteChanging(false);
-            return;
-        }
-
-        try {
-            const gsapModule = await import("gsap");
-            const { gsap } = gsapModule;
-
-            if (preloaderRef.current) {
-                gsap.to(preloaderRef.current, {
-                    opacity: 0,
-                    y: -20,
-                    duration: 0.3,
-                    ease: "power2.in",
-                    onComplete: () => {
-                        setIsVisible(false);
-                        setIsLoading(false);
-                        setIsRouteChanging(false);
-                    }
-                });
-            } else {
-                setIsVisible(false);
-                setIsLoading(false);
-                setIsRouteChanging(false);
-            }
-        } catch (error) {
-            console.warn("Animation failed, hiding preloader without animation:", error);
-            setIsVisible(false);
-            setIsLoading(false);
-            setIsRouteChanging(false);
-        }
-    }, [gsapLoaded, setIsLoading, setIsRouteChanging]);
+        }, 300);
+    }, [setIsLoading, setIsRouteChanging]);
 
     // Set up route change event handlers
     useEffect(() => {
@@ -118,9 +46,8 @@ const PreloaderOptimized = () => {
         };
 
         const handleRouteChangeComplete = () => {
-            setTimeout(() => {
-                animateOut();
-            }, 300); // Short delay for better UX
+            // Immediate completion for better UX
+            animateOut();
         };
 
         const handleRouteChangeError = () => {
@@ -135,9 +62,22 @@ const PreloaderOptimized = () => {
         router.events.on("routeChangeComplete", handleRouteChangeComplete);
         router.events.on("routeChangeError", handleRouteChangeError);
 
-        // Initial animation if needed
+        // Handle initial page load
         if (isLoading && !isRouteChanging) {
             animateIn();
+            // Auto-hide after initial load
+            const initialTimer = setTimeout(() => {
+                if (!isRouteChanging) {
+                    animateOut();
+                }
+            }, 1500); // Show for 1.5 seconds on initial load
+            
+            return () => {
+                clearTimeout(initialTimer);
+                router.events.off("routeChangeStart", handleRouteChangeStart);
+                router.events.off("routeChangeComplete", handleRouteChangeComplete);
+                router.events.off("routeChangeError", handleRouteChangeError);
+            };
         }
 
         // Clean up event listeners
@@ -156,8 +96,8 @@ const PreloaderOptimized = () => {
     return (
         <div
             ref={preloaderRef}
-            className={`fixed inset-0 z-[9999] flex items-center justify-center bg-gradient-to-br from-dark-bg via-dark2 to-dark-bg transition-opacity duration-300 ${
-                isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
+            className={`fixed inset-0 z-[9999] flex items-center justify-center bg-gradient-to-br from-dark-bg via-dark2 to-dark-bg transition-all duration-500 ${
+                isVisible ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
             }`}
             style={{
                 backdropFilter: 'blur(10px)',
@@ -207,7 +147,9 @@ const PreloaderOptimized = () => {
                 {/* Page Text */}
                 <div
                     ref={textRef}
-                    className="text-white text-lg font-josefin font-semibold tracking-wider"
+                    className={`text-white text-lg font-josefin font-semibold tracking-wider transition-all duration-300 ${
+                        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+                    }`}
                 >
                     {pageText}
                 </div>

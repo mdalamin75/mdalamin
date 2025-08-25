@@ -22,12 +22,12 @@ export function LoadingProvider({ children }) {
     // Force loading state to true on initial load
     setIsLoading(true);
     
-    // Minimum loading time of 800ms
+    // Minimum loading time of 1200ms for better UX
     const initialLoadingTimer = setTimeout(() => {
       if (!isRouteChanging) {
         setIsLoading(false);
       }
-    }, 800);
+    }, 1200);
     
     return () => clearTimeout(initialLoadingTimer);
   }, []);
@@ -54,11 +54,12 @@ export function LoadingProvider({ children }) {
   // Auto-reset loading state if it gets stuck (safety mechanism)
   useEffect(() => {
     if (isLoading) {
-      // If loading state is stuck for more than 5 seconds, force reset it
+      // If loading state is stuck for more than 3 seconds, force reset it
       const safetyTimer = setTimeout(() => {
+        console.log('Safety timer: Forcing loading state to false');
         setIsLoading(false);
         setIsRouteChanging(false);
-      }, 5000);
+      }, 3000);
       
       return () => clearTimeout(safetyTimer);
     }

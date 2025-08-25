@@ -21,12 +21,17 @@ const ClientAnimations = dynamic(() => import("../components/ClientAnimations"),
     loading: () => null
 });
 
-const PreloaderOptimized = dynamic(() => import("../components/PreloaderOptimized"), {
+const PreloaderOptimized = dynamic(() => import("../components/SimplePreloader"), {
     ssr: false,
     loading: () => null
 });
 
 const PerformanceMonitor = dynamic(() => import("../components/PerformanceMonitor"), {
+    ssr: false,
+    loading: () => null
+});
+
+const LoadingDebug = dynamic(() => import("../components/LoadingDebug"), {
     ssr: false,
     loading: () => null
 });
@@ -60,6 +65,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       <SessionProvider session={session}>
         {/* Performance monitoring */}
         <PerformanceMonitor />
+        
+        {/* Debug info in development */}
+        <LoadingDebug />
         
         {/* Optimized Preloader */}
         <PreloaderOptimized />
