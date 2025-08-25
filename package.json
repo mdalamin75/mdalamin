@@ -9,7 +9,8 @@
     "lint": "next lint",
     "analyze": "ANALYZE=true next build",
     "optimize-images": "node scripts/optimize-images.js",
-    "perf-audit": "lighthouse http://localhost:3000 --output=json --output-path=./lighthouse-report.json"
+    "perf-audit": "lighthouse http://localhost:3000 --output=json --output-path=./lighthouse-report.json",
+    "install-perf-tools": "npm install --save-dev @next/bundle-analyzer web-vitals lighthouse"
   },
   "dependencies": {
     "@emailjs/browser": "^3.11.0",

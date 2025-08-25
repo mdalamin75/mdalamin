@@ -33,7 +33,9 @@ const PerformanceMonitor = ({ enabled = process.env.NODE_ENV === 'development' }
                 getLCP(reportWebVitals);
                 getTTFB(reportWebVitals);
             } catch (error) {
-                console.warn('Web Vitals not available:', error);
+                if (process.env.NODE_ENV === 'development') {
+                    console.log('Web Vitals not available. Install with: npm install --save-dev web-vitals');
+                }
             }
         };
 
