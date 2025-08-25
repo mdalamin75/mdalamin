@@ -1,4 +1,4 @@
-"use client";
+// "use client"; // Removed - pages should not use client directive
 import Image from "next/image";
 import React, { useEffect } from "react";
 import ProjectItem from "../../components/ProjectItem";

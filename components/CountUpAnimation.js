@@ -1,4 +1,3 @@
-"use client";
 import React, { useState, useEffect } from "react";
 import CountUp from "react-countup";
 import { Titillium_Web, Josefin_Sans } from "next/font/google";

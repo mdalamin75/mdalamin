@@ -1,5 +1,4 @@
-"use client";
-import React, { Children } from "react";
+import React from "react";
 import Image from "next/image";
 import { Typewriter } from "react-simple-typewriter";
 import Link from "next/link";

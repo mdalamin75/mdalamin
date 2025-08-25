@@ -7,7 +7,7 @@ import Head from "next/head";
 // Static imports to prevent dynamic loading issues
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import ClientAnimations from "../components/ClientAnimations";
+import SimpleAnimations from "../components/SimpleAnimations";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter();
@@ -28,7 +28,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
             <Component {...pageProps} />
           </main>
           
-          <ClientAnimations />
+          <SimpleAnimations />
           
           {!isAdminRoute && <Footer />}
         </div>
