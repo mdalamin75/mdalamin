@@ -5,7 +5,13 @@ import { Typewriter } from "react-simple-typewriter";
 import Link from "next/link";
 import { FiDownload } from "react-icons/fi";
 import portfolio from "../public/portfolio/portfolio.svg";
-import Particles from "../components/Particles";
+import dynamic from "next/dynamic";
+
+// Dynamic import for particles to reduce initial bundle size
+const ParticlesOptimized = dynamic(() => import("../components/ParticlesOptimized"), {
+    ssr: false,
+    loading: () => null
+});
 import useFetch from "../hooks/useFetch";
 import ReactMarkdown from "react-markdown";
 import review from "../public/testimonial/review.svg";
@@ -61,7 +67,7 @@ export default function Home({ initialData }) {
 					ogImage={allHomeData.image || "/profile.jpg"}
 				/>
 					<section id="hero" className="relative pt-32 md:pt-10 pb-10 md:pb-20">
-						<Particles />
+						<ParticlesOptimized />
 						<div className="absolute bottom-0 inset-x-0 bg-bottom bg-no-repeat shadow_03"></div>
 						<div className="container mx-auto px-3 md:px-5">
 							<div className="grid sm:grid-cols-1 md:grid-cols-2 justify-between items-center min-h-screen">
