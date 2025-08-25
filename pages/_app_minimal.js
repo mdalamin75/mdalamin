@@ -3,10 +3,9 @@ import "../styles/globals.css";
 import { useRouter } from "next/router";
 import { LoadingProvider } from "../contexts/LoadingContext";
 
-// Static imports to prevent dynamic loading issues
+// Simple static imports for testing
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import ClientAnimations from "../components/ClientAnimations";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter();
@@ -15,15 +14,13 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <LoadingProvider>
       <SessionProvider session={session}>
-        {/* Simplified layout without dynamic loading */}
+        {/* Minimal layout without dynamic imports */}
         <div className="app-wrapper min-h-screen flex flex-col">
           {!isAdminRoute && <Navbar />}
           
           <main className="flex-grow">
             <Component {...pageProps} />
           </main>
-          
-          <ClientAnimations />
           
           {!isAdminRoute && <Footer />}
         </div>

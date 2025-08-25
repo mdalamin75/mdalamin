@@ -12,58 +12,12 @@ const LoadingContext = createContext({
 });
 
 export function LoadingProvider({ children }) {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isRouteChanging, setIsRouteChanging] = useState(false);
   const [currentRoute, setCurrentRoute] = useState('');
   const [nextRoute, setNextRoute] = useState('');
 
-  // Ensure initial loading for minimum time
-  useEffect(() => {
-    // Force loading state to true on initial load
-    setIsLoading(true);
-    
-    // Minimum loading time of 1200ms for better UX
-    const initialLoadingTimer = setTimeout(() => {
-      if (!isRouteChanging) {
-        setIsLoading(false);
-      }
-    }, 1200);
-    
-    return () => clearTimeout(initialLoadingTimer);
-  }, []);
-
-  // Apply body styles directly when loading state changes
-  // But DO NOT hide content - only control the preloader
-  useEffect(() => {
-    if (typeof document !== 'undefined') {
-      const documentBody = document.body;
-      const htmlElement = document.documentElement;
-      
-      if (isLoading || isRouteChanging) {
-        // Just prevent scrolling during preloader
-        documentBody.style.overflow = 'hidden';
-        htmlElement.style.overflow = 'hidden';
-      } else {
-        // Immediately restore scrolling when loading is done
-        documentBody.style.overflow = '';
-        htmlElement.style.overflow = '';
-      }
-    }
-  }, [isLoading, isRouteChanging]);
-  
-  // Auto-reset loading state if it gets stuck (safety mechanism)
-  useEffect(() => {
-    if (isLoading) {
-      // If loading state is stuck for more than 3 seconds, force reset it
-      const safetyTimer = setTimeout(() => {
-        console.log('Safety timer: Forcing loading state to false');
-        setIsLoading(false);
-        setIsRouteChanging(false);
-      }, 3000);
-      
-      return () => clearTimeout(safetyTimer);
-    }
-  }, [isLoading]);
+  // No automatic loading management to prevent loops
 
   return (
     <LoadingContext.Provider 
