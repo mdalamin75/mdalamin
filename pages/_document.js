@@ -40,6 +40,31 @@ export default function Document() {
             <body>
                 <Main />
                 <NextScript />
+                {/* Fallback: ensure body becomes visible even if hydration fails */}
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                            (function() {
+                                try {
+                                    var foucStyle = document.querySelector('style[data-next-hide-fouc]');
+                                    if (foucStyle) {
+                                        // If hydration hasn't removed it quickly, remove as a safety net
+                                        setTimeout(function() {
+                                            if (foucStyle && foucStyle.parentNode) {
+                                                foucStyle.parentNode.removeChild(foucStyle);
+                                            }
+                                            if (document && document.body) {
+                                                document.body.style.display = 'block';
+                                            }
+                                        }, 1200);
+                                    }
+                                } catch (e) {
+                                    // no-op
+                                }
+                            })();
+                        `,
+                    }}
+                />
             </body>
         </Html>
     )
