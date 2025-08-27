@@ -23,6 +23,11 @@ export default function Home({ initialData }) {
 
   if (loading) return null;
   const allHomeData = homeData?.[0];
+  const heroName = allHomeData?.title?.[0] || "";
+  const heroSkills = Array.isArray(allHomeData?.title) && allHomeData.title.length > 1
+    ? allHomeData.title
+    : ["Web Developer", "Designer"];
+  const heroImage = allHomeData?.image?.[0] || null;
 
   const handleDownload = async () => {
     try {
@@ -48,9 +53,9 @@ export default function Home({ initialData }) {
     <>
       {allHomeData && (
         <SEO
-          title={`${allHomeData.name} - ${allHomeData.title}`}
+          title={`${heroName || 'MD. AL AMIN'} - Portfolio`}
           description={`${allHomeData.description} Professional web developer specializing in React, Next.js, WordPress, and custom solutions.`}
-          ogImage={allHomeData.image || "/profile.jpg"}
+          ogImage={heroImage || "/profile.jpg"}
         />
       )}
 
@@ -63,12 +68,12 @@ export default function Home({ initialData }) {
               <h4 className="text-lg font-josefin font-medium">Hello, I'm</h4>
               {allHomeData && (
                 <h1 className="text-4xl md:text-6xl font-josefin font-bold bg-gradient-to-r from-color3 to-blue-400 bg-clip-text text-transparent">
-                  {allHomeData.name}
+                  {heroName}
                 </h1>
               )}
               <h2 className="text-2xl md:text-3xl font-josefin font-medium text-white mt-2 mb-4">
                 <Typewriter
-                  words={allHomeData?.skills || ['Web Developer', 'Designer']}
+                  words={heroSkills}
                   loop={0}
                   cursor
                   cursorStyle="_"
@@ -95,9 +100,9 @@ export default function Home({ initialData }) {
               </div>
             </div>
             <div data-aos="fade-left" data-aos-duration="1000" className="flex justify-center order-1 md:order-2 z-10">
-              {allHomeData?.image && (
+              {heroImage && (
                 <div className="relative">
-                  <Image src={allHomeData.image} alt={allHomeData.name} width={400} height={400} className="rounded-full shadow-2xl shadow-color3/20" priority />
+                  <Image src={heroImage} alt={heroName || 'Profile image'} width={400} height={400} className="rounded-full shadow-2xl shadow-color3/20" priority />
                   <div className="absolute -inset-4 bg-gradient-to-r from-color3/20 to-blue-400/20 rounded-full blur-xl"></div>
                 </div>
               )}
