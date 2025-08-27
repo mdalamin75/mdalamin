@@ -35,7 +35,8 @@ const ProjectItem = ({ initialData, showFilter = true, limit = null }) => {
           ? portfolioData.filter(
             (pro) =>
               pro.status === "publish" &&
-              pro.projectcategory[0] === selectedCategory
+              Array.isArray(pro.projectcategory) &&
+              pro.projectcategory.includes(selectedCategory)
           )
           : []
       );
