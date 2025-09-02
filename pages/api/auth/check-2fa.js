@@ -3,7 +3,7 @@ import { getSession } from 'next-auth/react';
 import connectDB from '../../../lib/connectDB';
 import User from '../../../models/User';
 
-export default async (req, res) => {
+const handler = async (req, res) => {
   await connectDB(); // Ensure MongoDB connection
   const session = await getSession({ req });
   if (!session || !session.user || !session.user.email) {
@@ -17,3 +17,5 @@ export default async (req, res) => {
 
   return res.status(200).json({ twoFactorSetup: false });
 };
+
+export default handler;

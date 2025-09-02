@@ -154,7 +154,7 @@ export default function Home({ initialData }) {
       <section id="portfolio" className="py-20 relative">
         <div className="container mx-auto px-3 md:px-5">
           <div className="text-center mb-16">
-            <img src="/portfolio/portfolio.svg" alt="Portfolio" width={80} height={80} className="mx-auto mb-4" />
+            <Image src="/portfolio/portfolio.svg" alt="Portfolio" width={80} height={80} className="mx-auto mb-4" />
             <h2 className="text-3xl md:text-4xl font-josefin font-bold mb-4">My Recent Work</h2>
             <p className="max-w-2xl mx-auto">Explore my latest projects showcasing modern web development, responsive design, and innovative solutions.</p>
           </div>
@@ -182,7 +182,7 @@ export default function Home({ initialData }) {
       <section className="py-20 relative">
         <div className="container mx-auto px-3 md:px-5">
           <div className="text-center mb-16">
-            <img src="/testimonial/review.svg" alt="Reviews" width={80} height={80} className="mx-auto mb-4" />
+            <Image src="/testimonial/review.svg" alt="Reviews" width={80} height={80} className="mx-auto mb-4" />
             <h2 className="text-3xl md:text-4xl font-josefin font-bold mb-4">Client Testimonials</h2>
             <p className="max-w-2xl mx-auto">What my clients say about working with me and the results we've achieved together.</p>
           </div>

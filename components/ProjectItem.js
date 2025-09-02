@@ -98,165 +98,164 @@ const ProjectItem = React.memo(({ initialData, showFilter = true, limit }) => {
             <button
               className={`${selectedCategory === "All"
                 ? "bg-gradient-to-r from-purple-800 to-purple-500 text-white"
-                : "bg-slate-100 text-purple-600"
-                } font-bold font-josefin py-2 px-6 rounded-3xl`}
-              onClick={() => handleCategoryChange("All")}>
+                : "bg-gradient-to-r from-gray-800 to-gray-500 text-white"
+                } px-5 py-2 rounded-lg font-josefin font-bold transition-all duration-300 hover:scale-105`}
+              onClick={() => handleCategoryChange("All")}
+            >
               All
             </button>
-            <button
-              className={`${selectedCategory === "Frontend Development"
-                ? "bg-gradient-to-r from-purple-800 to-purple-500 text-white"
-                : "bg-slate-100 text-purple-600"
-                } font-bold font-josefin py-2 px-6 rounded-3xl`}
-              onClick={() => handleCategoryChange("Frontend Development")}>
-              Frontend
-            </button>
-            <button
-              className={`${selectedCategory === "Full Stack Development"
-                ? "bg-gradient-to-r from-purple-800 to-purple-500 text-white"
-                : "bg-slate-100 text-purple-600"
-                } font-bold font-josefin py-2 px-6 rounded-3xl`}
-              onClick={() => handleCategoryChange("Full Stack Development")}>
-              Full Stack
-            </button>
-            <button
-              className={`${selectedCategory === "WordPress Website"
-                ? "bg-gradient-to-r from-purple-800 to-purple-500 text-white"
-                : "bg-slate-100 text-purple-600"
-                } font-bold font-josefin py-2 px-6 rounded-3xl`}
-              onClick={() => handleCategoryChange("WordPress Website")}>
-              WordPress
-            </button>
-            <button
-              className={`${selectedCategory === "E-commerce Website"
-                ? "bg-gradient-to-r from-purple-800 to-purple-500 text-white"
-                : "bg-slate-100 text-purple-600"
-                } font-bold font-josefin py-2 px-6 rounded-3xl`}
-              onClick={() => handleCategoryChange("E-commerce Website")}>
-              E-commerce
-            </button>
-            <button
-              className={`${selectedCategory === "Shopify Store"
-                ? "bg-gradient-to-r from-purple-800 to-purple-500 text-white"
-                : "bg-slate-100 text-purple-600"
-                } font-bold font-josefin py-2 px-6 rounded-3xl`}
-              onClick={() => handleCategoryChange("Shopify Store")}>
-              Shopify
-            </button>
-            <button
-              className={`${selectedCategory === "Email"
-                ? "bg-gradient-to-r from-purple-800 to-purple-500 text-white"
-                : "bg-slate-100 text-purple-600"
-                } font-bold font-josefin py-2 px-6 rounded-3xl`}
-              onClick={() => handleCategoryChange("Email")}>
-              Email
-            </button>
+            {Array.from(new Set(publishedData.flatMap(pro => pro.projectcategory || []))).map((category) => (
+              <button
+                key={category}
+                className={`${selectedCategory === category
+                  ? "bg-gradient-to-r from-purple-800 to-purple-500 text-white"
+                  : "bg-gradient-to-r from-gray-800 to-gray-500 text-white"
+                  } px-5 py-2 rounded-lg font-josefin font-bold transition-all duration-300 hover:scale-105`}
+                onClick={() => handleCategoryChange(category)}
+              >
+                {category}
+              </button>
+            ))}
           </div>
         )}
-        <AnimatePresence>
-          <motion.div
-            layout
-            className="grid grid-cols-1 md:grid-cols-2 gap-10 py-10">
-            {displayedProjects.length === 0 ? (
-              <div className="col-span-2 text-center py-20">
-                <h1 className="text-2xl font-bold mb-4">No Projects Found</h1>
-                <p className="text-gray-600 mb-4">
-                  {portfolioData && portfolioData.length > 0
-                    ? "No projects match the selected category or status filter."
-                    : "No portfolio projects have been added yet."
-                  }
-                </p>
-                {portfolioData && portfolioData.length > 0 && (
-                  <p className="text-sm text-gray-500">
-                    Total projects in database: {portfolioData.length} |
-                    Published: {portfolioData.filter(p => p.status === 'publish').length} |
-                    Draft: {portfolioData.filter(p => p.status === 'draft').length}
-                  </p>
-                )}
-                <button
-                  onClick={() => refetch()}
-                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4"
-                >
-                  Refresh Data
-                </button>
-              </div>
-            ) : (
-              displayedProjects.map((element) => {
-                const { id, title, slug, images, projectcategory } = element;
-                // Create SEO-friendly alt text
-                const altText = `${title} - ${projectcategory ? projectcategory.join(', ') : 'Web Project'} by MD. AL AMIN | Professional Portfolio Project`;
 
-                return (
-                  <Link
-                    href={`/portfolio/${slug}`}
-                    key={id}
-                    className="procard"
-                    data-aos="flip-left"
-                    data-aos-duration="1000"
-                  >
-                    <div
-                      key={id}
-                      className="card bg-base-100 image-full w-full h-96 overflow-hidden shadow-xl card_hover hover:shadow-lg hover:shadow-purple-500 duration-500">
-                      <figure>
-                        {images && images.length > 0 && images[0] ? (
-                          <Image
-                            src={images[0]}
-                            alt={altText}
-                            width={700}
-                            height={300}
-                            className="w-full h-96 object-top overflow-hidden transition duration-300 hover:scale-105"
-                            loading="lazy"
-                          />
-                        ) : (
-                          <div className="w-full h-[50vw] md:h-[30vw] lg:h-[20vw] min-h-60 border">
-                            <Image
-                              src="/no-image.jpg"
-                              alt="No image available - Portfolio project placeholder"
-                              width={700}
-                              height={300}
-                              className="w-full h-96 object-top overflow-hidden"
-                              loading="lazy"
-                            />
+        <div className="grid gap-5 grid-cols-12">
+          {displayedProjects.map((element, index) => {
+            const { id, title, description, images, slug, projectcategory, tags, livepreview } = element;
+
+            // Check if it's the last item and if the total items are odd
+            const isLastItemOdd = index === displayedProjects.length - 1 && displayedProjects.length % 2 !== 0;
+
+            // Create CSS classes for different column spans
+            let columnClasses = "col-span-12"; // Default for mobile
+
+            // Only apply these classes on md screens and up
+            if (isLastItemOdd) {
+              columnClasses += " md:col-span-12"; // Full width for last odd item
+            } else if (index % 4 === 0 || index % 4 === 3) {
+              columnClasses += " md:col-span-5"; // 5/12 width
+            } else {
+              columnClasses += " md:col-span-7"; // 7/12 width
+            }
+
+            // Create project-specific keywords based on title and description
+            const projectSpecificKeywords = [
+              title,
+              `${title} project`,
+              `MD. AL AMIN ${title}`,
+              `mdalamin75 ${title}`,
+              `portfolio ${title}`,
+              `web development ${title}`,
+              `${title} website`,
+              `professional ${title}`,
+              `${title} design`
+            ].join(", ");
+
+            return (
+              <div
+                key={id}
+                className={`card card-bordered border-purple-200 p-5 group ${columnClasses}`}
+                data-aos={index % 2 === 0 ? "fade-left" : "fade-right"}
+                data-aos-duration="1000"
+              >
+                {/* Add microdata for this specific project */}
+                <div itemScope itemType="https://schema.org/CreativeWork">
+                  <meta itemProp="name" content={title} />
+                  <meta itemProp="creator" content="MD. AL AMIN" />
+                  <meta itemProp="keywords" content={projectSpecificKeywords} />
+
+                  <div className="project_image">
+                    <figure className="card image-full">
+                      <Image
+                        src={images && images.length > 0 ? images[0] : "/projects/01/psd-to-html.png"}
+                        width={400}
+                        height={300}
+                        alt={title}
+                        className="w-full h-48 object-cover"
+                        priority={index < 2}
+                      />
+                      <div className="card-body">
+                        <div className="project_overlay">
+                          <div className="project_overlay_content">
+                            <div className="project_overlay_buttons">
+                              <Link
+                                href={`/portfolio/${slug}`}
+                                className="btn btn-primary btn-sm"
+                              >
+                                View Details
+                              </Link>
+                              {livepreview && (
+                                <a
+                                  href={livepreview}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="btn btn-secondary btn-sm"
+                                >
+                                  Live Preview
+                                </a>
+                              )}
+                            </div>
                           </div>
-                        )}
-                      </figure>
-                      <div className="card-body justify-end">
-                        <h2 className="card-title text-xl font-josefin font-bold">
-                          {title}
-                        </h2>
-                        <div className="card-actions">
-                          <Link
-                            href={`/portfolio/${slug}`}
-                            className="button w-36 button--nina bg-gradient-to-r from-purple-950 to-purple-600  relative block focus:outline-none border-2 border-solid rounded-lg text-sm text-center font-josefin font-semibold uppercase tracking-widest overflow-hidden me-3 px-5"
-                            data-text="View">
-                            <span className="align-middle">V</span>
-                            <span className="align-middle">i</span>
-                            <span className="align-middle">e</span>
-                            <span className="align-middle">w</span>
-                          </Link>
                         </div>
                       </div>
+                    </figure>
+                  </div>
+
+                  <div className="project_content mt-4">
+                    <h3
+                      itemProp="name"
+                      className="font-josefin text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-purple-300 mb-2"
+                    >
+                      {title}
+                    </h3>
+                    <p
+                      itemProp="description"
+                      className="text-gray-600 dark:text-gray-300 mb-3 line-clamp-2"
+                    >
+                      {description?.substring(0, 100)}...
+                    </p>
+                    <div className="project_tags flex flex-wrap gap-2 mb-3">
+                      {projectcategory?.map((category, catIndex) => (
+                        <span
+                          key={catIndex}
+                          className="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 text-xs rounded"
+                        >
+                          {category}
+                        </span>
+                      ))}
                     </div>
-                  </Link>
-                );
-              })
-            )}
-          </motion.div>
-        </AnimatePresence>
+                    <div className="project_actions flex justify-between items-center">
+                      <Link
+                        href={`/portfolio/${slug}`}
+                        className="text-purple-600 hover:text-purple-800 font-semibold text-sm"
+                      >
+                        Read More →
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </>
     );
   }
 
-  // Show skeleton only when actually loading AND no data exists
-  if (loading && !portfolioData && !initialData) {
+  // Show loading state
+  if (loading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 py-10">
+      <div className="grid gap-5 grid-cols-12">
         {[...Array(6)].map((_, index) => (
-          <div key={index} className="card bg-base-100 image-full w-full h-96 overflow-hidden shadow-xl animate-pulse">
-            <div className="w-full h-96 bg-gray-300 dark:bg-gray-700"></div>
-            <div className="card-body justify-end">
-              <div className="h-6 bg-gray-400 dark:bg-gray-600 rounded mb-2 w-3/4"></div>
-              <div className="h-4 bg-gray-400 dark:bg-gray-600 rounded w-24"></div>
+          <div key={index} className="col-span-12 md:col-span-6 animate-pulse">
+            <div className="card card-bordered border-purple-200 p-5">
+              <div className="h-48 bg-gray-300 dark:bg-gray-700 rounded mb-4"></div>
+              <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded mb-2"></div>
+              <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded w-3/4 mb-4"></div>
+              <div className="flex gap-2">
+                <div className="h-6 bg-gray-300 dark:bg-gray-600 rounded w-16"></div>
+                <div className="h-6 bg-gray-300 dark:bg-gray-600 rounded w-20"></div>
+              </div>
             </div>
           </div>
         ))}
@@ -264,47 +263,38 @@ const ProjectItem = React.memo(({ initialData, showFilter = true, limit }) => {
     );
   }
 
-  // Keep only essential error logging, remove debug logs:
+  // Show error state
   if (error) {
     return (
       <div className="text-center py-20">
-        <h2 className="text-2xl font-bold mb-4 text-red-600">Error Loading Portfolio</h2>
-        <p className="text-gray-600 mb-4">
-          {error.message || 'Failed to load portfolio data. Please check your connection and try again.'}
-        </p>
+        <h2 className="text-2xl font-bold mb-4">Error Loading Portfolio</h2>
+        <p className="text-gray-600 mb-4">Something went wrong while loading the portfolio.</p>
         <button
           onClick={() => refetch()}
-          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
         >
-          Retry Loading
+          Try Again
         </button>
       </div>
     );
   }
 
-  // Fallback: Show test content if no data and not loading
-  if (!loading && !portfolioData && !initialData) {
-    return (
-      <div className="text-center py-20">
-        <h2 className="text-2xl font-bold mb-4">No Portfolio Data Available</h2>
-        <p className="text-gray-600 mb-4">Please check your database connection and ensure portfolio items exist.</p>
-        <div className="space-y-2 text-sm text-gray-500">
-          <p>• Check if MongoDB is running</p>
-          <p>• Verify MONGODB_URI environment variable</p>
-          <p>• Ensure portfolio items exist in database</p>
-          <p>• Check browser console for errors</p>
-        </div>
-        <button
-          onClick={() => refetch()}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4"
-        >
-          Retry Loading
-        </button>
-      </div>
-    );
-  }
-
-  return null; // Should not happen if loading and data checks are correct
+  // Show fallback content
+  return (
+    <div className="text-center py-20">
+      <h2 className="text-2xl font-bold mb-4">No Portfolio Data Available</h2>
+      <p className="text-gray-600 mb-4">Please check your database connection and ensure portfolio data exists.</p>
+      <button
+        onClick={() => refetch()}
+        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+      >
+        Retry Loading
+      </button>
+    </div>
+  );
 });
+
+// Add display name for the memoized component
+ProjectItem.displayName = 'ProjectItem';
 
 export default ProjectItem;
