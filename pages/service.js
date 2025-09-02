@@ -8,10 +8,10 @@ const Service = ({ initialData }) => {
     const { data: serviceData, loading } = useFetch("service", initialData);
 
     // Extract service titles and descriptions for SEO
-    const servicesList = !loading && serviceData ? 
+    const servicesList = !loading && serviceData ?
         serviceData
             .filter(service => service.status === "publish")
-            .map(service => service.title) 
+            .map(service => service.title)
         : [];
 
     // Create service-specific keywords
@@ -45,13 +45,13 @@ const Service = ({ initialData }) => {
     ];
 
     // Add actual service names to keywords if available
-    const allServiceKeywords = servicesList.length > 0 ? 
-        [...serviceKeywords, ...servicesList].join(", ") : 
+    const allServiceKeywords = servicesList.length > 0 ?
+        [...serviceKeywords, ...servicesList].join(", ") :
         serviceKeywords.join(", ");
 
     return (
         <div>
-            <SEO 
+            <SEO
                 title="Professional Web Development Services | MD. AL AMIN"
                 description="Expert web development services by MD. AL AMIN. Specializing in custom websites, WordPress development, e-commerce solutions, React/Next.js applications, and responsive design. Hire a professional developer for your next project."
                 keywords={allServiceKeywords}
@@ -109,14 +109,14 @@ const Service = ({ initialData }) => {
                             "Frontend Development",
                             "UI/UX Design"
                         ],
-                        "makesOffer": servicesList.length > 0 ? 
+                        "makesOffer": servicesList.length > 0 ?
                             servicesList.map(service => ({
                                 "@type": "Offer",
                                 "itemOffered": {
                                     "@type": "Service",
                                     "name": service
                                 }
-                            })) : 
+                            })) :
                             [
                                 {
                                     "@type": "Offer",
@@ -170,9 +170,17 @@ export default Service
 
 // Add getServerSideProps to fetch initial data
 export async function getServerSideProps() {
-    return {
-        props: { 
-            initialData: null 
-        },
-    };
+    try {
+        const base = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+
+        // Fetch service data
+        const response = await fetch(`${base}/api/service`);
+        if (!response.ok) throw new Error('Failed to fetch service data');
+        const initialData = await response.json();
+
+        return { props: { initialData } };
+    } catch (error) {
+        console.error('Error fetching service data:', error);
+        return { props: { initialData: null } };
+    }
 }

@@ -6,8 +6,9 @@ import portfolio from "../../public/portfolio/portfolio.svg";
 import shadow from "../../public/shadow_01.png";
 import shadow2 from "../../public/shadow_02.png";
 import Head from "next/head";
+import axios from "axios";
 
-const Portfolio = () => {
+const Portfolio = ({ initialData }) => {
   return (
     <>
       <Head>
@@ -25,7 +26,7 @@ const Portfolio = () => {
           </div>
         </div>
         <div className="absolute inset-0 top-0 bg-top bg-no-repeat shadow_03"></div>
-        <div className="container mx-auto px-3 md:px-5">
+        <div className="container mx-auto px-3b md:px-5">
           <div className="portfolio_head pb-10">
             <Image src={portfolio} width={150} height={150} priority="true" alt="portfolio" className="mx-auto z-10" />
             <h1
@@ -40,12 +41,29 @@ const Portfolio = () => {
           </div>
           <div className="portfolio_data">
             {/* Project Item */}
-            <ProjectItem showFilter={true} />
+            <ProjectItem showFilter={true} initialData={initialData} />
           </div>
         </div>
       </section>
     </>
   );
 };
+
+export async function getServerSideProps() {
+  try {
+    // Try to fetch from local API first
+    const localResponse = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/api/portfolio`);
+    return { props: { initialData: localResponse.data } };
+  } catch (error) {
+    console.error('Error fetching portfolio data:', error);
+
+    // Fallback: return empty array if API fails
+    return {
+      props: {
+        initialData: []
+      }
+    };
+  }
+}
 
 export default Portfolio;

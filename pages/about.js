@@ -19,13 +19,30 @@ const About = ({ initialData }) => {
   if (loading) {
     return null;
   }
+
+  // Better data validation
+  if (!aboutData || !Array.isArray(aboutData) || aboutData.length === 0) {
+    return (
+      <div className="text-center py-20">
+        <h2 className="text-2xl font-bold mb-4">No About Data Available</h2>
+        <p className="text-gray-600 mb-4">Please check your database connection and ensure about data exists.</p>
+        <button
+          onClick={() => refetch()}
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        >
+          Retry Loading
+        </button>
+      </div>
+    );
+  }
+
   const allAboutData = aboutData[0]; // Access the first object in the array
-  const educationData = aboutData[0]?.education || [];
-  const skillImages = aboutData[0].skillimages || [];
+  const educationData = allAboutData?.education || [];
+  const skillImages = allAboutData?.skillimages || [];
 
   return (
     <>
-      <SEO 
+      <SEO
         title="About MD. AL AMIN - Skills, Experience & Education"
         description={`Learn about MD. AL AMIN's background, skills, and experience as a professional web developer. ${allAboutData?.description?.substring(0, 100)}...`}
         keywords="MD. AL AMIN biography, web developer skills, programmer experience, freelance developer, mdalamin75 about, web development expertise"
@@ -44,7 +61,7 @@ const About = ({ initialData }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 justify-between w-full items-center">
             <div className="mx-auto about_image ">
               <Image
-                src={allAboutData.aboutimage[0]}
+                src={allAboutData?.aboutimage?.[0] || "/alamin.jpg"}
                 width={300}
                 height={300}
                 alt="mdalamin"
@@ -68,7 +85,7 @@ const About = ({ initialData }) => {
                     )
                   }}
                 >
-                  {allAboutData.description}
+                  {allAboutData?.description || "No description available"}
                 </ReactMarkdown>
               </p>
             </div>
@@ -166,7 +183,7 @@ const About = ({ initialData }) => {
                 data-aos-duration="1000"
                 className="font-titillium text-xl font-bold mb-3 ">
                 {/* Experience in the Freelancer.com */}
-                {allAboutData.experiencetitle}
+                {allAboutData?.experiencetitle || "Experience"}
               </h2>
               <div
                 data-aos="zoom-in"
@@ -181,7 +198,7 @@ const About = ({ initialData }) => {
                     )
                   }}
                 >
-                  {allAboutData.experiencedescription}
+                  {allAboutData?.experiencedescription || "No experience description available"}
                 </ReactMarkdown>
               </div>
               <div className="flex items-center mt-5">
@@ -219,3 +236,19 @@ const About = ({ initialData }) => {
 };
 
 export default About;
+
+export async function getServerSideProps() {
+  try {
+    const base = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+
+    // Fetch about data
+    const response = await fetch(`${base}/api/about`);
+    if (!response.ok) throw new Error('Failed to fetch about data');
+    const initialData = await response.json();
+
+    return { props: { initialData } };
+  } catch (error) {
+    console.error('Error fetching about data:', error);
+    return { props: { initialData: null } };
+  }
+}

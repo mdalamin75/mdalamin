@@ -1,7 +1,10 @@
 import Portfolio from "../../models/Portfolio";
 import mongooseConnect from "../../lib/connectDB";
 
-export default async function handle(req, res) {
+export default async function handler(req, res) {
+    // Add cache headers
+    res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=600');
+
     try {
         await mongooseConnect();
 
@@ -138,8 +141,6 @@ export default async function handle(req, res) {
         return res.status(405).json({ error: 'Method not allowed' });
 
     } catch (error) {
-        console.error('API Error:', error);
-
         // Handle MongoDB duplicate key errors
         if (error.code === 11000) {
             return res.status(400).json({
@@ -156,9 +157,17 @@ export default async function handle(req, res) {
             });
         }
 
+        // Handle connection errors
+        if (error.name === 'MongoNetworkError' || error.name === 'MongoServerSelectionError') {
+            return res.status(500).json({
+                error: 'Database connection error',
+                message: 'Unable to connect to database'
+            });
+        }
+
         return res.status(500).json({
             error: 'Internal server error',
-            message: process.env.NODE_ENV === 'development' ? error.message : undefined
+            message: process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'
         });
     }
 }

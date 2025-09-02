@@ -1,20 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: true,
-    poweredByHeader: false,
-    
+    // Basic image optimization
     images: {
-        domains: ['res.cloudinary.com'],
+        domains: ['localhost', 'res.cloudinary.com'],
+        formats: ['image/webp'],
     },
-    
-    async rewrites() {
-        return [
-            {
-                source: '/sitemap.xml',
-                destination: '/api/sitemap.xml',
-            },
-        ];
-    },
-};
+    // Enable compression
+    compress: true,
+    // Optimize fonts
+    optimizeFonts: true,
+}
 
 module.exports = nextConfig;

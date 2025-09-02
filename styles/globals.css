@@ -1,29 +1,48 @@
 @tailwind base;
 @tailwind components;
-.tooltip {
-	@apply invisible absolute;
-}
-.has-tooltip:hover .tooltip {
-	@apply visible z-50;
-}
 @tailwind utilities;
-@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&family=Titillium+Web:wght@400;700&display=swap");
 
+/* Use CSS custom properties for repeated values */
 :root {
-	--swiper-theme-color: #f1f6f9 !important;
-}
-.card.image-full:before {
-	opacity: 0.55;
-}
-.card_hover:hover figure img {
-	transition: all ease-in-out 0.5s;
-	transform: scale(102%);
+	--swiper-theme-color: #f1f6f9;
+	--primary-gradient: linear-gradient(160deg, #068862 0%, #80d0c7 100%);
+	--shadow-color: rgba(186, 184, 184, 0.06);
+	--timeline-width: 6px;
+	--timeline-color: #068862;
 }
 
-/* Clear all previous preloader styles as we're using inline styles now */
-/* .preloader { */
-	/* We're using inline styles now */
-/* } */
+/* Optimize animations - remove will-change for now */
+.hero_image img {
+	animation: morphing 10s infinite;
+	overflow: hidden;
+}
+
+/* Use CSS containment for better performance - remove contain for now */
+.timeline {
+	position: relative;
+	max-width: 1200px;
+	margin: 0 auto;
+	flex-direction: column;
+}
+
+/* Optimize scrollbar styles */
+::-webkit-scrollbar {
+	width: 5px;
+	height: 5px;
+}
+
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #888;
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}
 
 /* Additional protection against text visibility issues */
 .preloader.hidden,
@@ -47,7 +66,9 @@ section {
 }
 
 /* Protection against z-index issues */
-section, main, div {
+section,
+main,
+div {
 	position: relative;
 }
 
@@ -379,10 +400,6 @@ body {
 /* ===============================Scrollbar End Here ============================  */
 
 /* ======================= Profile Image animation Start Here ============================== */
-.hero_image img {
-	animation: morphing 10s infinite;
-	overflow: hidden;
-}
 @-moz-keyframes morphing {
 	0% {
 		border-radius: 30% 70% 70% 30%/30% 30% 70% 70%;
@@ -700,14 +717,18 @@ body {
 }
 
 /* Ensure dropdowns appear above other content */
-.dropdown-content, 
+.dropdown-content,
 .menu-dropdown-show {
 	z-index: 10000 !important;
 }
 
 /* Ensure cursor displays properly on buttons and links */
-button, a, label, [role="button"], 
-.btn, .cursor-pointer {
+button,
+a,
+label,
+[role="button"],
+.btn,
+.cursor-pointer {
 	cursor: pointer !important;
 }
 
@@ -717,8 +738,8 @@ html {
 }
 
 /* Ensure the animated cursor is above all elements */
-#cursor-dot, 
-#cursor-dot-outline, 
+#cursor-dot,
+#cursor-dot-outline,
 .animated-cursor {
 	z-index: 999999 !important;
 	position: fixed !important;
@@ -726,8 +747,8 @@ html {
 }
 
 /* Make sure animated cursor doesn't have pointer-events */
-.animated-cursor__cursor, 
-.animated-cursor__inner, 
+.animated-cursor__cursor,
+.animated-cursor__inner,
 .animated-cursor__outer {
 	pointer-events: none !important;
 	z-index: 999999 !important;
@@ -738,9 +759,9 @@ html {
 	pointer-events: none !important;
 }
 
-.menu, 
-.menu li, 
-.menu a, 
+.menu,
+.menu li,
+.menu a,
 .menu div,
 .menu button,
 .menu span,
@@ -789,4 +810,3 @@ footer {
 }
 
 /* Remove page content transitions that may conflict with AOS */
-

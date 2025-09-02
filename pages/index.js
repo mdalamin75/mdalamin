@@ -1,213 +1,246 @@
 import React from "react";
-import Image from "next/image";
+import dynamic from "next/dynamic";
 import { Typewriter } from "react-simple-typewriter";
+import ReactMarkdown from "react-markdown";
+import Image from "next/image";
 import Link from "next/link";
 import { FiDownload } from "react-icons/fi";
-import portfolio from "../public/portfolio/portfolio.svg";
-import dynamic from "next/dynamic";
-
-// Dynamic import for particles to reduce initial bundle size
-const ParticlesOptimized = dynamic(() => import("../components/ParticlesOptimized"), {
-    ssr: false,
-    loading: () => null
-});
 import useFetch from "../hooks/useFetch";
-import ReactMarkdown from "react-markdown";
-import review from "../public/testimonial/review.svg";
+import Services from "../components/Services";
 import TestimonialSlider from "../components/TestimonialSlider";
 import ProjectItem from "../components/ProjectItem";
-import Services from "../components/Services";
 import SEO from "../components/SEO";
 
+const ParticlesOptimized = dynamic(() => import("../components/ParticlesOptimized"), {
+  ssr: false,
+  loading: () => null
+});
+
 export default function Home({ initialData }) {
-	const { data: homeData, loading, refetch } = useFetch("home", initialData);
+  // Extract data from the new initialData structure
+  const homeData = initialData?.home;
+  const portfolioData = initialData?.portfolio;
+  const servicesData = initialData?.services;
+  const testimonialsData = initialData?.testimonials;
 
-	if (loading) {
-		return null;
-	}
-	const allHomeData = homeData[0];
+  const { data: homeDataFromHook, loading } = useFetch("home", homeData);
 
-	// Handle CV Download
-	// Client-side handler in your index.js
-	const handleDownload = async () => {
-		try {
-			const pdfUrl = allHomeData.cvUrl;
-			const apiUrl = `/api/download-cv?url=${encodeURIComponent(pdfUrl)}`;
+  if (loading) return null;
 
-			const response = await fetch(apiUrl);
-			if (!response.ok) {
-				throw new Error(`Network response was not ok: ${response.statusText}`);
-			}
+  const allHomeData = Array.isArray(homeDataFromHook)
+    ? (homeDataFromHook.find(h => h.status === 'publish') || homeDataFromHook[0])
+    : homeDataFromHook || homeData;
 
-			const blob = await response.blob();
-			const url = window.URL.createObjectURL(blob);
-			const link = document.createElement('a');
-			link.href = url;
-			link.download = 'MD_AL_AMIN_CV.pdf';
+  const heroName = allHomeData?.title?.[0] || "";
+  const heroSkills = Array.isArray(allHomeData?.title) && allHomeData.title.length > 1
+    ? allHomeData.title
+    : ["Web Developer", "Designer"];
+  const heroImage = allHomeData?.image?.[0] || null;
 
-			document.body.appendChild(link);
-			link.click();
-			document.body.removeChild(link);
+  const handleDownload = async () => {
+    try {
+      const pdfUrl = allHomeData.cvUrl;
+      const apiUrl = `/api/download-cv?url=${encodeURIComponent(pdfUrl)}`;
+      const response = await fetch(apiUrl);
+      if (!response.ok) throw new Error(`Network response was not ok: ${response.statusText}`);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'MD_AL_AMIN_CV.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error('Download error:', error);
+      alert(`Failed to download CV: ${error.message}`);
+    }
+  };
 
-		} catch (error) {
-			console.error('Download error:', error);
-			alert(`Failed to download CV: ${error.message}`);
-		}
-	};
+  return (
+    <>
+      {allHomeData && (
+        <SEO
+          title={`${heroName || 'MD. AL AMIN'} - Portfolio`}
+          description={`${allHomeData.description} Professional web developer specializing in React, Next.js, WordPress, and custom solutions.`}
+          ogImage={heroImage || "/profile.jpg"}
+        />
+      )}
 
-	return (
-		<>
-			{allHomeData && (
-				<SEO
-					title={`${allHomeData.name} - ${allHomeData.title}`}
-					description={`${allHomeData.description} Professional web developer specializing in React, Next.js, WordPress, and custom solutions.`}
-					keywords="mdalamin, mdalamin75, web developer, portfolio, freelancer, React developer, WordPress expert, frontend developer, website designer"
-					ogImage={allHomeData.image || "/profile.jpg"}
-				/>
-			)}
-				<section id="hero" className="relative pt-32 md:pt-10 pb-10 md:pb-20">
-					<ParticlesOptimized />
-					<div className="absolute bottom-0 inset-x-0 bg-bottom bg-no-repeat shadow_03"></div>
-					<div className="container mx-auto px-3 md:px-5">
-						<div className="grid sm:grid-cols-1 md:grid-cols-2 justify-between items-center min-h-screen">
-							<div
-								data-aos="fade-right"
-								data-aos-duration="1000"
-								className="text-white order-2 md:order-1 mt-10 md:mt-0 z-10"
-							>
-								<h4 className="text-lg font-josefin font-medium">
-									Hello, I'm
-								</h4>
-								{allHomeData && (
-									<h1 className="text-4xl md:text-6xl font-josefin font-bold bg-gradient-to-r from-color3 to-blue-400 bg-clip-text text-transparent">
-										{allHomeData.name}
-									</h1>
-								)}
-								<h2 className="text-2xl md:text-3xl font-josefin font-medium text-white mt-2 mb-4">
-									<Typewriter
-										words={allHomeData?.skills || ['Web Developer', 'Designer']}
-										loop={0}
-										cursor
-										cursorStyle="_"
-										typeSpeed={70}
-										deleteSpeed={50}
-										delaySpeed={1000}
-									/>
-								</h2>
-								{allHomeData && (
-									<div className="prose prose-invert max-w-none">
-										<ReactMarkdown>{allHomeData.description}</ReactMarkdown>
-									</div>
-								)}
-								<div className="flex items-center gap-4 mt-6">
-									{allHomeData?.cvUrl && (
-										<button
-											onClick={handleDownload}
-											className="bg-gradient-to-r from-color3 to-blue-400 text-white px-6 py-3 rounded-lg font-josefin font-medium flex items-center gap-2 hover:shadow-lg hover:shadow-color3/25 transition-all duration-300"
-										>
-											<FiDownload />
-											Download CV
-										</button>
-									)}
-									<Link
-										href="/contact"
-										className="border border-color3 text-color3 px-6 py-3 rounded-lg font-josefin font-medium hover:bg-color3 hover:text-white transition-all duration-300"
-									>
-										Hire Me
-									</Link>
-								</div>
-							</div>
-							<div
-								data-aos="fade-left"
-								data-aos-duration="1000"
-								className="flex justify-center order-1 md:order-2 z-10"
-							>
-								{allHomeData?.image && (
-									<div className="relative">
-										<Image
-											src={allHomeData.image}
-											alt={allHomeData.name}
-											width={400}
-											height={400}
-											className="rounded-full shadow-2xl shadow-color3/20"
-											priority
-										/>
-										<div className="absolute -inset-4 bg-gradient-to-r from-color3/20 to-blue-400/20 rounded-full blur-xl"></div>
-									</div>
-								)}
-							</div>
-						</div>
-					</div>
-				</section>
+      <section id="hero" className="relative pt-32 md:pt-10 pb-10 md:pb-20">
+        <ParticlesOptimized />
+        <div className="absolute bottom-0 inset-x-0 bg-bottom bg-no-repeat shadow_03"></div>
+        <div className="container mx-auto px-3 md:px-5">
+          <div className="grid sm:grid-cols-1 md:grid-cols-2 justify-between items-center min-h-screen">
+            <div
+              data-aos="fade-right"
+              data-aos-duration="1000"
+              className="hero_text sm:order-last md:order-first">
+              <h5 className="bg-slate-500 dark:bg-opacity-25 text-lg font-bold w-fit px-4 rounded-sm">
+                Hello!
+              </h5>
+              <h1 className="font-josefin text-xl py-5">
+                My Name is
+                <span className="font-josefin text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-500 ml-2">
+                  MD. AL AMIN
+                </span>
+              </h1>
+              <h2 className="font-josefin text-3xl">
+                <span className="mr-2">I am a</span>
+                {allHomeData.title && (
+                  <Typewriter
+                    words={allHomeData.title.map((title) => title + ".")}
+                    loop={false}
+                    cursor={true}
+                    cursorColor="blue"
+                    typeSpeed={50}
+                  />
+                )}
+              </h2>
+              <div className="pt-5 pb-10">
+                <ReactMarkdown
+                  className="markdown-description"
+                  components={{
+                    p: ({ children }) => (
+                      <p className="font-titillium text-lg font-medium mb-1">
+                        {children}
+                      </p>
+                    )
+                  }}
+                >
+                  {allHomeData.description}
+                </ReactMarkdown>
+              </div>
+              <div className="flex flex-wrap flex-col-reverse sm:flex-row sm:flex-nowrap  gap-5">
+                <button
+                  onClick={handleDownload}
+                  className="flex gap-3 px-5 py-3 button button--aylen bg-gradient-to-r from-blue-950 to-blue-600 hover:from-blue-600  relative  focus:outline-none border-2 border-solid rounded-lg text-sm text-center font-semibold uppercase tracking-widest overflow-hidden w-52"
+                  data-text="Download CV"
+                >
+                  <span className="align-middle text-white">Download CV</span>
+                  <FiDownload className="text-xl font-extrabold animate-bounce delay-200 text-white align-middle" />
+                </button>
+                <Link href="/about">
+                  <button className="button button--nina bg-gradient-to-r from-blue-950 to-blue-600 hover:from-blue-600 hover:to-blue-950  relative block focus:outline-none border-2 border-solid rounded-lg text-sm text-center font-josefin font-semibold uppercase tracking-widest overflow-hidden px-5 text-white" data-text="About Me">
+                    {/* About Me */}
+                    <span className="align-middle">A</span>
+                    <span className="align-middle">b</span>
+                    <span className="align-middle">o</span>
+                    <span className="align-middle">u</span>
+                    <span className="align-middle">t</span>
+                    <span className="align-middle ms-1">M</span>
+                    <span className="align-middle">e</span>
+                  </button>
+                </Link>
+              </div>
+            </div>
+            <div
+              data-aos="zoom-in"
+              data-aos-duration="1000"
+              className="hero_image mx-auto order-first sm:order-first md:order-last">
+              <Image
+                src={allHomeData.image[0]}
+                width={350}
+                height={350}
+                alt="mdalamin75"
+                priority="true"
+                className="w-80 shadow-xl shadow-sky-600 rounded-full mb-10 xl:ml-64"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
 
-			{/* Services Section */}
-			<Services />
+      <section id="portfolio" className="py-20 relative">
+        <div className="container mx-auto px-3 md:px-5">
+          <div className="text-center mb-16">
+            <img src="/portfolio/portfolio.svg" alt="Portfolio" width={80} height={80} className="mx-auto mb-4" />
+            <h2 className="text-3xl md:text-4xl font-josefin font-bold mb-4">My Recent Work</h2>
+            <p className="max-w-2xl mx-auto">Explore my latest projects showcasing modern web development, responsive design, and innovative solutions.</p>
+          </div>
+          <ProjectItem showFilter={false} limit={6} initialData={portfolioData} />
+          <div className="w-full flex justify-center">
+            <Link
+              href="/portfolio"
+              data-aos="fade-right"
+              data-aos-duration="1000"
+              className="button button--nina bg-gradient-to-r from-blue-950 to-blue-600 hover:from-blue-600 hover:to-blue-950  relative block focus:outline-none border-2 border-solid rounded-lg text-sm text-center font-josefin font-semibold uppercase tracking-widest overflow-hidden ms-5 px-10 text-white" data-text="View More">
+              {/* View More */}
+              <span className="align-middle">V</span>
+              <span className="align-middle">i</span>
+              <span className="align-middle">e</span>
+              <span className="align-middle">w</span>
+              <span className="align-middle ms-1">M</span>
+              <span className="align-middle">o</span>
+              <span className="align-middle">r</span>
+              <span className="align-middle">e</span>
+            </Link>
+          </div>
+        </div>
+      </section>
 
-			{/* Portfolio Section */}
-			<section id="portfolio" className="py-20 relative">
-				<div className="container mx-auto px-3 md:px-5">
-					<div className="text-center mb-16">
-						<Image
-							src={portfolio}
-							alt="Portfolio"
-							width={80}
-							height={80}
-							className="mx-auto mb-4"
-						/>
-						<h2 className="text-3xl md:text-4xl font-josefin font-bold text-white mb-4">
-							My Recent Work
-						</h2>
-						<p className="text-gray-300 max-w-2xl mx-auto">
-							Explore my latest projects showcasing modern web development, responsive design, and innovative solutions.
-						</p>
-					</div>
-					<ProjectItem />
-				</div>
-			</section>
+      <section className="py-20 relative">
+        <div className="container mx-auto px-3 md:px-5">
+          <div className="text-center mb-16">
+            <img src="/testimonial/review.svg" alt="Reviews" width={80} height={80} className="mx-auto mb-4" />
+            <h2 className="text-3xl md:text-4xl font-josefin font-bold mb-4">Client Testimonials</h2>
+            <p className="max-w-2xl mx-auto">What my clients say about working with me and the results we've achieved together.</p>
+          </div>
+          <TestimonialSlider initialData={testimonialsData} />
+        </div>
+      </section>
 
-			{/* Testimonials Section */}
-			<section className="py-20 relative">
-				<div className="container mx-auto px-3 md:px-5">
-					<div className="text-center mb-16">
-						<Image
-							src={review}
-							alt="Reviews"
-							width={80}
-							height={80}
-							className="mx-auto mb-4"
-						/>
-						<h2 className="text-3xl md:text-4xl font-josefin font-bold text-white mb-4">
-							Client Testimonials
-						</h2>
-						<p className="text-gray-300 max-w-2xl mx-auto">
-							What my clients say about working with me and the results we've achieved together.
-						</p>
-					</div>
-					<TestimonialSlider />
-				</div>
-			</section>
-		</>
-	);
+      <section className="py-20 relative">
+        <div className="container mx-auto px-3 md:px-5">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-josefin font-bold mb-4">Service</h2>
+            <p className="max-w-2xl mx-auto">Secure your seat, fasten your seatbelt, and join us on an interstellar journey to turn your
+              web vision into a next level reality.</p>
+          </div>
+          <Services initialData={servicesData} />
+        </div>
+      </section>
+    </>
+  );
 }
 
 export async function getServerSideProps() {
-	try {
-		const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000'}/api/home`);
-		if (!response.ok) {
-			throw new Error('Failed to fetch data');
-		}
-		const initialData = await response.json();
-		return {
-			props: {
-				initialData,
-			},
-		};
-	} catch (error) {
-		console.error('Error fetching home data:', error);
-		return {
-			props: {
-				initialData: null,
-			},
-		};
-	}
+  try {
+    const base = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+
+    // Fetch all necessary data in parallel
+    const [homeResponse, portfolioResponse, servicesResponse, testimonialsResponse] = await Promise.all([
+      fetch(`${base}/api/home`),
+      fetch(`${base}/api/portfolio`),
+      fetch(`${base}/api/service`),
+      fetch(`${base}/api/testimonial`)
+    ]);
+
+    // Check if all responses are ok
+    if (!homeResponse.ok) throw new Error('Failed to fetch home data');
+    if (!portfolioResponse.ok) throw new Error('Failed to fetch portfolio data');
+    if (!servicesResponse.ok) throw new Error('Failed to fetch services data');
+    if (!testimonialsResponse.ok) throw new Error('Failed to fetch testimonials data');
+
+    // Parse all responses
+    const [homeData, portfolioData, servicesData, testimonialsData] = await Promise.all([
+      homeResponse.json(),
+      portfolioResponse.json(),
+      servicesResponse.json(),
+      testimonialsResponse.json()
+    ]);
+
+    // Combine all data into initialData
+    const initialData = {
+      home: homeData,
+      portfolio: portfolioData,
+      services: servicesData,
+      testimonials: testimonialsData
+    };
+
+    return { props: { initialData } };
+  } catch (error) {
+    console.error('Error fetching data for home page:', error);
+    return { props: { initialData: null } };
+  }
 }

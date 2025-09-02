@@ -95,7 +95,7 @@ const Footer = () => {
           </div>
           <p className="font-titillium text-center py-4 md:py-6 border-t border-purple-200 mt-4 text-sm md:text-base text-base-content">
             Copyright &copy; <span> {new Date().getFullYear()} </span>
-            <span className="text-primary font-bold">MD. AL AMIN</span>. All Rights Reserved.
+            <Link href="https://www.freelancer.com/u/mdalamin75" target="_blank" className="text-primary font-bold">MD. AL AMIN</Link>. All Rights Reserved.
           </p>
         </div>
       </div>
