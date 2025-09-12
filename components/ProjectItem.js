@@ -156,26 +156,30 @@ const ProjectItem = React.memo(({ initialData, showFilter = true, limit }) => {
                         className="grid grid-cols-1 md:grid-cols-2 gap-10 py-10">
                         {displayedProjects.length === 0 ? (
                             <div className="col-span-2 text-center py-20">
-                                <h1 className="text-2xl font-bold mb-4">No Projects Found</h1>
-                                <p className="text-gray-600 mb-4">
-                                    {portfolioData && portfolioData.length > 0
-                                        ? "No projects match the selected category or status filter."
-                                        : "No portfolio projects have been added yet."
-                                    }
-                                </p>
-                                {portfolioData && portfolioData.length > 0 && (
-                                    <p className="text-sm text-gray-500">
-                                        Total projects in database: {portfolioData.length} |
-                                        Published: {portfolioData.filter(p => p.status === 'publish').length} |
-                                        Draft: {portfolioData.filter(p => p.status === 'draft').length}
-                                    </p>
+                                {loading ? (
+                                    <div className="animate-pulse">
+                                        <div className="h-8 bg-gray-300 dark:bg-gray-600 rounded-lg w-64 mx-auto mb-4"></div>
+                                        <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded w-96 mx-auto mb-2"></div>
+                                        <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded w-80 mx-auto"></div>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">No Projects Found</h1>
+                                        <p className="text-gray-600 dark:text-gray-400 mb-4">
+                                            {portfolioData && portfolioData.length > 0
+                                                ? "No projects match the selected category or status filter."
+                                                : "No portfolio projects have been added yet."
+                                            }
+                                        </p>
+                                        {portfolioData && portfolioData.length > 0 && (
+                                            <p className="text-sm text-gray-500 dark:text-gray-400">
+                                                Total projects in database: {portfolioData.length} |
+                                                Published: {portfolioData.filter(p => p.status === 'publish').length} |
+                                                Draft: {portfolioData.filter(p => p.status === 'draft').length}
+                                            </p>
+                                        )}
+                                    </>
                                 )}
-                                <button
-                                    onClick={() => refetch()}
-                                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4"
-                                >
-                                    Refresh Data
-                                </button>
                             </div>
                         ) : (
                             displayedProjects.map((element) => {
@@ -259,42 +263,40 @@ const ProjectItem = React.memo(({ initialData, showFilter = true, limit }) => {
         );
     }
 
-    // Show error state
+    // Show error state with auto-retry
     if (error) {
         return (
             <div className="text-center py-20">
-                <h2 className="text-2xl font-bold mb-4 text-red-600">Error Loading Portfolio</h2>
-                <p className="text-gray-600 mb-4">
-                    {error.message || 'Failed to load portfolio data. Please check your connection and try again.'}
+                <div className="animate-pulse">
+                    <div className="h-8 bg-red-200 dark:bg-red-800 rounded-lg w-80 mx-auto mb-4"></div>
+                    <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded w-96 mx-auto mb-2"></div>
+                    <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded w-80 mx-auto"></div>
+                </div>
+                <p className="text-gray-600 dark:text-gray-400 mt-6">
+                    Retrying automatically... Please wait a moment.
                 </p>
-                <button
-                    onClick={() => refetch()}
-                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-                >
-                    Retry Loading
-                </button>
             </div>
         );
     }
 
-    // Fallback: Show test content if no data and not loading
+    // Fallback: Show skeleton while auto-retrying
     if (!loading && !portfolioData && !initialData) {
         return (
             <div className="text-center py-20">
-                <h2 className="text-2xl font-bold mb-4">No Portfolio Data Available</h2>
-                <p className="text-gray-600 mb-4">Please check your database connection and ensure portfolio items exist.</p>
-                <div className="space-y-2 text-sm text-gray-500">
-                    <p>• Check if MongoDB is running</p>
-                    <p>• Verify MONGODB_URI environment variable</p>
-                    <p>• Ensure portfolio items exist in database</p>
-                    <p>• Check browser console for errors</p>
+                <div className="animate-pulse">
+                    <div className="h-8 bg-gray-300 dark:bg-gray-600 rounded-lg w-80 mx-auto mb-4"></div>
+                    <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded w-96 mx-auto mb-2"></div>
+                    <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded w-80 mx-auto mb-4"></div>
+                    <div className="space-y-2">
+                        <div className="h-3 bg-gray-300 dark:bg-gray-600 rounded w-64 mx-auto"></div>
+                        <div className="h-3 bg-gray-300 dark:bg-gray-600 rounded w-72 mx-auto"></div>
+                        <div className="h-3 bg-gray-300 dark:bg-gray-600 rounded w-60 mx-auto"></div>
+                        <div className="h-3 bg-gray-300 dark:bg-gray-600 rounded w-68 mx-auto"></div>
+                    </div>
                 </div>
-                <button
-                    onClick={() => refetch()}
-                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4"
-                >
-                    Retry Loading
-                </button>
+                <p className="text-gray-600 dark:text-gray-400 mt-6">
+                    Initializing portfolio data... Please wait.
+                </p>
             </div>
         );
     }

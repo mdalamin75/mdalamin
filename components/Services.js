@@ -15,6 +15,7 @@ const Services = ({ initialData }) => {
     const {
         data: serviceData,
         loading,
+        error,
         refetch,
     } = useFetch("service", serviceInitialData);
 
@@ -191,18 +192,34 @@ const Services = ({ initialData }) => {
         );
     }
 
-    // Fallback: Show test content if no data and not loading
+    // Show error state with auto-retry
+    if (error) {
+        return (
+            <div className="text-center py-20">
+                <div className="animate-pulse">
+                    <div className="h-8 bg-red-200 dark:bg-red-800 rounded-lg w-80 mx-auto mb-4"></div>
+                    <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded w-96 mx-auto mb-2"></div>
+                    <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded w-80 mx-auto"></div>
+                </div>
+                <p className="text-gray-600 dark:text-gray-400 mt-6">
+                    Retrying automatically... Please wait a moment.
+                </p>
+            </div>
+        );
+    }
+
+    // Fallback: Show skeleton while auto-retrying
     if (!loading && !serviceData && !initialData) {
         return (
             <div className="text-center py-20">
-                <h2 className="text-2xl font-bold mb-4">No Services Data Available</h2>
-                <p className="text-gray-600 mb-4">Please check your database connection and ensure services exist.</p>
-                <button
-                    onClick={() => refetch()}
-                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                >
-                    Retry Loading
-                </button>
+                <div className="animate-pulse">
+                    <div className="h-8 bg-gray-300 dark:bg-gray-600 rounded-lg w-80 mx-auto mb-4"></div>
+                    <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded w-96 mx-auto mb-2"></div>
+                    <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded w-80 mx-auto"></div>
+                </div>
+                <p className="text-gray-600 dark:text-gray-400 mt-6">
+                    Initializing services data... Please wait.
+                </p>
             </div>
         );
     }
