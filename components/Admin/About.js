@@ -16,7 +16,7 @@ export default function About() {
     aboutimage: [],
     description: "",
     education: [{ name: "", date: "" }],
-    skillimages: [{ src: "", label: "" }],
+    skillimages: [{ src: "", label: "", category: "frontend", level: "Intermediate" }],
     experiencetitle: "",
     experiencedescription: "",
     status: ""
@@ -38,7 +38,7 @@ export default function About() {
             aboutimage: data.aboutimage || [],
             description: data.description || "",
             education: data.education || [{ name: "", date: "" }],
-            skillimages: data.skillimages || [{ src: "", label: "" }],
+            skillimages: data.skillimages || [{ src: "", label: "", category: "frontend", level: "Intermediate" }],
             experiencetitle: data.experiencetitle || "",
             experiencedescription: data.experiencedescription || "",
             status: data.status || ""
@@ -76,7 +76,9 @@ export default function About() {
         })),
         skillimages: formData.skillimages.map(skill => ({
           src: skill.src,
-          label: skill.label
+          label: skill.label,
+          category: skill.category || "frontend",
+          level: skill.level || "Intermediate"
         })),
         experiencetitle: formData.experiencetitle,
         experiencedescription: formData.experiencedescription,

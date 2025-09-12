@@ -3,31 +3,47 @@ import { getSession } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import AdminLayout from "../../layouts/AdminLayout";
 import axios from "axios";
 import { FaShoppingBag, FaBriefcase, FaComments, FaNewspaper, FaBoxOpen } from "react-icons/fa";
-import { Bar, Pie } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  ArcElement
-} from "chart.js";
 
-// Register ChartJS components
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  ArcElement
-);
+// Lazy load heavy chart components
+const Bar = dynamic(() => import("react-chartjs-2").then(mod => ({ default: mod.Bar })), {
+  ssr: false,
+  loading: () => <div className="h-64 bg-gray-200 animate-pulse rounded"></div>
+});
+
+const Pie = dynamic(() => import("react-chartjs-2").then(mod => ({ default: mod.Pie })), {
+  ssr: false,
+  loading: () => <div className="h-64 bg-gray-200 animate-pulse rounded"></div>
+});
+
+// Lazy load Chart.js registration
+const loadChartJS = async () => {
+  const {
+    Chart: ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+    ArcElement
+  } = await import("chart.js");
+  
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+    ArcElement
+  );
+  
+  return ChartJS;
+};
 
 const AdminPage = () => {
   const { data: session, status } = useSession();
@@ -40,6 +56,7 @@ const AdminPage = () => {
     products: 0
   });
   const [loading, setLoading] = useState(true);
+  const [chartLoaded, setChartLoaded] = useState(false);
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -52,6 +69,10 @@ const AdminPage = () => {
   useEffect(() => {
     if (session?.user?.twoFactorVerified) {
       fetchStats();
+      // Load Chart.js in background
+      loadChartJS().then(() => {
+        setChartLoaded(true);
+      });
     }
   }, [session]);
 
@@ -207,14 +228,26 @@ const AdminPage = () => {
           <div className="glass p-6 rounded-lg shadow-md backdrop-blur-sm">
             <h2 className="text-xl font-semibold mb-4 text-base-content">Content Distribution</h2>
             <div className="h-64">
-              <Bar data={barChartData} options={{ maintainAspectRatio: false }} />
+              {chartLoaded ? (
+                <Bar data={barChartData} options={{ maintainAspectRatio: false }} />
+              ) : (
+                <div className="h-full bg-gray-200 animate-pulse rounded flex items-center justify-center">
+                  <span className="text-gray-500">Loading chart...</span>
+                </div>
+              )}
             </div>
           </div>
           
           <div className="glass p-6 rounded-lg shadow-md backdrop-blur-sm">
             <h2 className="text-xl font-semibold mb-4 text-base-content">Content Percentage</h2>
             <div className="h-64">
-              <Pie data={pieChartData} options={{ maintainAspectRatio: false }} />
+              {chartLoaded ? (
+                <Pie data={pieChartData} options={{ maintainAspectRatio: false }} />
+              ) : (
+                <div className="h-full bg-gray-200 animate-pulse rounded flex items-center justify-center">
+                  <span className="text-gray-500">Loading chart...</span>
+                </div>
+              )}
             </div>
           </div>
         </div>

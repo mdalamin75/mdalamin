@@ -11,53 +11,57 @@ export const FetchProvider = ({ children }) => {
   const { setIsLoading } = useLoading();
   const [activeRequests, setActiveRequests] = useState({});
   
-  // Clear expired cache entries periodically
+  // Clear expired cache entries periodically (disabled in development)
   useEffect(() => {
-    const interval = setInterval(() => {
-      const now = Date.now();
-      let expired = 0;
+    if (process.env.NODE_ENV === 'production') {
+      const interval = setInterval(() => {
+        const now = Date.now();
+        let expired = 0;
+        
+        Object.keys(dataCache).forEach(key => {
+          if (now - dataCache[key].timestamp > 600000) { // 10 minutes expiration
+            delete dataCache[key];
+            expired++;
+          }
+        });
+      }, 30000);
       
-      Object.keys(dataCache).forEach(key => {
-        if (now - dataCache[key].timestamp > 300000) { // 5 minutes expiration
-          delete dataCache[key];
-          expired++;
-        }
-      });
-    }, 30000);
-    
-    return () => clearInterval(interval);
+      return () => clearInterval(interval);
+    }
   }, []);
 
-  // Pre-load common data when FetchProvider mounts
+  // Pre-load common data when FetchProvider mounts (disabled in development)
   useEffect(() => {
-    // Pre-fetch critical data in background
-    const prefetchData = async () => {
-      try {
-        const criticalEndpoints = ['home', 'service', 'portfolio', 'testimonial'];
-        
-        for (const endpoint of criticalEndpoints) {
-          if (!dataCache[endpoint]) {
-            try {
-              await fetchData(endpoint, { showLoading: false });
-            } catch (err) {
-              // Continue with other prefetches even if one fails
+    // Only prefetch in production to avoid development issues
+    if (process.env.NODE_ENV === 'production') {
+      const prefetchData = async () => {
+        try {
+          const criticalEndpoints = ['home', 'service', 'portfolio', 'testimonial'];
+          
+          for (const endpoint of criticalEndpoints) {
+            if (!dataCache[endpoint]) {
+              try {
+                await fetchData(endpoint, { showLoading: false });
+              } catch (err) {
+                // Continue with other prefetches even if one fails
+              }
             }
           }
+          
+          // Trigger animations after all critical data is loaded
+          setTimeout(() => {
+            if (typeof window !== 'undefined' && window.AOS) {
+              window.AOS.refresh();
+            }
+          }, 200);
+        } catch (err) {
+          // Silently continue
         }
-        
-        // Trigger animations after all critical data is loaded
-        setTimeout(() => {
-          if (typeof window !== 'undefined' && window.AOS) {
-            window.AOS.refresh();
-          }
-        }, 200);
-      } catch (err) {
-        // Silently continue
-      }
-    };
-    
-    // Start pre-fetching
-    prefetchData();
+      };
+      
+      // Start pre-fetching
+      prefetchData();
+    }
   }, []);
 
   // Fetch data from API with caching and deduplication

@@ -21,12 +21,33 @@ const loadSlim = dynamic(
 const ParticlesOptimized = ({ reduceMotion = false }) => {
     const [init, setInit] = useState(false);
     const [shouldRender, setShouldRender] = useState(false);
+    const [theme, setTheme] = useState("light");
 
     // Check for user preference for reduced motion
     useEffect(() => {
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         setShouldRender(!prefersReducedMotion && !reduceMotion);
     }, [reduceMotion]);
+
+    // Detect theme changes
+    useEffect(() => {
+        const detectTheme = () => {
+            const currentTheme = document.documentElement.getAttribute("data-theme");
+            setTheme(currentTheme || "light");
+        };
+
+        // Initial theme detection
+        detectTheme();
+
+        // Watch for theme changes
+        const observer = new MutationObserver(detectTheme);
+        observer.observe(document.documentElement, { 
+            attributes: true, 
+            attributeFilter: ["data-theme"] 
+        });
+
+        return () => observer.disconnect();
+    }, []);
 
     // Initialize particles engine only when needed
     useEffect(() => {
@@ -59,11 +80,13 @@ const ParticlesOptimized = ({ reduceMotion = false }) => {
     }, [shouldRender]);
 
     const particlesLoaded = useCallback((container) => {
-        // Remove console.log for production
-        if (process.env.NODE_ENV === 'development') {
-            console.log("Particles loaded:", container);
-        }
+        // Particles loaded successfully
     }, []);
+
+    // Get theme-aware particle color
+    const getParticleColor = () => {
+        return theme === "light" ? "#6b7280" : "#ffffff"; // Gray for light theme, white for dark/night theme
+    };
 
     // Simplified and optimized particle configuration
     const options = useMemo(() => ({
@@ -135,7 +158,7 @@ const ParticlesOptimized = ({ reduceMotion = false }) => {
                 }
             },
             color: {
-                value: "#ffffff",
+                value: getParticleColor(),
                 animation: {
                     h: {
                         count: 0,
@@ -320,7 +343,7 @@ const ParticlesOptimized = ({ reduceMotion = false }) => {
         style: {},
         themes: [],
         zLayers: 100
-    }), []);
+    }), [theme]);
 
     // Don't render if motion should be reduced or not initialized
     if (!shouldRender || !init) {

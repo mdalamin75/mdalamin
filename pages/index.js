@@ -24,12 +24,155 @@ export default function Home({ initialData }) {
   const testimonialsData = initialData?.testimonials;
 
   const { data: homeDataFromHook, loading } = useFetch("home", homeData);
+  
 
-  if (loading) return null;
+  // Complete Page Skeleton Loader
+  const PageSkeleton = () => (
+    <>
+      <SEO
+        title="MD. AL AMIN - Professional Web Developer & Designer"
+        description="Professional web developer specializing in modern web applications, responsive design, and digital solutions. Explore my portfolio and get in touch for your next project."
+        keywords="web developer, frontend developer, react developer, nextjs developer, portfolio, web design, responsive design, MD AL AMIN"
+        ogImage="/profile.jpg"
+      />
+
+      {/* Hero Section Skeleton */}
+      <section id="hero" className="relative pt-32 md:pt-10 pb-10 md:pb-20">
+        <ParticlesOptimized />
+        <div className="absolute bottom-0 inset-x-0 bg-bottom bg-no-repeat shadow_03"></div>
+        <div className="container mx-auto px-3 md:px-5">
+          <div className="grid sm:grid-cols-1 md:grid-cols-2 justify-between items-center min-h-screen">
+            {/* Hero Text Skeleton */}
+            <div className="hero_text sm:order-last md:order-first">
+              <div className="h-8 bg-gray-700/50 rounded-sm w-20 animate-pulse mb-4"></div>
+              <div className="h-8 bg-gray-700/50 rounded-lg w-64 animate-pulse mb-5"></div>
+              <div className="h-12 bg-gray-700/50 rounded-lg w-80 animate-pulse mb-5"></div>
+
+              {/* Description Skeleton */}
+              <div className="pt-5 pb-10 space-y-3">
+                <div className="h-4 bg-gray-700/50 rounded w-full animate-pulse"></div>
+                <div className="h-4 bg-gray-700/50 rounded w-full animate-pulse"></div>
+                <div className="h-4 bg-gray-700/50 rounded w-3/4 animate-pulse"></div>
+              </div>
+
+              {/* Buttons Skeleton */}
+              <div className="flex flex-wrap flex-col-reverse sm:flex-row sm:flex-nowrap gap-5">
+                <div className="h-12 bg-gray-700/50 rounded-lg w-52 animate-pulse"></div>
+                <div className="h-12 bg-gray-700/50 rounded-lg w-32 animate-pulse"></div>
+              </div>
+            </div>
+
+            {/* Hero Image Skeleton */}
+            <div className="hero_image mx-auto order-first sm:order-first md:order-last">
+              <div className="w-80 h-80 bg-gray-700/50 rounded-full animate-pulse mb-10 xl:ml-64"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section Skeleton */}
+      <section id="services" className="py-10 md:py-20 snap-start relative bg_pattern2">
+        <div className="container mx-auto px-3 md:px-5">
+          <div className="services_head text-center mb-16">
+            <div className="w-32 h-32 bg-gray-700/50 rounded-full mx-auto animate-pulse mb-4"></div>
+            <div className="h-12 bg-gray-700/50 rounded-lg mx-auto w-48 animate-pulse"></div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <div key={i} className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50">
+                <div className="w-16 h-16 bg-gray-700/50 rounded-xl mx-auto mb-4 animate-pulse"></div>
+                <div className="h-6 bg-gray-700/50 rounded w-3/4 mx-auto mb-3 animate-pulse"></div>
+                <div className="space-y-2">
+                  <div className="h-4 bg-gray-700/50 rounded w-full animate-pulse"></div>
+                  <div className="h-4 bg-gray-700/50 rounded w-full animate-pulse"></div>
+                  <div className="h-4 bg-gray-700/50 rounded w-2/3 animate-pulse"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Portfolio Section Skeleton */}
+      <section id="portfolio" className="py-10 md:py-20 snap-start relative bg_pattern2">
+        <div className="container mx-auto px-3 md:px-5">
+          <div className="portfolio_head text-center mb-16">
+            <div className="w-32 h-32 bg-gray-700/50 rounded-full mx-auto animate-pulse mb-4"></div>
+            <div className="h-12 bg-gray-700/50 rounded-lg mx-auto w-48 animate-pulse"></div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <div key={i} className="bg-gray-800/30 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-700/50">
+                <div className="h-48 bg-gray-700/50 animate-pulse"></div>
+                <div className="p-6">
+                  <div className="h-6 bg-gray-700/50 rounded w-3/4 mb-3 animate-pulse"></div>
+                  <div className="space-y-2">
+                    <div className="h-4 bg-gray-700/50 rounded w-full animate-pulse"></div>
+                    <div className="h-4 bg-gray-700/50 rounded w-2/3 animate-pulse"></div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section Skeleton */}
+      <section id="testimonials" className="py-10 md:py-20 snap-start relative bg_pattern2">
+        <div className="container mx-auto px-3 md:px-5">
+          <div className="testimonials_head text-center mb-16">
+            <div className="w-32 h-32 bg-gray-300 dark:bg-gray-700/50 rounded-full mx-auto animate-pulse mb-4"></div>
+            <div className="h-12 bg-gray-300 dark:bg-gray-700/50 rounded-lg mx-auto w-56 animate-pulse"></div>
+          </div>
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-sm rounded-2xl p-8 border border-gray-200/50 dark:border-gray-700/50">
+              <div className="text-center">
+                <div className="w-20 h-20 bg-gray-300 dark:bg-gray-700/50 rounded-full mx-auto mb-4 animate-pulse"></div>
+                <div className="h-6 bg-gray-300 dark:bg-gray-700/50 rounded w-48 mx-auto mb-4 animate-pulse"></div>
+                <div className="space-y-3">
+                  <div className="h-4 bg-gray-300 dark:bg-gray-700/50 rounded w-full animate-pulse"></div>
+                  <div className="h-4 bg-gray-300 dark:bg-gray-700/50 rounded w-full animate-pulse"></div>
+                  <div className="h-4 bg-gray-300 dark:bg-gray-700/50 rounded w-3/4 mx-auto animate-pulse"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section Skeleton */}
+      <section className="py-20 relative">
+        <div className="container mx-auto px-3 md:px-5">
+          <div className="text-center mb-16">
+            <div className="h-12 bg-gray-700/50 rounded-lg mx-auto w-32 animate-pulse mb-4"></div>
+            <div className="h-4 bg-gray-700/50 rounded w-3/4 mx-auto animate-pulse"></div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <div key={i} className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50">
+                <div className="w-16 h-16 bg-gray-700/50 rounded-xl mx-auto mb-4 animate-pulse"></div>
+                <div className="h-6 bg-gray-700/50 rounded w-3/4 mx-auto mb-3 animate-pulse"></div>
+                <div className="space-y-2">
+                  <div className="h-4 bg-gray-700/50 rounded w-full animate-pulse"></div>
+                  <div className="h-4 bg-gray-700/50 rounded w-full animate-pulse"></div>
+                  <div className="h-4 bg-gray-700/50 rounded w-2/3 animate-pulse"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  );
 
   const allHomeData = Array.isArray(homeDataFromHook)
     ? (homeDataFromHook.find(h => h.status === 'publish') || homeDataFromHook[0])
     : homeDataFromHook || homeData;
+
+  // Show skeleton while loading or if no data
+  if (loading || !allHomeData) {
+    return <PageSkeleton />;
+  }
 
   const heroName = allHomeData?.title?.[0] || "";
   const heroSkills = Array.isArray(allHomeData?.title) && allHomeData.title.length > 1
@@ -75,7 +218,7 @@ export default function Home({ initialData }) {
             <div
               data-aos="fade-right"
               data-aos-duration="1000"
-              className="hero_text sm:order-last md:order-first">
+              className="hero_text sm:order-last md:order-first animate-fadeInUp">
               <h5 className="bg-slate-500 dark:bg-opacity-25 text-lg font-bold w-fit px-4 rounded-sm">
                 Hello!
               </h5>
@@ -137,7 +280,7 @@ export default function Home({ initialData }) {
             <div
               data-aos="zoom-in"
               data-aos-duration="1000"
-              className="hero_image mx-auto order-first sm:order-first md:order-last">
+              className="hero_image mx-auto order-first sm:order-first md:order-last animate-fadeInUp">
               <Image
                 src={allHomeData.image[0]}
                 width={350}
@@ -181,7 +324,7 @@ export default function Home({ initialData }) {
 
       <section className="py-20 relative">
         <div className="container mx-auto px-3 md:px-5">
-          <div className="text-center mb-16">
+          <div className="testimonials_head text-center mb-16">
             <Image src="/testimonial/review.svg" alt="Reviews" width={80} height={80} className="mx-auto mb-4" />
             <h2 className="text-3xl md:text-4xl font-josefin font-bold mb-4">Client Testimonials</h2>
             <p className="max-w-2xl mx-auto">What my clients say about working with me and the results we've achieved together.</p>
@@ -200,6 +343,24 @@ export default function Home({ initialData }) {
           <Services initialData={servicesData} />
         </div>
       </section>
+      
+      {/* Custom CSS for smooth animations */}
+      <style jsx>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .animate-fadeInUp {
+          animation: fadeInUp 0.8s ease-out forwards;
+        }
+      `}</style>
     </>
   );
 }

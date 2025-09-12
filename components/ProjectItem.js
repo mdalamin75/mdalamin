@@ -183,13 +183,12 @@ const ProjectItem = React.memo(({ initialData, showFilter = true, limit }) => {
                                 return (
                                     <Link
                                         href={`/portfolio/${slug}`}
-                                        key={id}
+                                        key={`project-${id}-${slug}`}
                                         className="procard"
                                         data-aos="flip-left"
                                         data-aos-duration="1000"
                                     >
                                         <div
-                                            key={id}
                                             className="card bg-base-100 image-full w-full h-96 overflow-hidden shadow-xl card_hover hover:shadow-lg hover:shadow-purple-500 duration-500">
                                             <figure>
                                                 {images && images.length > 0 && images[0] ? (
@@ -219,15 +218,14 @@ const ProjectItem = React.memo(({ initialData, showFilter = true, limit }) => {
                                                     {title}
                                                 </h2>
                                                 <div className="card-actions">
-                                                    <Link
-                                                        href={`/portfolio/${slug}`}
+                                                    <button
                                                         className="button w-36 button--nina bg-gradient-to-r from-purple-950 to-purple-600  relative block focus:outline-none border-2 border-solid rounded-lg text-sm text-center font-josefin font-semibold uppercase tracking-widest overflow-hidden me-3 px-5"
                                                         data-text="View">
                                                         <span className="align-middle">V</span>
                                                         <span className="align-middle">i</span>
                                                         <span className="align-middle">e</span>
                                                         <span className="align-middle">w</span>
-                                                    </Link>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -246,7 +244,7 @@ const ProjectItem = React.memo(({ initialData, showFilter = true, limit }) => {
         return (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 py-10">
                 {[...Array(6)].map((_, index) => (
-                    <div key={index} className="card bg-base-100 image-full w-full h-96 overflow-hidden shadow-xl animate-pulse">
+                    <div key={`project-skeleton-${index}`} className="card bg-base-100 image-full w-full h-96 overflow-hidden shadow-xl animate-pulse">
                         <div className="w-full h-96 bg-gray-300 dark:bg-gray-700"></div>
                         <div className="card-body justify-end">
                             <div className="h-6 bg-gray-400 dark:bg-gray-600 rounded mb-2 w-3/4"></div>

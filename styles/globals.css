@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Prevent theme flash during initialization */
+.theme-loading {
+  visibility: hidden;
+}
+
+.theme-loading * {
+  transition: none !important;
+}
+
 /* Use CSS custom properties for repeated values */
 :root {
 	--swiper-theme-color: #f1f6f9;
@@ -25,7 +34,7 @@
 	flex-direction: column;
 }
 
-/* Optimize scrollbar styles */
+/* Optimize scrollbar styles - Theme aware */
 ::-webkit-scrollbar {
 	width: 5px;
 	height: 5px;
@@ -35,13 +44,25 @@
 	background: #f1f1f1;
 }
 
+.dark ::-webkit-scrollbar-track {
+	background: #374151;
+}
+
 ::-webkit-scrollbar-thumb {
 	background: #888;
 	border-radius: 10px;
 }
 
+.dark ::-webkit-scrollbar-thumb {
+	background: #6b7280;
+}
+
 ::-webkit-scrollbar-thumb:hover {
 	background: #555;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+	background: #9ca3af;
 }
 
 /* Additional protection against text visibility issues */
@@ -614,6 +635,13 @@ body {
 	/* height: 400px ; */
 }
 
+/* Mobile responsive testimonial cards */
+@media screen and (max-width: 640px) {
+	.swiper-slide {
+		width: 280px !important;
+	}
+}
+
 .swiper-slide img {
 	display: block;
 	width: 100%;
@@ -623,6 +651,37 @@ body {
 }
 .review_card {
 	min-height: 24rem;
+	max-height: 28rem;
+}
+
+
+
+/* Custom scrollbar for testimonial reviews */
+.scrollbar-thin {
+	scrollbar-width: thin;
+}
+
+/* Prevent layout shift during countdown animation */
+.countdown-stat {
+	min-width: 2.5rem;
+	text-align: center;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+	width: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+	background-color: rgba(156, 163, 175, 0.5);
+	border-radius: 2px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+	background-color: rgba(156, 163, 175, 0.7);
 }
 /* ================================= Testimonial End Here ======================= */
 

@@ -6,6 +6,7 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  darkMode: 'class', // Enable class-based dark mode
   theme: {
     extend: {
       fontFamily: {
@@ -44,6 +45,10 @@ module.exports = {
     require('daisyui'),
   ],
   daisyui: {
-    themes: ["night", "light"]
+    themes: ["light", "night"], // Use night theme for better color scheme
+    darkTheme: "night",
+    base: true,
+    styled: true,
+    utils: true,
   },
 };

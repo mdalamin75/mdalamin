@@ -95,7 +95,7 @@ const Services = ({ initialData }) => {
 
                             return (
                                 <div
-                                    key={id}
+                                    key={`service-${id}-${index}`}
                                     className={`card card-bordered border-purple-200 p-5 group ${columnClasses}`}
                                     data-aos={index % 2 === 0 ? "fade-left" : "fade-right"}
                                     data-aos-duration="1000"
@@ -175,7 +175,7 @@ const Services = ({ initialData }) => {
                     }
 
                     return (
-                        <div key={index} className={`card card-bordered border-purple-200 p-5 animate-pulse ${columnClasses}`}>
+                        <div key={`service-skeleton-${index}`} className={`card card-bordered border-purple-200 p-5 animate-pulse ${columnClasses}`}>
                             <div className="h-8 bg-gray-300 dark:bg-gray-700 rounded mb-3 w-2/3"></div>
                             <div className="space-y-2">
                                 <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded"></div>

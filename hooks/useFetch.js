@@ -9,14 +9,14 @@ export default function useFetch(endpoint, initialData = null) {
     const { setIsLoading } = useLoading();
     const abortControllerRef = useRef(null);
     const lastFetchTimeRef = useRef(0);
-    const cacheTimeout = 30000; // 30 seconds cache
+    const cacheTimeout = 60000; // 60 seconds cache
     const isMountedRef = useRef(true);
 
     const fetchData = useCallback(async () => {
         try {
             // Check if we have recent data and avoid unnecessary fetches
             const now = Date.now();
-            if (data && (now - lastFetchTimeRef.current) < cacheTimeout) {
+            if (lastFetchTimeRef.current && (now - lastFetchTimeRef.current) < cacheTimeout) {
                 setLoading(false);
                 return;
             }
@@ -60,9 +60,10 @@ export default function useFetch(endpoint, initialData = null) {
             // Only update loading state if component is still mounted
             if (isMountedRef.current) {
                 setLoading(false);
+                setIsLoading(false);
             }
         }
-    }, [endpoint, initialData, setIsLoading, data, cacheTimeout]);
+    }, [endpoint, initialData, setIsLoading, cacheTimeout]);
 
     useEffect(() => {
         // For SSR data, we already have the data
@@ -73,7 +74,7 @@ export default function useFetch(endpoint, initialData = null) {
                 if (isMountedRef.current) {
                     setIsLoading(false);
                 }
-            }, 300); // Reduced from 800ms
+            }, 100); // Reduced from 300ms
         } else {
             // No initial data, so fetch from API
             fetchData();

@@ -6,7 +6,8 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState("light");
+  const [themeLoaded, setThemeLoaded] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const Menus = [
     {
@@ -43,18 +44,66 @@ const Navbar = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Theme Handler
+  // Theme Handler - Initialize with system preference
   useEffect(() => {
+    // Add loading class to prevent flash
+    document.documentElement.classList.add("theme-loading");
+    
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme) {
       setTheme(savedTheme);
+    } else {
+      // Detect system preference
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initialTheme = systemPrefersDark ? "night" : "light";
+      setTheme(initialTheme);
+      
+      // Save the system preference as the initial theme
+      localStorage.setItem("theme", initialTheme);
     }
+
+    // Listen for system theme changes (optional - only if no manual theme is saved)
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleSystemThemeChange = (e) => {
+      // Only auto-switch if user hasn't manually set a theme preference
+      const hasManualTheme = localStorage.getItem("theme");
+      if (!hasManualTheme) {
+        const newTheme = e.matches ? "night" : "light";
+        setTheme(newTheme);
+        localStorage.setItem("theme", newTheme);
+      }
+    };
+
+    mediaQuery.addEventListener('change', handleSystemThemeChange);
+    
+    return () => {
+      mediaQuery.removeEventListener('change', handleSystemThemeChange);
+    };
+  }, []);
+
+  // Mark theme as loaded after initialization
+  useEffect(() => {
+    setThemeLoaded(true);
   }, []);
 
   useEffect(() => {
     localStorage.setItem("theme", theme);
-    document.querySelector("html").setAttribute("data-theme", theme);
-  }, [theme]);
+    document.documentElement.setAttribute("data-theme", theme);
+    
+    // Also set the dark class for Tailwind dark mode
+    if (theme === "night") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+    
+    // Remove theme loading class once theme is set
+    if (themeLoaded) {
+      document.documentElement.classList.remove("theme-loading");
+    }
+    
+    // Debug logging removed for cleaner console
+  }, [theme, themeLoaded]);
 
   const handleTheme = (e) => {
     setTheme(e.target.checked ? "night" : "light");
@@ -189,7 +238,7 @@ const Navbar = () => {
                         <input
                           type="checkbox"
                           onChange={handleTheme}
-                          checked={theme === "light" ? false : true}
+                          checked={theme === "night"}
                         />
                         <svg
                           className="swap-on h-8 w-8 fill-current text-base-content"

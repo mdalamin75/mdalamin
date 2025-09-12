@@ -1,21 +1,45 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Pagination } from "swiper";
-import "swiper/swiper-bundle.css";
+import dynamic from "next/dynamic";
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { a11yDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import useFetch from "../../hooks/useFetch";
-import { useState, useEffect } from 'react'; // Added useEffect
+import { useState, useEffect } from 'react';
 import Image from "next/image";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import SEO from "../../components/SEO";
 
+// Lazy load heavy components to reduce bundle size
+const Swiper = dynamic(() => import("swiper/react").then(mod => ({ default: mod.Swiper })), {
+  ssr: false,
+  loading: () => <div className="animate-pulse bg-gray-700 h-64 rounded"></div>
+});
+
+const SwiperSlide = dynamic(() => import("swiper/react").then(mod => ({ default: mod.SwiperSlide })), {
+  ssr: false
+});
+
+const SyntaxHighlighter = dynamic(() => import("react-syntax-highlighter").then(mod => mod.Prism), {
+  ssr: false,
+  loading: () => <div className="bg-gray-800 p-4 rounded animate-pulse">Loading code...</div>
+});
+
+// Lazy load Swiper modules
+const loadSwiperModules = () => import("swiper").then(mod => ({
+  FreeMode: mod.FreeMode,
+  Pagination: mod.Pagination
+}));
+
 export default function ProjectSlug({ initialData }) {
 	const router = useRouter();
 	const { slug } = router.query;
+	const [swiperModules, setSwiperModules] = useState(null);
+
+	// Load Swiper modules dynamically
+	useEffect(() => {
+		loadSwiperModules().then(setSwiperModules);
+	}, []);
 
 	const {
 		data: project,
@@ -223,12 +247,13 @@ export default function ProjectSlug({ initialData }) {
 
 								{projectImages.length > 0 && (
 									<div className="max-h-48 overflow-hidden">
+									{swiperModules ? (
 										<Swiper
 											slidesPerView={"auto"}
 											spaceBetween={30}
 											freeMode={true}
 											grabCursor={true}
-											modules={[FreeMode]}
+											modules={[swiperModules.FreeMode]}
 											className="mySwiper">
 											{projectImages.map((image, index) => (
 												<SwiperSlide key={index}>
@@ -242,6 +267,9 @@ export default function ProjectSlug({ initialData }) {
 												</SwiperSlide>
 											))}
 										</Swiper>
+									) : (
+										<div className="animate-pulse bg-gray-700 h-48 rounded"></div>
+									)}
 									</div>
 								)}
 							</div>
