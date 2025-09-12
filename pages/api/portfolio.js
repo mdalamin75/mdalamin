@@ -2,8 +2,16 @@ import Portfolio from "../../models/Portfolio";
 import mongooseConnect from "../../lib/connectDB";
 
 export default async function handler(req, res) {
-    // Add cache headers
+    // Add cache headers for better performance
     res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=600');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+    // Handle preflight requests
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
 
     try {
         await mongooseConnect();
@@ -76,9 +84,18 @@ export default async function handler(req, res) {
             }
 
             const projects = await Portfolio.find(filter)
-                .sort({ createdAt: -1 }); // Sort by newest first
+                .sort({ createdAt: -1 }) // Sort by newest first
+                .limit(100); // Limit to prevent large responses
 
-            return res.json(projects);
+            // Add metadata for better debugging
+            const response = {
+                data: projects,
+                count: projects.length,
+                timestamp: new Date().toISOString(),
+                status: 'success'
+            };
+
+            return res.json(response);
         }
 
         if (method === 'PUT') {

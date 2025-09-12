@@ -11,11 +11,14 @@ const ProjectItem = React.memo(({ initialData, showFilter = true, limit }) => {
     const portfolioInitialData = initialData?.portfolio || initialData;
 
     const {
-        data: portfolioData,
+        data: portfolioResponse,
         loading,
         error,
         refetch,
     } = useFetch("portfolio", portfolioInitialData);
+
+    // Extract portfolio data from the new API response format
+    const portfolioData = portfolioResponse?.data || portfolioResponse || portfolioInitialData;
 
     const [selectedCategory, setSelectedCategory] = useState("All");
 

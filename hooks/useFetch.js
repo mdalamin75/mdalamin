@@ -33,10 +33,10 @@ export default function useFetch(endpoint, initialData = null) {
             setLoading(true);
             setIsLoading(true);
 
-            // Fetch data with timeout
+            // Fetch data with longer timeout for Vercel cold starts
             const response = await axios.get(`/api/${endpoint}`, {
                 signal: abortControllerRef.current.signal,
-                timeout: 5000 // 5 second timeout
+                timeout: 15000 // 15 second timeout for Vercel
             });
 
             // Only update state if component is still mounted
@@ -55,6 +55,17 @@ export default function useFetch(endpoint, initialData = null) {
                 console.error('Error fetching data:', error);
                 setError(error);
                 setData(initialData);
+                
+                // Retry logic for network errors (only in production/Vercel)
+                if (process.env.NODE_ENV === 'production' && 
+                    (error.code === 'ECONNABORTED' || error.response?.status >= 500)) {
+                    console.log(`Retrying ${endpoint} in 2 seconds...`);
+                    setTimeout(() => {
+                        if (isMountedRef.current) {
+                            fetchData();
+                        }
+                    }, 2000);
+                }
             }
         } finally {
             // Only update loading state if component is still mounted
