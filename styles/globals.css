@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Performance optimizations */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 /* Prevent theme flash during initialization */
 .theme-loading {
   visibility: hidden;
@@ -9,6 +18,23 @@
 
 .theme-loading * {
   transition: none !important;
+}
+
+/* Optimize rendering performance */
+.optimize-rendering {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Lazy loading placeholder */
+.lazy {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.lazy.loaded {
+  opacity: 1;
 }
 
 /* Use CSS custom properties for repeated values */

@@ -4,13 +4,23 @@ import { useRouter } from "next/router";
 import { AnimatePresence, motion } from "framer-motion";
 import { LoadingProvider } from "../contexts/LoadingContext";
 import Head from "next/head";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
+import dynamic from "next/dynamic";
 
-// Static imports to prevent dynamic loading issues
+// Static imports for critical components
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import CursorAnimation from "../components/CursorAnimation";
-import ClientTawkMessenger from "../components/ClientTawkMessenger";
+
+// Dynamic imports for non-critical components
+const CursorAnimation = dynamic(() => import("../components/CursorAnimation"), {
+  ssr: false,
+  loading: () => null
+});
+
+const ClientTawkMessenger = dynamic(() => import("../components/ClientTawkMessenger"), {
+  ssr: false,
+  loading: () => null
+});
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter();

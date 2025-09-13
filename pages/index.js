@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import dynamic from "next/dynamic";
 import { Typewriter } from "react-simple-typewriter";
 import ReactMarkdown from "react-markdown";
@@ -6,10 +6,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { FiDownload } from "react-icons/fi";
 import useFetch from "../hooks/useFetch";
-import Services from "../components/Services";
-import TestimonialSlider from "../components/TestimonialSlider";
-import ProjectItem from "../components/ProjectItem";
 import SEO from "../components/SEO";
+
+// Dynamic imports for better performance
+const Services = dynamic(() => import("../components/Services"), {
+  loading: () => <div className="animate-pulse h-96 bg-gray-300 dark:bg-gray-700 rounded-lg"></div>
+});
+
+const TestimonialSlider = dynamic(() => import("../components/TestimonialSlider"), {
+  loading: () => <div className="animate-pulse h-96 bg-gray-300 dark:bg-gray-700 rounded-lg"></div>
+});
+
+const ProjectItem = dynamic(() => import("../components/ProjectItem"), {
+  loading: () => <div className="animate-pulse h-96 bg-gray-300 dark:bg-gray-700 rounded-lg"></div>
+});
 
 const ParticlesOptimized = dynamic(() => import("../components/ParticlesOptimized"), {
   ssr: false,

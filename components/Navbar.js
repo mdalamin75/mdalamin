@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("night"); // Default to night theme
   const [themeLoaded, setThemeLoaded] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const Menus = [
@@ -53,13 +53,19 @@ const Navbar = () => {
     if (savedTheme) {
       setTheme(savedTheme);
     } else {
-      // Detect system preference
-      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const initialTheme = systemPrefersDark ? "night" : "light";
-      setTheme(initialTheme);
-      
-      // Save the system preference as the initial theme
-      localStorage.setItem("theme", initialTheme);
+      // Try to detect system preference, default to night if not available
+      try {
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const initialTheme = systemPrefersDark ? "night" : "night"; // Default to night
+        setTheme(initialTheme);
+        
+        // Save the theme preference
+        localStorage.setItem("theme", initialTheme);
+      } catch (error) {
+        // If system preference detection fails, use night as default
+        setTheme("night");
+        localStorage.setItem("theme", "night");
+      }
     }
 
     // Listen for system theme changes (optional - only if no manual theme is saved)
@@ -68,7 +74,7 @@ const Navbar = () => {
       // Only auto-switch if user hasn't manually set a theme preference
       const hasManualTheme = localStorage.getItem("theme");
       if (!hasManualTheme) {
-        const newTheme = e.matches ? "night" : "light";
+        const newTheme = e.matches ? "night" : "night"; // Default to night
         setTheme(newTheme);
         localStorage.setItem("theme", newTheme);
       }
