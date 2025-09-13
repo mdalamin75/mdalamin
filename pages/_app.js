@@ -22,6 +22,11 @@ const ClientTawkMessenger = dynamic(() => import("../components/ClientTawkMessen
   loading: () => null
 });
 
+const PerformanceMonitor = dynamic(() => import("../components/PerformanceMonitor"), {
+  ssr: false,
+  loading: () => null
+});
+
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter();
   const isAdminRoute = router.pathname.startsWith('/admin');
@@ -73,6 +78,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
           
           {/* Live Chat - Only show on non-admin pages */}
           {!isAdminRoute && <ClientTawkMessenger />}
+          
+          {/* Performance Monitoring */}
+          <PerformanceMonitor />
 
           {!isAdminRoute && <Footer />}
         </div>

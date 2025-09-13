@@ -27,6 +27,26 @@ html {
   perspective: 1000px;
 }
 
+/* Prevent forced reflows */
+.prevent-reflow {
+  will-change: transform;
+  contain: layout style paint;
+}
+
+/* Optimize animations to prevent reflows */
+.hero_image img {
+  animation: morphing 10s infinite;
+  overflow: hidden;
+  will-change: transform;
+  contain: layout style paint;
+}
+
+/* Optimize framer-motion animations */
+[data-framer-motion] {
+  will-change: transform;
+  contain: layout style paint;
+}
+
 /* Lazy loading placeholder */
 .lazy {
   opacity: 0;

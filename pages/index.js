@@ -295,8 +295,11 @@ export default function Home({ initialData }) {
                 src={allHomeData.image[0]}
                 width={350}
                 height={350}
-                alt="mdalamin75"
-                priority="true"
+                alt="MD. AL AMIN - Professional Web Developer"
+                priority={true}
+                fetchPriority="high"
+                quality={85}
+                sizes="(max-width: 768px) 280px, (max-width: 1200px) 320px, 350px"
                 className="w-80 shadow-xl shadow-sky-600 rounded-full mb-10 xl:ml-64"
               />
             </div>
@@ -307,7 +310,15 @@ export default function Home({ initialData }) {
       <section id="portfolio" className="py-20 relative">
         <div className="container mx-auto px-3 md:px-5">
           <div className="text-center mb-16">
-            <Image src="/portfolio/portfolio.svg" alt="Portfolio" width={80} height={80} className="mx-auto mb-4" />
+            <Image 
+              src="/portfolio/portfolio.svg" 
+              alt="Portfolio" 
+              width={80} 
+              height={80} 
+              className="mx-auto mb-4"
+              priority={false}
+              quality={90}
+            />
             <h2 className="text-3xl md:text-4xl font-josefin font-bold mb-4">My Recent Work</h2>
             <p className="max-w-2xl mx-auto">Explore my latest projects showcasing modern web development, responsive design, and innovative solutions.</p>
           </div>
