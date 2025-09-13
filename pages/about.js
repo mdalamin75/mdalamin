@@ -822,18 +822,43 @@ Whether you need a simple website, a complex web application, or ongoing mainten
 
 export default About;
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ req }) {
   try {
-    const base = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+    // Determine the correct base URL for API calls
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const host = req.headers['x-forwarded-host'] || req.headers.host;
+    const base = process.env.NODE_ENV === 'production' 
+      ? `${protocol}://${host}`
+      : (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000');
+
+    console.log('About page - Base URL:', base);
 
     // Fetch about data
-    const response = await fetch(`${base}/api/about`);
-    if (!response.ok) throw new Error('Failed to fetch about data');
-    const initialData = await response.json();
+    const response = await fetch(`${base}/api/about`, {
+      timeout: 10000,
+      headers: {
+        'User-Agent': 'About-Page-SSR'
+      }
+    });
+    
+    if (!response.ok) throw new Error(`Failed to fetch about data: ${response.status}`);
+    
+    const data = await response.json();
+    const initialData = data?.data || data;
+
+    console.log('About page - Data fetched successfully:', {
+      hasData: !!initialData,
+      dataKeys: initialData ? Object.keys(initialData) : []
+    });
 
     return { props: { initialData } };
   } catch (error) {
-    console.error('Error fetching about data:', error);
+    console.error('About page - Error fetching data:', {
+      message: error.message,
+      code: error.code,
+      status: error.response?.status,
+      url: error.config?.url
+    });
     return { props: { initialData: null } };
   }
 }

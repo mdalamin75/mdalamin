@@ -49,13 +49,42 @@ const Portfolio = ({ initialData }) => {
   );
 };
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ req }) {
   try {
-    // Try to fetch from local API first
-    const localResponse = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/api/portfolio`);
-    return { props: { initialData: localResponse.data } };
+    // Determine the correct base URL for API calls
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const host = req.headers['x-forwarded-host'] || req.headers.host;
+    const baseUrl = process.env.NODE_ENV === 'production' 
+      ? `${protocol}://${host}`
+      : (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000');
+
+    console.log('Portfolio page - Base URL:', baseUrl);
+    
+    const response = await axios.get(`${baseUrl}/api/portfolio`, {
+      timeout: 10000, // 10 second timeout
+      headers: {
+        'User-Agent': 'Portfolio-Page-SSR'
+      }
+    });
+
+    console.log('Portfolio page - API Response:', {
+      status: response.status,
+      dataLength: response.data?.data?.length || 0,
+      hasData: !!response.data?.data
+    });
+
+    return { 
+      props: { 
+        initialData: response.data?.data || response.data || []
+      } 
+    };
   } catch (error) {
-    console.error('Error fetching portfolio data:', error);
+    console.error('Portfolio page - Error fetching data:', {
+      message: error.message,
+      code: error.code,
+      status: error.response?.status,
+      url: error.config?.url
+    });
 
     // Fallback: return empty array if API fails
     return {

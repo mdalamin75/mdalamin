@@ -169,18 +169,43 @@ const Service = ({ initialData }) => {
 export default Service
 
 // Add getServerSideProps to fetch initial data
-export async function getServerSideProps() {
+export async function getServerSideProps({ req }) {
     try {
-        const base = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+        // Determine the correct base URL for API calls
+        const protocol = req.headers['x-forwarded-proto'] || 'http';
+        const host = req.headers['x-forwarded-host'] || req.headers.host;
+        const base = process.env.NODE_ENV === 'production' 
+            ? `${protocol}://${host}`
+            : (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000');
+
+        console.log('Service page - Base URL:', base);
 
         // Fetch service data
-        const response = await fetch(`${base}/api/service`);
-        if (!response.ok) throw new Error('Failed to fetch service data');
-        const initialData = await response.json();
+        const response = await fetch(`${base}/api/service`, {
+            timeout: 10000,
+            headers: {
+                'User-Agent': 'Service-Page-SSR'
+            }
+        });
+        
+        if (!response.ok) throw new Error(`Failed to fetch service data: ${response.status}`);
+        
+        const data = await response.json();
+        const initialData = data?.data || data;
+
+        console.log('Service page - Data fetched successfully:', {
+            hasData: !!initialData,
+            dataLength: Array.isArray(initialData) ? initialData.length : 'not array'
+        });
 
         return { props: { initialData } };
     } catch (error) {
-        console.error('Error fetching service data:', error);
+        console.error('Service page - Error fetching data:', {
+            message: error.message,
+            code: error.code,
+            status: error.response?.status,
+            url: error.config?.url
+        });
         return { props: { initialData: null } };
     }
 }

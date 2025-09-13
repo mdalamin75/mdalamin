@@ -365,9 +365,16 @@ export default function Home({ initialData }) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ req }) {
   try {
-    const base = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+    // Determine the correct base URL for API calls
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const host = req.headers['x-forwarded-host'] || req.headers.host;
+    const base = process.env.NODE_ENV === 'production' 
+      ? `${protocol}://${host}`
+      : (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000');
+
+    console.log('Home page - Base URL:', base);
 
     // Fetch all necessary data in parallel
     const [homeResponse, portfolioResponse, servicesResponse, testimonialsResponse] = await Promise.all([
@@ -393,15 +400,27 @@ export async function getServerSideProps() {
 
     // Combine all data into initialData
     const initialData = {
-      home: homeData,
-      portfolio: portfolioData,
-      services: servicesData,
-      testimonials: testimonialsData
+      home: homeData?.data || homeData,
+      portfolio: portfolioData?.data || portfolioData,
+      services: servicesData?.data || servicesData,
+      testimonials: testimonialsData?.data || testimonialsData
     };
+
+    console.log('Home page - Data fetched successfully:', {
+      home: !!initialData.home,
+      portfolio: !!initialData.portfolio,
+      services: !!initialData.services,
+      testimonials: !!initialData.testimonials
+    });
 
     return { props: { initialData } };
   } catch (error) {
-    console.error('Error fetching data for home page:', error);
+    console.error('Home page - Error fetching data:', {
+      message: error.message,
+      code: error.code,
+      status: error.response?.status,
+      url: error.config?.url
+    });
     return { props: { initialData: null } };
   }
 }
