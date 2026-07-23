@@ -20,8 +20,9 @@ export default function AllPortfolio({ initialData }) {
     // Search
     const [searchQuery, setSearchQuery] = useState('');
 
-    // Fetch portfolio data
-    const { data: portfolioData, loading, refetch } = useFetch("portfolio", initialData);
+    // Fetch portfolio data - handle wrapped API response { data: [...] }
+    const safeInitialData = Array.isArray(initialData) ? initialData : (initialData?.data || null);
+    const { data: portfolioData, loading, refetch } = useFetch("portfolio", safeInitialData);
 
     // Function to handle page change
     const paginate = (pageNumber) => {
@@ -53,7 +54,7 @@ export default function AllPortfolio({ initialData }) {
         <AdminLayout>
             <div className="draftportfolio p-6">
                 <div className="titledashboard flex flex-sb">
-                <h1 className="text-2xl font-bold mb-4">Admin All Portfolio</h1>
+                    <h1 className="text-2xl font-bold mb-4">Admin All Portfolio</h1>
                 </div>
                 <div className="blogstable">
                     <div className="flex items-center gap-2 mb-1">
@@ -98,37 +99,37 @@ export default function AllPortfolio({ initialData }) {
                         </tbody>
                     </table>
                     {publishedPortfolios.length > 0 && (
-                    <div className="flex justify-center mt-10">
-                        <button 
-                            onClick={() => paginate(currentPage - 1)} 
-                            disabled={currentPage === 1}
-                            className="btn btn-info btn-sm"
-                        >
-                            Previous
-                        </button>
-                        {pageNumbers
-                            .slice(
-                                Math.max(currentPage - 3, 0), 
-                                Math.min(currentPage + 2, pageNumbers.length)
-                            )
-                            .map(number => (
-                                <button
-                                    key={number}
-                                    onClick={() => paginate(number)}
-                                    className={`${currentPage === number ? 'active' : ''} text-lg mx-3 ` }
-                                >
-                                    {number}
-                                </button>
-                            ))}
-                        <button 
-                            onClick={() => paginate(currentPage + 1)} 
-                            disabled={currentPage >= Math.ceil(filteredPortfolios.length / perPage)}
-                            className="btn btn-info btn-sm"
-                        >
-                            Next
-                        </button>
-                    </div>
-                )}
+                        <div className="flex justify-center mt-10">
+                            <button
+                                onClick={() => paginate(currentPage - 1)}
+                                disabled={currentPage === 1}
+                                className="btn btn-info btn-sm"
+                            >
+                                Previous
+                            </button>
+                            {pageNumbers
+                                .slice(
+                                    Math.max(currentPage - 3, 0),
+                                    Math.min(currentPage + 2, pageNumbers.length)
+                                )
+                                .map(number => (
+                                    <button
+                                        key={number}
+                                        onClick={() => paginate(number)}
+                                        className={`${currentPage === number ? 'active' : ''} text-lg mx-3 `}
+                                    >
+                                        {number}
+                                    </button>
+                                ))}
+                            <button
+                                onClick={() => paginate(currentPage + 1)}
+                                disabled={currentPage >= Math.ceil(filteredPortfolios.length / perPage)}
+                                className="btn btn-info btn-sm"
+                            >
+                                Next
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </AdminLayout>

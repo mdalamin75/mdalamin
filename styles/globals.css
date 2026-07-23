@@ -4,60 +4,59 @@
 
 /* Performance optimizations */
 * {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 html {
-  scroll-behavior: smooth;
+	scroll-behavior: smooth;
+	height: 100%;
+	scrollbar-gutter: stable;
+	cursor: none;
+}
+
+body {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	overflow-x: clip;
 }
 
 /* Prevent theme flash during initialization */
 .theme-loading {
-  visibility: hidden;
+	visibility: hidden;
 }
 
 .theme-loading * {
-  transition: none !important;
+	transition: none !important;
 }
 
 /* Optimize rendering performance */
 .optimize-rendering {
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  perspective: 1000px;
+	transform: translateZ(0);
+	backface-visibility: hidden;
+	perspective: 1000px;
 }
 
-/* Prevent forced reflows */
 .prevent-reflow {
-  will-change: transform;
-  contain: layout style paint;
+	will-change: transform;
+	contain: layout style paint;
 }
 
-/* Optimize animations to prevent reflows */
-.hero_image img {
-  animation: morphing 10s infinite;
-  overflow: hidden;
-  will-change: transform;
-  contain: layout style paint;
-}
-
-/* Optimize framer-motion animations */
 [data-framer-motion] {
-  will-change: transform;
-  contain: layout style paint;
+	will-change: transform;
+	contain: layout style paint;
 }
 
-/* Lazy loading placeholder */
 .lazy {
-  opacity: 0;
-  transition: opacity 0.3s;
+	opacity: 0;
+	transition: opacity 0.3s;
 }
 
 .lazy.loaded {
-  opacity: 1;
+	opacity: 1;
 }
 
-/* Use CSS custom properties for repeated values */
 :root {
 	--swiper-theme-color: #f1f6f9;
 	--primary-gradient: linear-gradient(160deg, #068862 0%, #80d0c7 100%);
@@ -66,21 +65,7 @@ html {
 	--timeline-color: #068862;
 }
 
-/* Optimize animations - remove will-change for now */
-.hero_image img {
-	animation: morphing 10s infinite;
-	overflow: hidden;
-}
-
-/* Use CSS containment for better performance - remove contain for now */
-.timeline {
-	position: relative;
-	max-width: 1200px;
-	margin: 0 auto;
-	flex-direction: column;
-}
-
-/* Optimize scrollbar styles - Theme aware */
+/* ============================ Scrollbar =========================== */
 ::-webkit-scrollbar {
 	width: 5px;
 	height: 5px;
@@ -111,7 +96,31 @@ html {
 	background: #9ca3af;
 }
 
-/* Additional protection against text visibility issues */
+.my-custom-scrollbar {
+	overflow-y: scroll;
+	scrollbar-width: thin;
+	scrollbar-color: #888 #f1f1f1;
+}
+
+.my-custom-scrollbar::-webkit-scrollbar {
+	width: 4px;
+	height: 4px;
+}
+
+.my-custom-scrollbar::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+
+.my-custom-scrollbar::-webkit-scrollbar-thumb {
+	background: #888;
+	border-radius: 10px;
+}
+
+.my-custom-scrollbar::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}
+
+/* ============================ Additional protection =========================== */
 .preloader.hidden,
 .preloader.hidden * {
 	opacity: 0 !important;
@@ -119,7 +128,6 @@ html {
 	display: none !important;
 }
 
-/* Ensure body content doesn't get affected by preloader */
 #app-content {
 	position: relative;
 	z-index: 1;
@@ -128,58 +136,73 @@ html {
 }
 
 section {
-	/* Making sure sections maintain their proper overflow behavior */
 	overflow: visible !important;
-}
-
-/* Protection against z-index issues */
-section,
-main,
-div {
-	position: relative;
-}
-
-/* ============================ Global Body Style =========================== */
-html,
-body {
-	overflow-x: clip;
-}
-html {
-	/* cursor: none; */
-	height: 100%;
-	/* Prevent scrollbar jump */
-	scrollbar-gutter: stable;
-	cursor: none !important;
-}
-body {
-	width: 100%;
-	height: 100%;
-	display: flex;
-	/* overflow-x: hidden; */
-	flex-direction: column;
-}
-
-/* Ensure content is always visible regardless of preloader state */
-#app-content {
-	visibility: visible !important;
-	opacity: 1 !important;
-	position: relative;
-	z-index: 1;
 }
 
 .sticky {
 	position: sticky;
 }
 
-/*======================== Animation Start =======================*/
-/* Border Animation */
-@property --border-angle {
-	inherits: false;
-	initial-value: 0deg;
-	syntax: "<angle>";
+section,
+main,
+div {
+	position: relative;
 }
-/* Button Animation */
-/* Nina */
+
+/*======================== Animation Start =======================*/
+@-webkit-keyframes morphing {
+	0% {
+		border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+		box-shadow: 15px 15px 50px #0284c7;
+	}
+	25% {
+		border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%;
+	}
+	50% {
+		border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%;
+		box-shadow: -10px -5px 50px #0284c7;
+	}
+	75% {
+		border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%;
+	}
+}
+
+@keyframes morphing {
+	0% {
+		border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+		box-shadow: 15px 15px 50px #0284c7;
+	}
+	25% {
+		border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%;
+	}
+	50% {
+		border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%;
+		box-shadow: -10px -5px 50px #0284c7;
+	}
+	75% {
+		border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%;
+	}
+}
+
+@keyframes text-rotate {
+	from {
+		transform: rotateY(0deg);
+	}
+	to {
+		transform: rotateY(360deg);
+	}
+}
+
+@keyframes waveAnimateB {
+	0% {
+		transform: translate3d(-90px, 0, 0);
+	}
+	100% {
+		transform: translate3d(85px, 0, 0);
+	}
+}
+
+/* Button Animations */
 .button--nina {
 	-webkit-transition: background-color 0.3s;
 	transition: background-color 0.3s;
@@ -190,8 +213,12 @@ body {
 	opacity: 0;
 	-webkit-transform: translate3d(0, -10px, 0);
 	transform: translate3d(0, -10px, 0);
-	-webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
-	transition: transform 0.3s, opacity 0.3s;
+	-webkit-transition:
+		-webkit-transform 0.3s,
+		opacity 0.3s;
+	transition:
+		transform 0.3s,
+		opacity 0.3s;
 	-webkit-transition-timing-function: cubic-bezier(0.75, 0, 0.125, 1);
 	transition-timing-function: cubic-bezier(0.75, 0, 0.125, 1);
 }
@@ -203,8 +230,12 @@ body {
 	width: 100%;
 	height: 100%;
 	padding: 1em 0;
-	-webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
-	transition: transform 0.3s, opacity 0.3s;
+	-webkit-transition:
+		-webkit-transform 0.3s,
+		opacity 0.3s;
+	transition:
+		transform 0.3s,
+		opacity 0.3s;
 	-webkit-transition-timing-function: cubic-bezier(0.75, 0, 0.125, 1);
 	transition-timing-function: cubic-bezier(0.75, 0, 0.125, 1);
 }
@@ -262,7 +293,47 @@ body {
 	-webkit-transition-delay: 0.5s;
 	transition-delay: 0.5s;
 }
-/* Button Aylen */
+.button--nina:hover > span:nth-child(12) {
+	-webkit-transition-delay: 0.55s;
+	transition-delay: 0.55s;
+}
+.button--nina:hover > span:nth-child(13) {
+	-webkit-transition-delay: 0.6s;
+	transition-delay: 0.6s;
+}
+.button--nina:hover > span:nth-child(14) {
+	-webkit-transition-delay: 0.65s;
+	transition-delay: 0.65s;
+}
+.button--nina:hover > span:nth-child(15) {
+	-webkit-transition-delay: 0.7s;
+	transition-delay: 0.7s;
+}
+.button--nina:hover > span:nth-child(16) {
+	-webkit-transition-delay: 0.75s;
+	transition-delay: 0.75s;
+}
+.button--nina:hover > span:nth-child(17) {
+	-webkit-transition-delay: 0.8s;
+	transition-delay: 0.8s;
+}
+.button--nina:hover > span:nth-child(18) {
+	-webkit-transition-delay: 0.85s;
+	transition-delay: 0.85s;
+}
+.button--nina:hover > span:nth-child(19) {
+	-webkit-transition-delay: 0.9s;
+	transition-delay: 0.9s;
+}
+.button--nina:hover > span:nth-child(20) {
+	-webkit-transition-delay: 0.95s;
+	transition-delay: 0.95s;
+}
+
+
+
+
+
 .button.button--aylen {
 	-webkit-transition: color 0.3s;
 	transition: color 0.3s;
@@ -297,14 +368,16 @@ body {
 	transition-delay: 0.175s;
 }
 
-/* Winona */
 .button--winona {
-	-webkit-transition: border-color 0.3s, background-color 0.3s;
-	transition: border-color 0.3s, background-color 0.3s;
+	-webkit-transition:
+		border-color 0.3s,
+		background-color 0.3s;
+	transition:
+		border-color 0.3s,
+		background-color 0.3s;
 	-webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
 	transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
 }
-
 .button--winona::after {
 	content: attr(data-text);
 	position: absolute;
@@ -316,22 +389,22 @@ body {
 	-webkit-transform: translate3d(0, 25%, 0);
 	transform: translate3d(0, 25%, 0);
 }
-
 .button--winona::after,
 .button--winona > span {
-	/* padding: 1em 2em; */
-	-webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
-	transition: transform 0.3s, opacity 0.3s;
+	-webkit-transition:
+		-webkit-transform 0.3s,
+		opacity 0.3s;
+	transition:
+		transform 0.3s,
+		opacity 0.3s;
 	-webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
 	transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
 }
-
 .button--winona:hover::after {
 	opacity: 1;
 	-webkit-transform: translate3d(0, 0, 0);
 	transform: translate3d(0, 0, 0);
 }
-
 .button--winona:hover > span {
 	opacity: 0;
 	-webkit-transform: translate3d(0, -25%, 0);
@@ -339,7 +412,7 @@ body {
 }
 /*======================== Animation End =======================*/
 
-/*==================== Logo Style Start =======================*/
+/*==================== Logo Style =======================*/
 .text-rotate {
 	position: relative;
 	display: inline-block;
@@ -353,11 +426,9 @@ body {
 	perspective: 500px;
 	position: relative;
 	z-index: 1;
-}
-
-.text-rotate span {
 	animation: text-rotate 3s ease infinite;
 }
+
 .text-rotate span:nth-child(2) {
 	animation-delay: 0.1s;
 }
@@ -383,158 +454,13 @@ body {
 	animation-delay: 0.8s;
 }
 
-@keyframes text-rotate {
-	from {
-		transform: rotateY(0deg);
-	}
-	to {
-		transform: rotateY(360deg);
-	}
-}
-/*=================== Logo Style End ===========================*/
-
-/* ===============================Header Start Here ============================  */
-html,
-body {
-	overflow-x: clip;
-}
-html {
-	/* cursor: none; */
-	height: 100%;
-	/* Prevent scrollbar jump */
-	scrollbar-gutter: stable;
-}
-body {
-	width: 100%;
-	height: 100%;
-	display: flex;
-	/* overflow-x: hidden; */
-	flex-direction: column;
-}
-.sticky {
-	position: sticky;
-}
-/*======================== Animation End =======================*/
-
-/* ===============================Header End Here ============================  */
-
-/* ===============================Scrollbar Start Here ============================  */
-/* Custom Scrollbar for WebKit Browsers */
-::-webkit-scrollbar {
-	width: 5px !important; /* Width of the entire scrollbar */
-	height: 5px !important; /* Height of the entire scrollbar */
+/* Profile Image animation */
+.hero_image img {
+	animation: morphing 10s infinite;
+	overflow: hidden;
 }
 
-::-webkit-scrollbar-track {
-	background: #f1f1f1; /* Background of the track */
-}
-
-::-webkit-scrollbar-thumb {
-	background: #888; /* Color of the scroll thumb */
-	-webkit-border-radius: 10px;
-	border-radius: 10px; /* Rounded corners */
-}
-
-::-webkit-scrollbar-thumb:hover {
-	background: #555; /* Color of the scroll thumb when hovered */
-}
-/* Applying custom scrollbar to a specific element */
-.my-custom-scrollbar {
-	overflow-y: scroll; /* Enable vertical scrolling */
-	scrollbar-width: thin; /* Firefox: set scrollbar width */
-	scrollbar-color: #888 #f1f1f1; /* Firefox: set thumb and track color */
-}
-
-/* Custom Scrollbar for WebKit Browsers */
-.my-custom-scrollbar::-webkit-scrollbar {
-	width: 4px !important; /* Width of the entire scrollbar */
-	height: 4px !important; /* Height of the entire scrollbar */
-}
-
-.my-custom-scrollbar::-webkit-scrollbar-track {
-	background: #f1f1f1; /* Background of the track */
-}
-
-.my-custom-scrollbar::-webkit-scrollbar-thumb {
-	background: #888; /* Color of the scroll thumb */
-	border-radius: 10px; /* Rounded corners */
-}
-
-.my-custom-scrollbar::-webkit-scrollbar-thumb:hover {
-	background: #555; /* Color of the scroll thumb when hovered */
-}
-
-/* ===============================Scrollbar End Here ============================  */
-
-/* ======================= Profile Image animation Start Here ============================== */
-@-moz-keyframes morphing {
-	0% {
-		border-radius: 30% 70% 70% 30%/30% 30% 70% 70%;
-		box-shadow: 15px 15px 50px #0284c7;
-	}
-	25% {
-		border-radius: 58% 42% 75% 25%/76% 46% 54% 24%;
-	}
-	50% {
-		border-radius: 50% 50% 33% 67%/55% 27% 73% 45%;
-		box-shadow: -10px -5px 50px #0284c7;
-	}
-	75% {
-		border-radius: 33% 67% 58% 42%/63% 68% 32% 37%;
-	}
-}
-@-webkit-keyframes morphing {
-	0% {
-		border-radius: 30% 70% 70% 30%/30% 30% 70% 70%;
-		box-shadow: 15px 15px 50px #0284c7;
-	}
-	25% {
-		border-radius: 58% 42% 75% 25%/76% 46% 54% 24%;
-	}
-	50% {
-		border-radius: 50% 50% 33% 67%/55% 27% 73% 45%;
-		box-shadow: -10px -5px 50px #0284c7;
-	}
-	75% {
-		border-radius: 33% 67% 58% 42%/63% 68% 32% 37%;
-	}
-}
-@-o-keyframes morphing {
-	0% {
-		border-radius: 30% 70% 70% 30%/30% 30% 70% 70%;
-		box-shadow: 15px 15px 50px #0284c7;
-	}
-	25% {
-		border-radius: 58% 42% 75% 25%/76% 46% 54% 24%;
-	}
-	50% {
-		border-radius: 50% 50% 33% 67%/55% 27% 73% 45%;
-		box-shadow: -10px -5px 50px #0284c7;
-	}
-	75% {
-		border-radius: 33% 67% 58% 42%/63% 68% 32% 37%;
-	}
-}
-@keyframes morphing {
-	0% {
-		border-radius: 30% 70% 70% 30%/30% 30% 70% 70%;
-		box-shadow: 15px 15px 50px #0284c7;
-	}
-	25% {
-		border-radius: 58% 42% 75% 25%/76% 46% 54% 24%;
-	}
-	50% {
-		border-radius: 50% 50% 33% 67%/55% 27% 73% 45%;
-		box-shadow: -10px -5px 50px #0284c7;
-	}
-	75% {
-		border-radius: 33% 67% 58% 42%/63% 68% 32% 37%;
-	}
-}
-/* ================================= Profile Image animation End Here ======================= */
-
-/* ================================= Education Timeline Start Here ======================= */
-/* The actual timeline (the vertical ruler) */
+/* ================================= Education Timeline ======================= */
 .timeline {
 	position: relative;
 	max-width: 1200px;
@@ -542,21 +468,18 @@ body {
 	flex-direction: column;
 }
 
-/* The actual timeline (the vertical ruler) */
 .timeline::after {
 	content: "";
 	position: absolute;
 	width: 6px;
 	background-color: #068862;
 	background-image: linear-gradient(160deg, #068862 0%, #80d0c7 100%);
-
 	top: 0;
 	bottom: 0;
 	left: 50%;
 	margin-left: -3px;
 }
 
-/* Container around content */
 .timeline_container {
 	padding: 10px 40px;
 	position: relative;
@@ -564,7 +487,6 @@ body {
 	width: 50%;
 }
 
-/* The circles on the timeline */
 .timeline_container::after {
 	content: "";
 	position: absolute;
@@ -581,17 +503,13 @@ body {
 	z-index: 40;
 }
 
-/* Place the container to the left */
 .left {
 	left: 0;
 }
-
-/* Place the container to the right */
 .right {
 	left: 50%;
 }
 
-/* Add arrows to the left container (pointing right) */
 .left::before {
 	content: " ";
 	height: 0;
@@ -605,7 +523,6 @@ body {
 	border-color: transparent transparent transparent #0b1121;
 }
 
-/* Add arrows to the right container (pointing left) */
 .right::before {
 	content: " ";
 	height: 0;
@@ -619,55 +536,46 @@ body {
 	border-color: transparent #0b1121 transparent transparent;
 }
 
-/* Fix the circle for containers on the right side */
 .right::after {
 	left: -16px;
 }
 
-/* The actual content */
 .content {
 	padding: 20px 30px;
-	/* background-color: #0b1121; */
 	position: relative;
 	border-radius: 6px;
 }
 
-/* Media queries - Responsive timeline on screens less than 600px wide */
+.right::before,
+.left::before {
+	display: none;
+}
+
 @media screen and (max-width: 600px) {
-	/* Place the timelime to the left */
 	.timeline::after {
 		left: 31px;
 	}
-
-	/* Full-width containers */
 	.timeline_container {
 		width: 100%;
 		padding-left: 70px;
 		padding-right: 25px;
 	}
-
-	/* Make sure that all arrows are pointing leftwards */
 	.timeline_container::before {
 		left: 60px;
 		border: medium solid white;
 		border-width: 10px 10px 10px 0;
 		border-color: transparent white transparent transparent;
 	}
-
-	/* Make sure all circles are at the same spot */
 	.left::after,
 	.right::after {
 		left: 15px;
 	}
-
-	/* Make all right containers behave like the left ones */
 	.right {
 		left: 0%;
 	}
 }
-/* ================================= Education Timeline End Here ======================= */
 
-/* ================================= Testimonial Start Here ======================= */
+/* ================================= Testimonial ======================= */
 .swiper {
 	width: 100%;
 	padding-top: 50px;
@@ -675,13 +583,9 @@ body {
 }
 
 .swiper-slide {
-	/* background-position: center;
-  background-size: cover; */
 	width: 350px !important;
-	/* height: 400px ; */
 }
 
-/* Mobile responsive testimonial cards */
 @media screen and (max-width: 640px) {
 	.swiper-slide {
 		width: 280px !important;
@@ -692,46 +596,40 @@ body {
 	display: block;
 	width: 100%;
 }
+
 .swiper-pagination {
 	bottom: -5px !important;
 }
+
 .review_card {
 	min-height: 24rem;
 	max-height: 28rem;
 }
 
-
-
-/* Custom scrollbar for testimonial reviews */
 .scrollbar-thin {
 	scrollbar-width: thin;
-}
-
-/* Prevent layout shift during countdown animation */
-.countdown-stat {
-	min-width: 2.5rem;
-	text-align: center;
 }
 
 .scrollbar-thin::-webkit-scrollbar {
 	width: 4px;
 }
-
 .scrollbar-thin::-webkit-scrollbar-track {
 	background: transparent;
 }
-
 .scrollbar-thin::-webkit-scrollbar-thumb {
 	background-color: rgba(156, 163, 175, 0.5);
 	border-radius: 2px;
 }
-
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
 	background-color: rgba(156, 163, 175, 0.7);
 }
-/* ================================= Testimonial End Here ======================= */
 
-/* ================================= SVG Wave Animation Start Here ======================= */
+.countdown-stat {
+	min-width: 2.5rem;
+	text-align: center;
+}
+
+/* ================================= SVG Wave Animation ======================= */
 .demo2 {
 	width: 100vw;
 	position: relative;
@@ -749,16 +647,8 @@ body {
 	animation-duration: 12s;
 	fill-opacity: 1;
 }
-@keyframes waveAnimateB {
-	0% {
-		transform: translate3d(-90px, 0, 0);
-	}
-	100% {
-		transform: translate3d(85px, 0, 0);
-	}
-}
-/* ================================= SVG Wave Animation End Here ======================= */
-/*======================== Shadow & Pattern Start =======================*/
+
+/*======================== Shadow & Pattern =======================*/
 .shadow_01 {
 	background-image: url("/shadow_01.png");
 	background-size: 136.75rem 100%;
@@ -798,10 +688,8 @@ body {
 	z-index: -1;
 }
 .bg_pattern {
-	background-image: linear-gradient(
-			rgba(186, 184, 184, 0.06) 1px,
-			transparent 1px
-		),
+	background-image:
+		linear-gradient(rgba(186, 184, 184, 0.06) 1px, transparent 1px),
 		linear-gradient(to right, rgba(186, 184, 184, 0.06) 1px, transparent 1px);
 	background-size: 30px 30px;
 }
@@ -812,22 +700,18 @@ body {
 	);
 	background-size: 30px 30px;
 }
-/*======================== Shadow & Pattern End =======================*/
 
-/*========================================================================Dashboard CSS Start Here =============================================================*/
-/* Admin Sidebar Styles */
+/*========================================================================Dashboard CSS =============================================================*/
 .admin-sidebar {
 	z-index: 9999 !important;
 	position: fixed !important;
 }
 
-/* Ensure dropdowns appear above other content */
 .dropdown-content,
 .menu-dropdown-show {
 	z-index: 10000 !important;
 }
 
-/* Ensure cursor displays properly on buttons and links */
 button,
 a,
 label,
@@ -837,12 +721,6 @@ label,
 	cursor: pointer !important;
 }
 
-/* Fix cursor animation in admin pages */
-html {
-	cursor: none !important;
-}
-
-/* Ensure the animated cursor is above all elements */
 #cursor-dot,
 #cursor-dot-outline,
 .animated-cursor {
@@ -851,7 +729,6 @@ html {
 	pointer-events: none !important;
 }
 
-/* Make sure animated cursor doesn't have pointer-events */
 .animated-cursor__cursor,
 .animated-cursor__inner,
 .animated-cursor__outer {
@@ -859,7 +736,6 @@ html {
 	z-index: 999999 !important;
 }
 
-/* Ensure sidebar never has click-through issues */
 .navbar + div:has(.fixed) {
 	pointer-events: none !important;
 }
@@ -879,12 +755,10 @@ html {
 	pointer-events: auto !important;
 }
 
-/* Ensure editor doesn't overlap with sidebar */
 .rc-md-editor {
 	z-index: 1 !important;
 }
 
-/* Add explicit z-index to main content */
 main {
 	z-index: 0;
 	position: relative;
@@ -894,12 +768,7 @@ main {
 	transform: translateX(-10%);
 	padding-left: 2rem !important;
 }
-.right::before,
-.left::before {
-	display: none;
-}
 
-/* App layout and footer positioning */
 .app-wrapper {
 	display: flex;
 	flex-direction: column;
@@ -913,5 +782,3 @@ main {
 footer {
 	flex-shrink: 0;
 }
-
-/* Remove page content transitions that may conflict with AOS */

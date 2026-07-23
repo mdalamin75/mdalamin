@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 import { RiDoubleQuotesL, RiDoubleQuotesR } from "react-icons/ri";
 import { FaStar, FaRegStar } from "react-icons/fa";
@@ -18,7 +17,7 @@ import LoadingSpinner from "./LoadingSpinner";
 const TestimonialSlider = ({ initialData }) => {
   // Fetch Testimonial data
   const { data: testimonialData, loading, refetch } = useFetch("testimonial", initialData);
-  
+
   // State for managing expanded reviews
   const [expandedReviews, setExpandedReviews] = useState({});
 
@@ -64,7 +63,7 @@ const TestimonialSlider = ({ initialData }) => {
         className="mySwiper">
         {testimonialPublishedData.map((currentElement, index) => {
           const { id, date, clientname, nationality, review, star } = currentElement;
-          
+
           // Ensure we have valid data
           if (!currentElement) return null;
 
@@ -88,7 +87,7 @@ const TestimonialSlider = ({ initialData }) => {
             <SwiperSlide key={`testimonial-${index}-${clientname || 'unknown'}-${reviewText.substring(0, 10).replace(/\s+/g, '')}-${date || 'no-date'}-${star || 0}`}>
               <div
                 className="review_card w-64 sm:w-80 h-full sm:h-96 min-h-96 flex flex-col justify-between m-5 ml-12 sm:ml-5 p-5 rounded-xl shadow-lg shadow-purple-600/20 dark:shadow-purple-600 text-center border border-gray-200 dark:border-gray-700">
-                
+
                 {/* Header Section */}
                 <div className="flex-shrink-0">
                   <h3
@@ -114,7 +113,7 @@ const TestimonialSlider = ({ initialData }) => {
                     </span>
                     <RiDoubleQuotesR className="inline-block mb-1 ms-1 text-xl font-bold text-emerald-600 dark:text-emerald-400" />
                   </div>
-                  
+
                   {/* Read More/Less Button */}
                   {isLongReview && (
                     <button

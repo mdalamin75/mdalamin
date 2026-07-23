@@ -31,7 +31,7 @@ const loadChartJS = async () => {
     Legend,
     ArcElement
   } = await import("chart.js");
-  
+
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -41,7 +41,7 @@ const loadChartJS = async () => {
     Legend,
     ArcElement
   );
-  
+
   return ChartJS;
 };
 
@@ -154,7 +154,7 @@ const AdminPage = () => {
     <AdminLayout>
       <div className="p-6">
         <h1 className="text-2xl font-bold mb-6">Admin Dashboard</h1>
-        
+
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 mb-8">
           {/* Services */}
@@ -169,7 +169,7 @@ const AdminPage = () => {
               </div>
             </div>
           </div>
-          
+
           {/* Portfolios */}
           <div className="glass shadow-md rounded-lg p-4 border-l-4 border-secondary backdrop-blur-sm">
             <div className="flex items-center">
@@ -182,7 +182,7 @@ const AdminPage = () => {
               </div>
             </div>
           </div>
-          
+
           {/* Testimonials */}
           <div className="glass shadow-md rounded-lg p-4 border-l-4 border-accent backdrop-blur-sm">
             <div className="flex items-center">
@@ -195,7 +195,7 @@ const AdminPage = () => {
               </div>
             </div>
           </div>
-          
+
           {/* Blogs (Placeholder) */}
           <div className="glass shadow-md rounded-lg p-4 border-l-4 border-info backdrop-blur-sm">
             <div className="flex items-center">
@@ -208,7 +208,7 @@ const AdminPage = () => {
               </div>
             </div>
           </div>
-          
+
           {/* Total Products */}
           <div className="glass shadow-md rounded-lg p-4 border-l-4 border-success backdrop-blur-sm">
             <div className="flex items-center">
@@ -222,7 +222,7 @@ const AdminPage = () => {
             </div>
           </div>
         </div>
-        
+
         {/* Charts */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="glass p-6 rounded-lg shadow-md backdrop-blur-sm">
@@ -237,7 +237,7 @@ const AdminPage = () => {
               )}
             </div>
           </div>
-          
+
           <div className="glass p-6 rounded-lg shadow-md backdrop-blur-sm">
             <h2 className="text-xl font-semibold mb-4 text-base-content">Content Percentage</h2>
             <div className="h-64">
@@ -265,15 +265,6 @@ export async function getServerSideProps(context) {
     return {
       redirect: {
         destination: "/admin/login",
-        permanent: false,
-      },
-    };
-  }
-
-  if (!session.user?.twoFactorVerified) {
-    return {
-      redirect: {
-        destination: "/admin/2fa-verify",
         permanent: false,
       },
     };

@@ -3,13 +3,13 @@ const nextConfig = {
     // Performance optimizations
     poweredByHeader: false,
     compress: true,
-    reactStrictMode: true,
-    
+    reactStrictMode: process.env.NODE_ENV === 'production',
+
     // Experimental features for better performance
     experimental: {
         optimizePackageImports: ['react-icons', 'framer-motion'],
     },
-    
+
     // Image optimization
     images: {
         remotePatterns: [
@@ -33,9 +33,34 @@ const nextConfig = {
         contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
         unoptimized: false,
     },
-    
-    // Security headers
+
+    // Security headers (only in production to avoid interfering with dev HMR)
     async headers() {
+        // In development, only return minimal security headers (no Cache-Control)
+        // Aggressive Cache-Control in dev breaks Next.js webpack HMR hot-update.json requests
+        if (process.env.NODE_ENV !== 'production') {
+            return [
+                {
+                    source: '/(.*)',
+                    headers: [
+                        {
+                            key: 'X-Content-Type-Options',
+                            value: 'nosniff',
+                        },
+                        {
+                            key: 'X-Frame-Options',
+                            value: 'DENY',
+                        },
+                        {
+                            key: 'X-XSS-Protection',
+                            value: '1; mode=block',
+                        },
+                    ],
+                },
+            ];
+        }
+
+        // Production headers with proper caching
         return [
             {
                 source: '/(.*)',
@@ -52,10 +77,23 @@ const nextConfig = {
                         key: 'X-XSS-Protection',
                         value: '1; mode=block',
                     },
+                    {
+                        key: 'Cache-Control',
+                        value: 'public, max-age=0, must-revalidate',
+                    },
                 ],
             },
             {
-                source: '/(.*)\\.(js|css|woff|woff2|eot|ttf|otf|svg|png|jpg|jpeg|gif|webp|avif|ico)',
+                source: '/_next/static/(.*)',
+                headers: [
+                    {
+                        key: 'Cache-Control',
+                        value: 'public, max-age=31536000, immutable',
+                    },
+                ],
+            },
+            {
+                source: '/(.*)\\.(woff|woff2|eot|ttf|otf|svg|png|jpg|jpeg|gif|webp|avif|ico)$',
                 headers: [
                     {
                         key: 'Cache-Control',
@@ -65,55 +103,55 @@ const nextConfig = {
             },
         ];
     },
-    
+
     // Webpack optimizations for better performance
     webpack: (config, { isServer, dev }) => {
-        // Tree shaking and bundle optimization
-        if (!isServer) {
-            config.resolve.alias = {
-                ...config.resolve.alias,
-                'react-icons/fa': 'react-icons/fa/index.esm.js',
-                'react-icons/fi': 'react-icons/fi/index.esm.js',
-                'react-icons/bs': 'react-icons/bs/index.esm.js',
-                'react-icons/io': 'react-icons/io/index.esm.js',
-                'react-icons/ai': 'react-icons/ai/index.esm.js',
-            };
-            
-            // Optimize chunks for better caching
-            config.optimization.splitChunks = {
-                chunks: 'all',
-                cacheGroups: {
-                    vendor: {
-                        test: /[\\/]node_modules[\\/]/,
-                        name: 'vendors',
-                        chunks: 'all',
-                        priority: 10,
-                    },
-                    reactIcons: {
-                        test: /[\\/]node_modules[\\/]react-icons[\\/]/,
-                        name: 'react-icons',
-                        chunks: 'all',
-                        priority: 20,
-                    },
-                    framerMotion: {
-                        test: /[\\/]node_modules[\\/]framer-motion[\\/]/,
-                        name: 'framer-motion',
-                        chunks: 'all',
-                        priority: 20,
-                    },
-                },
-            };
-        }
-        
-        // Production optimizations
+        // Production optimizations (avoid in dev to prevent HMR issues in Next.js 15)
         if (!dev) {
+            if (!isServer) {
+                // Tree shaking and bundle optimization
+                config.resolve.alias = {
+                    ...config.resolve.alias,
+                    'react-icons/fa': 'react-icons/fa/index.esm.js',
+                    'react-icons/fi': 'react-icons/fi/index.esm.js',
+                    'react-icons/bs': 'react-icons/bs/index.esm.js',
+                    'react-icons/io': 'react-icons/io/index.esm.js',
+                    'react-icons/ai': 'react-icons/ai/index.esm.js',
+                };
+
+                // Optimize chunks for better caching
+                config.optimization.splitChunks = {
+                    chunks: 'all',
+                    cacheGroups: {
+                        vendor: {
+                            test: /[\\/]node_modules[\\/]/,
+                            name: 'vendors',
+                            chunks: 'all',
+                            priority: 10,
+                        },
+                        reactIcons: {
+                            test: /[\\/]node_modules[\\/]react-icons[\\/]/,
+                            name: 'react-icons',
+                            chunks: 'all',
+                            priority: 20,
+                        },
+                        framerMotion: {
+                            test: /[\\/]node_modules[\\/]framer-motion[\\/]/,
+                            name: 'framer-motion',
+                            chunks: 'all',
+                            priority: 20,
+                        },
+                    },
+                };
+            }
+
             config.optimization.minimize = true;
             config.optimization.usedExports = true;
             config.optimization.sideEffects = false;
         }
-        
+
         return config;
-    },
+    }
 }
 
 module.exports = nextConfig;

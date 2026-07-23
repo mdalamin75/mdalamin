@@ -6,6 +6,8 @@ import { LoadingProvider } from "../contexts/LoadingContext";
 import Head from "next/head";
 import { useEffect, Suspense } from "react";
 import dynamic from "next/dynamic";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import Script from "next/script";
 
 // Static imports for critical components
 import Navbar from "../components/Navbar";
@@ -53,7 +55,8 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
           <meta name="theme-color" content="#10b981" />
           <meta name="mobile-web-app-capable" content="yes" />
           <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-          <meta name="apple-mobile-web-app-title" content="MD. AL AMIN" />
+          <meta name="apple-mobile-web-app-title" content="MD AL AMIN" />
+          <meta name="google-site-verification" content="J1A08xBE8skOHEruTmcWx1X6jrwWWElpwBl6nIYkITA" />
         </Head>
 
         {/* Simplified layout without dynamic loading */}
@@ -75,15 +78,29 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
           </main>
 
           <CursorAnimation />
-          
+
           {/* Live Chat - Only show on non-admin pages */}
           {!isAdminRoute && <ClientTawkMessenger />}
-          
+
           {/* Performance Monitoring */}
           <PerformanceMonitor />
 
           {!isAdminRoute && <Footer />}
         </div>
+
+        {/* Google Analytics */}
+        {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
+
+        {/* Microsoft Clarity Analytics */}
+        <Script id="clarity" strategy="afterInteractive">
+          {`
+            (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0].parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "${process.env.NEXT_PUBLIC_CLARITY_ID}");
+          `}
+        </Script>
       </SessionProvider>
     </LoadingProvider>
   );

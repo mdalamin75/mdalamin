@@ -1,4 +1,3 @@
-"use client";
 import React, { useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 
@@ -16,11 +15,11 @@ const CursorAnimation = () => {
   useEffect(() => {
     // Function to detect if the device is a touch device
     const detectTouchDevice = () => {
-      const isTouchCapable = 'ontouchstart' in window || 
-        navigator.maxTouchPoints > 0 || 
+      const isTouchCapable = 'ontouchstart' in window ||
+        navigator.maxTouchPoints > 0 ||
         navigator.msMaxTouchPoints > 0 ||
         (window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
-      
+
       setIsTouchDevice(isTouchCapable);
     };
 
@@ -29,7 +28,7 @@ const CursorAnimation = () => {
 
     // Also detect on resize in case of device orientation changes or external displays
     window.addEventListener('resize', detectTouchDevice);
-    
+
     return () => {
       window.removeEventListener('resize', detectTouchDevice);
     };

@@ -87,15 +87,8 @@ export default async function handler(req, res) {
                 .sort({ createdAt: -1 }) // Sort by newest first
                 .limit(100); // Limit to prevent large responses
 
-            // Add metadata for better debugging
-            const response = {
-                data: projects,
-                count: projects.length,
-                timestamp: new Date().toISOString(),
-                status: 'success'
-            };
-
-            return res.json(response);
+            // Return the raw array - the frontend expects this format
+            return res.json(projects);
         }
 
         if (method === 'PUT') {

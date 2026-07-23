@@ -51,7 +51,7 @@ async function setupLayoutData() {
                         color: "hover:text-red-500"
                     }
                 ],
-                copyright: "© 2024 MD. AL AMIN. All rights reserved.",
+                copyright: "© 2024 MD AL AMIN. All rights reserved.",
                 links: [
                     { href: "/", title: "Home" },
                     { href: "/about", title: "About" },

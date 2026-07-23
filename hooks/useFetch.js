@@ -5,7 +5,7 @@ import { useLoading } from "../contexts/LoadingContext";
 export default function useFetch(endpoint, initialData = null) {
     const [data, setData] = useState(initialData);
     const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(initialData ? false : true); // Skip loading if we have SSR data
     const { setIsLoading } = useLoading();
     const abortControllerRef = useRef(null);
     const lastFetchTimeRef = useRef(0);
@@ -55,9 +55,9 @@ export default function useFetch(endpoint, initialData = null) {
                 console.error('Error fetching data:', error);
                 setError(error);
                 setData(initialData);
-                
+
                 // Retry logic for network errors (only in production/Vercel)
-                if (process.env.NODE_ENV === 'production' && 
+                if (process.env.NODE_ENV === 'production' &&
                     (error.code === 'ECONNABORTED' || error.response?.status >= 500)) {
                     console.log(`Retrying ${endpoint} in 2 seconds...`);
                     setTimeout(() => {

@@ -34,15 +34,15 @@ export default function Home({ initialData }) {
   const testimonialsData = initialData?.testimonials;
 
   const { data: homeDataFromHook, loading } = useFetch("home", homeData);
-  
+
 
   // Complete Page Skeleton Loader
   const PageSkeleton = () => (
     <>
       <SEO
-        title="MD. AL AMIN - Professional Web Developer & Designer"
-        description="Professional web developer specializing in modern web applications, responsive design, and digital solutions. Explore my portfolio and get in touch for your next project."
-        keywords="web developer, frontend developer, react developer, nextjs developer, portfolio, web design, responsive design, MD AL AMIN"
+        title="MD AL AMIN - Professional Web Developer & Designer | WordPress Developer | Elementor Expert"
+        description="Professional web developer specializing in modern web applications, responsive design, and digital solutions. Explore my portfolio and get in touch for your next project. Hire a professional WordPress Developer specializing in Elementor, WooCommerce, SEO optimization, and high-performance websites."
+        keywords="web developer, frontend developer, react developer, nextjs developer, portfolio, web design, responsive design, MD AL AMIN, mdalamin75, WordPress Developer, Elementor Expert, Woocommerce, shopify"
         ogImage="/profile.jpg"
       />
 
@@ -214,7 +214,7 @@ export default function Home({ initialData }) {
     <>
       {allHomeData && (
         <SEO
-          title={`${heroName || 'MD. AL AMIN'} - Portfolio`}
+          title={`${heroName || 'MD AL AMIN'} - Portfolio`}
           description={`${allHomeData.description} Professional web developer specializing in React, Next.js, WordPress, and custom solutions.`}
           ogImage={heroImage || "/profile.jpg"}
         />
@@ -235,7 +235,7 @@ export default function Home({ initialData }) {
               <h1 className="font-josefin text-xl py-5">
                 My Name is
                 <span className="font-josefin text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-500 ml-2">
-                  MD. AL AMIN
+                  MD AL AMIN
                 </span>
               </h1>
               <h2 className="font-josefin text-3xl">
@@ -273,18 +273,33 @@ export default function Home({ initialData }) {
                   <span className="align-middle text-white">Download CV</span>
                   <FiDownload className="text-xl font-extrabold animate-bounce delay-200 text-white align-middle" />
                 </button>
-                <Link href="/about">
-                  <button className="button button--nina bg-gradient-to-r from-blue-950 to-blue-600 hover:from-blue-600 hover:to-blue-950  relative block focus:outline-none border-2 border-solid rounded-lg text-sm text-center font-josefin font-semibold uppercase tracking-widest overflow-hidden px-5 text-white" data-text="About Me">
-                    {/* About Me */}
-                    <span className="align-middle">A</span>
-                    <span className="align-middle">b</span>
-                    <span className="align-middle">o</span>
-                    <span className="align-middle">u</span>
-                    <span className="align-middle">t</span>
-                    <span className="align-middle ms-1">M</span>
-                    <span className="align-middle">e</span>
-                  </button>
-                </Link>
+                <button >
+                  <Link
+                    href="https://calendly.com/mdalamin75/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setOpen(false)}
+                    className="button button--nina bg-gradient-to-r from-blue-950 to-blue-600 hover:from-blue-600 hover:to-blue-950 relative block focus:outline-none border-2 border-solid rounded-lg text-sm text-center font-josefin font-semibold uppercase tracking-widest overflow-hidden px-3 text-white whitespace-nowrap"
+                    data-text="Book Consultation"
+                  >
+                    <span>B</span>
+                    <span>o</span>
+                    <span>o</span>
+                    <span>k</span>
+                    <span className="ms-1">C</span>
+                    <span>o</span>
+                    <span>n</span>
+                    <span>s</span>
+                    <span>u</span>
+                    <span>l</span>
+                    <span>t</span>
+                    <span>a</span>
+                    <span>t</span>
+                    <span>i</span>
+                    <span>o</span>
+                    <span>n</span>
+                  </Link>
+                </button>
               </div>
             </div>
             <div
@@ -310,11 +325,11 @@ export default function Home({ initialData }) {
       <section id="portfolio" className="py-20 relative">
         <div className="container mx-auto px-3 md:px-5">
           <div className="text-center mb-16">
-            <Image 
-              src="/portfolio/portfolio.svg" 
-              alt="Portfolio" 
-              width={80} 
-              height={80} 
+            <Image
+              src="/portfolio/portfolio.svg"
+              alt="Portfolio"
+              width={80}
+              height={80}
               className="mx-auto mb-4"
               priority={false}
               quality={90}
@@ -364,7 +379,7 @@ export default function Home({ initialData }) {
           <Services initialData={servicesData} />
         </div>
       </section>
-      
+
       {/* Custom CSS for smooth animations */}
       <style jsx>{`
         @keyframes fadeInUp {
@@ -391,7 +406,7 @@ export async function getServerSideProps({ req }) {
     // Determine the correct base URL for API calls
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const host = req.headers['x-forwarded-host'] || req.headers.host;
-    const base = process.env.NODE_ENV === 'production' 
+    const base = process.env.NODE_ENV === 'production'
       ? `${protocol}://${host}`
       : (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000');
 

@@ -26,9 +26,9 @@ const Contact = () => {
   return (
     <>
       <SEO 
-        title="Contact MD. AL AMIN - Hire a Professional Web Developer"
-        description="Get in touch with MD. AL AMIN for your web development needs. Hire an expert developer for your next project or discuss a collaboration opportunity."
-        keywords="contact MD. AL AMIN, hire web developer, freelance developer contact, web development services, mdalamin75 contact, professional developer for hire"
+        title="Contact MD AL AMIN - Hire a Professional Web Developer | WordPress Developer | Elementor Expert"
+        description="Get in touch with MD AL AMIN for your web development needs. Hire an expert developer for your next project or discuss a collaboration opportunity. Hire a professional WordPress Developer specializing in Elementor, WooCommerce, SEO optimization, and high-performance websites."
+        keywords="contact MD AL AMIN, hire web developer, freelance developer contact, web development services, mdalamin75 contact, professional developer for hire"
         ogImage="/ContactPage/contact-us-animate.svg"
       />
 
@@ -39,14 +39,14 @@ const Contact = () => {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "ContactPage",
-            "name": "Contact MD. AL AMIN",
-            "description": "Get in touch with MD. AL AMIN for web development services",
-            "url": "https://mdalamin.com/contact",
+            "name": "Contact MD AL AMIN",
+            "description": "Get in touch with MD AL AMIN for web development services",
+            "url": "https://mdalamin.online/contact",
             "mainEntity": {
               "@type": "Person",
               "name": "MD. AL AMIN",
-              "email": "mdalamiin75@gmail.com",
-              "url": "https://mdalamin.com",
+              "email": "himdalamin75@gmail.com",
+              "url": "https://mdalamin.online",
               "jobTitle": "Full Stack Web Developer"
             }
           })

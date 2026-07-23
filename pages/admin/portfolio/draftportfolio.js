@@ -20,8 +20,9 @@ export default function DraftPortfolio({ initialData }) {
     // Search
     const [searchQuery, setSearchQuery] = useState('');
 
-    // Fetch portfolio data
-    const { data: portfolioData, loading, refetch } = useFetch("portfolio", initialData);
+    // Fetch portfolio data - handle wrapped API response { data: [...] }
+    const safeInitialData = Array.isArray(initialData) ? initialData : (initialData?.data || null);
+    const { data: portfolioData, loading, refetch } = useFetch("portfolio", safeInitialData);
 
     // Function to handle page change
     const paginate = (pageNumber) => {

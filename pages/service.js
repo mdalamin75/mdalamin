@@ -52,8 +52,8 @@ const Service = ({ initialData }) => {
     return (
         <div>
             <SEO
-                title="Professional Web Development Services | MD. AL AMIN"
-                description="Expert web development services by MD. AL AMIN. Specializing in custom websites, WordPress development, e-commerce solutions, React/Next.js applications, and responsive design. Hire a professional developer for your next project."
+                title="Professional Web Development Services | MD AL AMIN  | WordPress Developer | Elementor Expert"
+                description="Expert web development services by MD AL AMIN. Specializing in custom websites, WordPress development, e-commerce solutions, React/Next.js applications, and responsive design. Hire a professional developer for your next project. Hire a professional WordPress Developer specializing in Elementor, WooCommerce, SEO optimization, and high-performance websites."
                 keywords={allServiceKeywords}
                 ogImage="/services-banner.jpg"
             />
@@ -68,8 +68,8 @@ const Service = ({ initialData }) => {
                         "serviceType": "Web Development Services",
                         "provider": {
                             "@type": "Person",
-                            "name": "MD. AL AMIN",
-                            "url": "https://mdalamin.com"
+                            "name": "MD AL AMIN",
+                            "url": "https://mdalamin.online"
                         },
                         "description": "Professional web development services including custom website development, WordPress solutions, e-commerce websites, and more.",
                         "offers": {
@@ -92,11 +92,11 @@ const Service = ({ initialData }) => {
                         "@context": "https://schema.org",
                         "@type": "ProfessionalService",
                         "name": "MD. AL AMIN Web Development Services",
-                        "url": "https://mdalamin.com/service",
-                        "logo": "https://mdalamin.com/logo.png",
+                        "url": "https://mdalamin.online/service",
+                        "logo": "https://mdalamin.online/logo.png",
                         "description": "Professional web development services for businesses and individuals. Expert in WordPress, React, Next.js, and e-commerce solutions.",
                         "telephone": "+880-000-000000",
-                        "email": "mdalamiin75@gmail.com",
+                        "email": "himdalamin75@gmail.com",
                         "priceRange": "$$",
                         "serviceArea": "Worldwide",
                         "knowsAbout": [

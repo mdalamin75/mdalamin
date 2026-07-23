@@ -1,6 +1,6 @@
 {
   "name": "mdalamin",
-  "version": "3.1.1",
+  "version": "3.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@emailjs/browser": "^3.11.0",
+    "@next/third-parties": "^16.2.11",
     "@tawk.to/tawk-messenger-react": "^2.0.2",
     "@tsparticles/react": "^3.0.0",
     "@tsparticles/slim": "^3.0.3",

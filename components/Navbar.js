@@ -35,11 +35,11 @@ const Navbar = () => {
   // Check if we're on desktop - only runs on client side
   useEffect(() => {
     setIsDesktop(window.innerWidth >= 1024);
-    
+
     const handleResize = () => {
       setIsDesktop(window.innerWidth >= 1024);
     };
-    
+
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -48,7 +48,7 @@ const Navbar = () => {
   useEffect(() => {
     // Add loading class to prevent flash
     document.documentElement.classList.add("theme-loading");
-    
+
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme) {
       setTheme(savedTheme);
@@ -58,7 +58,7 @@ const Navbar = () => {
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const initialTheme = systemPrefersDark ? "night" : "night"; // Default to night
         setTheme(initialTheme);
-        
+
         // Save the theme preference
         localStorage.setItem("theme", initialTheme);
       } catch (error) {
@@ -81,7 +81,7 @@ const Navbar = () => {
     };
 
     mediaQuery.addEventListener('change', handleSystemThemeChange);
-    
+
     return () => {
       mediaQuery.removeEventListener('change', handleSystemThemeChange);
     };
@@ -95,19 +95,19 @@ const Navbar = () => {
   useEffect(() => {
     localStorage.setItem("theme", theme);
     document.documentElement.setAttribute("data-theme", theme);
-    
+
     // Also set the dark class for Tailwind dark mode
     if (theme === "night") {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
     }
-    
+
     // Remove theme loading class once theme is set
     if (themeLoaded) {
       document.documentElement.classList.remove("theme-loading");
     }
-    
+
     // Debug logging removed for cleaner console
   }, [theme, themeLoaded]);
 
@@ -141,13 +141,13 @@ const Navbar = () => {
   };
 
   const itemVariants = {
-    closed: { 
-      opacity: 0, 
+    closed: {
+      opacity: 0,
       y: -10,
       transition: { duration: 0.2 }
     },
-    open: { 
-      opacity: 1, 
+    open: {
+      opacity: 1,
       y: 0,
       transition: { duration: 0.3 }
     }
@@ -169,7 +169,7 @@ const Navbar = () => {
                   <div className="text-rotate text-2xl uppercase font-bold">
                     <span>m</span>
                     <span>d</span>
-                    <span>.</span>
+                    <span> </span>
                     <span className="ml-1">a</span>
                     <span>l</span>
                     <span className="ml-1">a</span>
@@ -179,7 +179,7 @@ const Navbar = () => {
                   </div>
                 </h1>
               </Link>
-              <motion.button 
+              <motion.button
                 className="lg:hidden"
                 onClick={() => setOpen(!open)}
                 variants={buttonVariants}
@@ -214,11 +214,10 @@ const Navbar = () => {
             <AnimatePresence>
               {(open || isDesktop) && (
                 <motion.div
-                  className={`flex-1 justify-self-center pb-3 lg:block lg:pb-0 lg:mt-0 ${
-                    open
-                      ? "p-12 lg:p-0 block bg-base-100/80 lg:bg-base-100/0 w-screen text-base-content"
-                      : "hidden lg:block"
-                  }`}
+                  className={`flex-1 justify-self-center pb-3 lg:block lg:pb-0 lg:mt-0 ${open
+                    ? "p-12 lg:p-0 block bg-base-100/80 lg:bg-base-100/0 w-screen text-base-content"
+                    : "hidden lg:block"
+                    }`}
                   initial="closed"
                   animate="open"
                   exit="closed"
@@ -226,7 +225,7 @@ const Navbar = () => {
                 >
                   <ul className="h-screen lg:h-auto flex items-center justify-start flex-col gap-x-12 lg:flex-row lg:justify-end lg:gap-x-10">
                     {Menus.map((menu, index) => (
-                      <motion.li 
+                      <motion.li
                         key={index}
                         variants={itemVariants}
                       >
@@ -262,6 +261,33 @@ const Navbar = () => {
                         </svg>
                       </label>
                     </motion.div>
+                    <motion.li variants={itemVariants}>
+                      <a
+                        href="https://calendly.com/mdalamin75/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setOpen(false)}
+                        className="button button--nina bg-gradient-to-r from-blue-950 to-blue-600 hover:from-blue-600 hover:to-blue-950 relative block focus:outline-none border border-solid rounded-lg text-sm text-center font-josefin font-semibold uppercase tracking-widest overflow-hidden px-3 text-white whitespace-nowrap"
+                        data-text="Book Consultation"
+                      >
+                        <span>B</span>
+                        <span>o</span>
+                        <span>o</span>
+                        <span>k</span>
+                        <span className="ms-1">C</span>
+                        <span>o</span>
+                        <span>n</span>
+                        <span>s</span>
+                        <span>u</span>
+                        <span>l</span>
+                        <span>t</span>
+                        <span>a</span>
+                        <span>t</span>
+                        <span>i</span>
+                        <span>o</span>
+                        <span>n</span>
+                      </a>
+                    </motion.li>
                   </ul>
                 </motion.div>
               )}

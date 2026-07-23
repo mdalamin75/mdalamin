@@ -5,15 +5,18 @@ import ProjectItem from "../../components/ProjectItem";
 import portfolio from "../../public/portfolio/portfolio.svg";
 import shadow from "../../public/shadow_01.png";
 import shadow2 from "../../public/shadow_02.png";
-import Head from "next/head";
 import axios from "axios";
+import SEO from "../../components/SEO";
 
 const Portfolio = ({ initialData }) => {
   return (
     <>
-      <Head>
-        <title>Portfolio</title>
-      </Head>
+      <SEO
+        title="Portfolio MD AL AMIN | WordPress Developer | Elementor Expert"
+        description="Learn MD AL AMIN portfolios web development journey, skills, and professional experience. Discover the technologies and expertise behind modern web solutions. Hire a professional WordPress Developer specializing in Elementor, WooCommerce, SEO optimization, and high-performance websites."
+        keywords="MD AL AMIN biography, web developer skills, programmer experience, freelance developer, mdalamin75 Portfolio, web development expertise, wordpress, woocommerce, elementor, customisation, wordpress customisation, wordpress development, multilanguage, wpml, acf, contact form"
+        ogImage="/profile.jpg"
+      />
       <section id="portfolio" className="relative pb-10 md:mb-20 pt-32 snap-start">
         <div className="absolute z-20 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
           <div className="w-[108rem] flex-none flex justify-end">
@@ -54,12 +57,12 @@ export async function getServerSideProps({ req }) {
     // Determine the correct base URL for API calls
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const host = req.headers['x-forwarded-host'] || req.headers.host;
-    const baseUrl = process.env.NODE_ENV === 'production' 
+    const baseUrl = process.env.NODE_ENV === 'production'
       ? `${protocol}://${host}`
       : (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000');
 
     console.log('Portfolio page - Base URL:', baseUrl);
-    
+
     const response = await axios.get(`${baseUrl}/api/portfolio`, {
       timeout: 10000, // 10 second timeout
       headers: {
@@ -73,10 +76,10 @@ export async function getServerSideProps({ req }) {
       hasData: !!response.data?.data
     });
 
-    return { 
-      props: { 
+    return {
+      props: {
         initialData: response.data?.data || response.data || []
-      } 
+      }
     };
   } catch (error) {
     console.error('Portfolio page - Error fetching data:', {

@@ -21,7 +21,7 @@ const authOptions = {
           if (user && bcrypt.compareSync(credentials.password, user.password)) {
             console.log("User authenticated:", user.email);
             console.log("2FA status:", Boolean(user.twoFactorSecret));
-            
+
             // Return user with 2FA information
             return {
               id: user._id.toString(),
@@ -60,6 +60,29 @@ const authOptions = {
     },
     async session({ session, token }) {
       session.user = token.user;
+
+      // Always check database for up-to-date 2FA verification status
+      // This ensures that after 2FA verification, the server-side session
+      // reflects the current state even before the JWT cookie is re-issued
+      if (session.user?.email) {
+        try {
+          await connectMongo();
+          const dbUser = await User.findOne({ email: session.user.email });
+          if (dbUser) {
+            session.user.twoFactorVerified = Boolean(dbUser.twoFactorVerified);
+            session.user.twoFactorEnabled = Boolean(dbUser.twoFactorSecret);
+
+            // Also update the token to persist the verified state
+            if (token.user) {
+              token.user.twoFactorVerified = Boolean(dbUser.twoFactorVerified);
+              token.user.twoFactorEnabled = Boolean(dbUser.twoFactorSecret);
+            }
+          }
+        } catch (error) {
+          console.error('Error fetching user from DB for session:', error);
+        }
+      }
+
       return session;
     },
   },

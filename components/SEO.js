@@ -13,16 +13,16 @@ import { useRouter } from 'next/router';
  * @param {boolean} props.noindex - Whether to prevent indexing
  */
 const SEO = ({ 
-  title = "MD. AL AMIN - Web Developer & Full Stack Developer",
-  description = "Expert web developer and designer specializing in React, Next.js, WordPress, Shopify, Email Signature, and e-commerce solutions. Hire MD. AL AMIN for professional web development services.",
-  keywords = "mdalamin, mdalamin75, web developer, full stack developer, freelancer, React developer, Next.js developer, WordPress expert, frontend developer, web designer, portfolio, email signature, email template, Shopify store development, custom web solutions",
+  title = "MD AL AMIN - Web Developer & Full Stack Developer | WordPress Developer | Elementor Expert",
+  description = "Expert web developer and designer specializing in React, Next.js, WordPress, Shopify, Email Signature, and e-commerce solutions. Hire MD AL AMIN for professional web development services. Hire a professional WordPress Developer specializing in Elementor, WooCommerce, SEO optimization, and high-performance websites.",
+  keywords = "mdalamin, mdalamin75, web developer, full stack developer, freelancer, React developer, Next.js developer, WordPress expert, frontend developer, web designer, portfolio, email signature, email template, Shopify store development, custom web solutions, wordpress, woocommerce, elementor, wpml, acf, contact form, customisation, wordpress customisation",
   ogImage = "/profile.jpg",
   ogType = "website",
   noindex = false
 }) => {
   const router = useRouter();
   const canonicalUrl = `https://mdalamin.vercel.app${router.asPath}`;
-  const fullTitle = title.includes("MD. AL AMIN") ? title : `${title} | MD. AL AMIN`;
+  const fullTitle = title.includes("MD AL AMIN") ? title : `${title} | MD AL AMIN`;
   
   // Default list of services
   const services = [

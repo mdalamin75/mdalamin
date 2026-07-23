@@ -26,7 +26,7 @@ const About = ({ initialData }) => {
   
   // Countdown animation state - start with final values to prevent layout shift
   const [animatedStats, setAnimatedStats] = React.useState({
-    years: 4,
+    years: 5,
     projects: 29,
     satisfaction: 100
   });
@@ -62,7 +62,7 @@ const About = ({ initialData }) => {
       const actualProjectCount = freelancerStats?.completedProjects || 50;
       
       const targets = {
-        years: 4,
+        years: 5,
         projects: actualProjectCount,
         satisfaction: 100
       };
@@ -111,8 +111,8 @@ const About = ({ initialData }) => {
   const SkeletonLoader = () => (
     <>
       <SEO
-        title="About MD. AL AMIN - Skills, Experience & Education"
-        description="Learn about MD. AL AMIN's web development journey, skills, and professional experience. Discover the technologies and expertise behind modern web solutions."
+        title="About MD AL AMIN - Skills, Experience & Education | WordPress Developer | Elementor Expert"
+        description="Learn about MD. AL AMIN's web development journey, skills, and professional experience. Discover the technologies and expertise behind modern web solutions. Hire a professional WordPress Developer specializing in Elementor, WooCommerce, SEO optimization, and high-performance websites."
         keywords="MD. AL AMIN biography, web developer skills, programmer experience, freelance developer, mdalamin75 about, web development expertise"
         ogImage="/profile.jpg"
       />
@@ -339,7 +339,7 @@ const About = ({ initialData }) => {
               <div className="space-y-6">
                 <div>
                   <h2 className="text-4xl md:text-5xl font-bold mb-2 text-gray-900 dark:text-white">
-                    Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-blue-400">MD. AL AMIN</span>
+                    Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-blue-400">MD AL AMIN</span>
                   </h2>
                   <p className="text-xl font-medium text-gray-700 dark:text-gray-300">
                     Professional Web Developer & Digital Solutions Expert
@@ -408,20 +408,50 @@ Whether you need a simple website, a complex web application, or ongoing mainten
 
               {/* Call to action buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link 
-                  href="/portfolio" 
-                  className="group inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-semibold rounded-xl hover:from-emerald-600 hover:to-emerald-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-emerald-500/30"
-                >
-                  <FcBriefcase className="mr-3 text-lg group-hover:scale-110 transition-transform" />
-                  View My Portfolio
-                </Link>
-                <Link 
-                  href="/contact" 
-                  className="group inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-blue-500/30"
-                >
-                  <SiFreelancer className="mr-3 text-lg group-hover:scale-110 transition-transform" />
-                  Get In Touch
-                </Link>
+                <button >
+                  <Link
+                    href="https://calendly.com/mdalamin75/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setOpen(false)}
+                    className="button button--nina bg-gradient-to-r from-blue-950 to-blue-600 hover:from-blue-600 hover:to-blue-950 relative block focus:outline-none border-2 border-solid rounded-lg text-sm text-center font-josefin font-semibold uppercase tracking-widest overflow-hidden px-3 text-white whitespace-nowrap"
+                    data-text="Book Consultation"
+                  >
+                    <span>B</span>
+                    <span>o</span>
+                    <span>o</span>
+                    <span>k</span>
+                    <span className="ms-1">C</span>
+                    <span>o</span>
+                    <span>n</span>
+                    <span>s</span>
+                    <span>u</span>
+                    <span>l</span>
+                    <span>t</span>
+                    <span>a</span>
+                    <span>t</span>
+                    <span>i</span>
+                    <span>o</span>
+                    <span>n</span>
+                  </Link>
+                </button>
+                <button >
+                  <Link
+                    href="https://www.freelancer.com/u/mdalamin75"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setOpen(false)}
+                    className="button button--nina bg-gradient-to-r from-blue-950 to-blue-600 hover:from-blue-600 hover:to-blue-950 relative block focus:outline-none border-2 border-solid rounded-lg text-sm text-center font-josefin font-semibold uppercase tracking-widest overflow-hidden px-10 text-white whitespace-nowrap"
+                    data-text="Hire Me"
+                  >
+                    <span>H</span>
+                    <span>i</span>
+                    <span>r</span>
+                    <span>e</span>
+                    <span className="ms-1">M</span>
+                    <span>e</span>
+                  </Link>
+                </button>
               </div>
             </div>
           </div>

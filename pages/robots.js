@@ -19,9 +19,11 @@ Allow: /portfolio
 Allow: /about
 Allow: /contact
 
-# Sitemaps
+# Sitemaps - Both domains (serving the same site)
 Sitemap: https://mdalamin.vercel.app/sitemap.xml
 Sitemap: https://mdalamin.vercel.app/services-sitemap.xml
+Sitemap: https://www.mdalamin.online/sitemap.xml
+Sitemap: https://www.mdalamin.online/services-sitemap.xml
 `;
 }
 
